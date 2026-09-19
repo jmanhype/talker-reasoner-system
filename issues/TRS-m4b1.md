@@ -4,7 +4,7 @@ title: "M1 architecture gate: enforce implementation imports with explicit debt"
 status: closed
 priority: 1
 type: task
-labels: [architecture, integration, delivered]
+labels: [architecture, integration, delivered, accepted]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed

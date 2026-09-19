@@ -9,13 +9,13 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
 updated_at: 2026-09-19T14:14:40Z
-content_hash: "sha256:28748c8690f2eada15a095db019465f4205b71246f279d257551bfaa04e88651"
+content_hash: "sha256:148dc05c863c0516a1231e032478a1216a13e2e68505824e9b07e4fb757f79f0"
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-74z8
 follows: [TRS-0daa, TRS-zpo4]
 closed_at: 2026-09-19T14:14:39Z
 close_reason: "Accepted: independently reran story/full suites (14/14 and 28/28), compilation, pvg verify, static boundary scan, and hash checks. Routing is local/deterministic, exactly three routes, threshold-guarded, fully reported, and privacy-safe."
-led_to: [TRS-9md6, TRS-ndv6]
+led_to: [TRS-9md6, TRS-ndv6, TRS-f7sm]
 ---
 
 ## Description
@@ -272,6 +272,6 @@ status: delivered
 - Parent: [[TRS-pf94]]
 - Was blocked by: [[TRS-0daa]]
 - Follows: [[TRS-0daa]], [[TRS-zpo4]]
-- Led to: [[TRS-9md6]], [[TRS-ndv6]]
+- Led to: [[TRS-9md6]], [[TRS-ndv6]], [[TRS-f7sm]]
 
 ## Comments

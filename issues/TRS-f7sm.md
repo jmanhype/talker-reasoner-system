@@ -1,17 +1,19 @@
 ---
 id: TRS-f7sm
 title: "Show clean CLI outcomes for every terminal slice state"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [cli, integration, slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T05:29:37Z
-content_hash: "sha256:b0f6f6d86da4d9180aa90b44b94f68dd184d357b79c5d97ea94ba2721e5e0f53"
+updated_at: 2026-09-19T16:31:37Z
+content_hash: "sha256:7d6502a3df2c9e0206f8c91d56ce7a2ad1b6a095eb1eab452a285cd7d5ac908e"
 blocks: [TRS-osl5]
 was_blocked_by: [TRS-74z8, TRS-9md6, TRS-ndv6]
+assignee: dev-TRS-f7sm
+follows: [TRS-74z8, TRS-9md6, TRS-ndv6]
 ---
 
 ## Description
@@ -167,10 +169,16 @@ status: new
 - 2026-09-19T14:14:39Z dep_removed: was_blocked_by TRS-74z8
 - 2026-09-19T15:55:45Z dep_removed: was_blocked_by TRS-9md6
 - 2026-09-19T16:31:14Z dep_removed: was_blocked_by TRS-ndv6
+- 2026-09-19T16:31:37Z status: open -> in_progress
+- 2026-09-19T16:31:37Z auto-follows: linked to predecessor TRS-74z8
+- 2026-09-19T16:31:37Z auto-follows: linked to predecessor TRS-9md6
+- 2026-09-19T16:31:37Z auto-follows: linked to predecessor TRS-ndv6
+- 2026-09-19T16:31:37Z claimed by dev-TRS-f7sm
 
 ## Links
 - Parent: [[TRS-pf94]]
 - Blocks: [[TRS-osl5]]
 - Was blocked by: [[TRS-74z8]], [[TRS-9md6]], [[TRS-ndv6]]
+- Follows: [[TRS-74z8]], [[TRS-9md6]], [[TRS-ndv6]]
 
 ## Comments

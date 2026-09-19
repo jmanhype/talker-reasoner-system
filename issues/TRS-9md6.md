@@ -9,13 +9,13 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
 updated_at: 2026-09-19T15:55:45Z
-content_hash: "sha256:1ccfe25f80ab0453310261d36bbb2d23c9a259631a5a028ea910345ee2ea7b04"
+content_hash: "sha256:39d457639f956e4cf426b516f1bb2da520f6b25a2f4ba4dcb81be7063e3eb098"
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-9md6
 follows: [TRS-0daa, TRS-74z8]
 closed_at: 2026-09-19T15:55:44Z
 close_reason: "Accepted: independently reran story/full suites (24/24 and 52/52), compilation, pvg verify, static dependency/privacy scans, LOC/budget checks, and hash verification. The compacted implementation is 421 LOC, covers every rejection and policy outcome, and executes nothing."
-led_to: [TRS-ndv6]
+led_to: [TRS-ndv6, TRS-f7sm]
 ---
 
 ## Description
@@ -277,6 +277,6 @@ status: delivered
 - Parent: [[TRS-pf94]]
 - Was blocked by: [[TRS-0daa]]
 - Follows: [[TRS-0daa]], [[TRS-74z8]]
-- Led to: [[TRS-ndv6]]
+- Led to: [[TRS-ndv6]], [[TRS-f7sm]]
 
 ## Comments

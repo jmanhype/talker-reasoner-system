@@ -1,19 +1,20 @@
 ---
 id: TRS-f7sm
 title: "Show clean CLI outcomes for every terminal slice state"
-status: in_progress
+status: closed
 priority: 1
 type: feature
 labels: [cli, integration, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T16:57:30Z
-content_hash: "sha256:3be86ca4efa60fcb744084b45a3b7f5901c6867100650fe7cd558dd22cbf6b10"
-blocks: [TRS-osl5]
+updated_at: 2026-09-19T16:57:44Z
+content_hash: "sha256:e756d1cc1e8ab97705d94c995d28af928f717eaecf7e2da1cc8868b7b75b0695"
 was_blocked_by: [TRS-74z8, TRS-9md6, TRS-ndv6]
 assignee: dev-TRS-f7sm
 follows: [TRS-74z8, TRS-9md6, TRS-ndv6, TRS-0daa]
+closed_at: 2026-09-19T16:57:44Z
+close_reason: "Accepted: independently reran compilation, 44/44 story tests, 154/154 full tests, pvg verify, git diff check, real chitchat/unclear/needs-tools/invalid CLI probes, and privacy scans. Rendering is clean, bounded, privacy-safe, and correctly separates stdout from compact evidence."
 ---
 
 ## Description
@@ -243,10 +244,11 @@ status: delivered
 - 2026-09-19T16:31:37Z claimed by dev-TRS-f7sm
 - 2026-09-19T16:56:27Z status: in_progress -> in_progress
 - 2026-09-19T16:56:27Z auto-follows: linked to predecessor TRS-0daa
+- 2026-09-19T16:57:44Z status: in_progress -> closed
+- 2026-09-19T16:57:44Z dep_removed: no_longer_blocks TRS-osl5
 
 ## Links
 - Parent: [[TRS-pf94]]
-- Blocks: [[TRS-osl5]]
 - Was blocked by: [[TRS-74z8]], [[TRS-9md6]], [[TRS-ndv6]]
 - Follows: [[TRS-74z8]], [[TRS-9md6]], [[TRS-ndv6]], [[TRS-0daa]]
 

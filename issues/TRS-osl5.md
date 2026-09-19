@@ -4,11 +4,11 @@ title: "E2e: trace fixture conversations to clean outcomes"
 status: closed
 priority: 1
 type: feature
-labels: [capstone, e2e, slice-0, delivered, accepted]
+labels: [capstone, e2e, slice-0, accepted]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T17:59:51Z
+updated_at: 2026-09-19T17:59:52Z
 content_hash: "sha256:a26cebe5efdbc93acd737ce3c924e3b027f40782ce546470b4a1b3072d1ac219"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]

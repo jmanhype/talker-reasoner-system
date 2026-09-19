@@ -8,8 +8,8 @@ labels: [hard-tdd, walking-skeleton, red-approved, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:20:08Z
-content_hash: "sha256:6f8492e1385d33fbe5f36909f4d6b4fd11073f2728362a605c958e4d17e46310"
+updated_at: 2026-09-19T19:20:22Z
+content_hash: "sha256:b55ae34e1c29956acba9d47e89ff5712dbd1886ff499b6f33fcb4d5eb47f1812"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -182,7 +182,20 @@ status: new
 - `machinery check design --impl .` was an initial diagnostic mis-scan over `.venv`; it produced 462 boundary-mapping errors and was not treated as a project result. The story's literal command, `machinery check design`, exited 0 with 0 blocking findings.
 - `machinery check design --impl tests` exited 1 with exactly two expected G4 errors because `tests/` is intentionally outside contract boundaries; its Gt section still verified 8 test files, 7 machines, and 62/62 oracle rows covered by conformance parse.
 - `machinery check design` emitted seven non-blocking Gx carrier warnings for invariants attested through prose/tests rather than machine units: `action-schema-fail-closed`, `hot-state-minimized`, `hot-state-ttl`, `model-boundaries-explicit`, `policy-three-outcomes`, `talker-no-authority`, and `transcriber-no-authority`. Blocking count remained zero; these are covered by the RED property tests and remain GREEN obligations.
+## PM Decision
+TEST-EDIT AUTHORIZED: tests/test_machinery_invariants.py -- repair only the five RED authoring defects recorded in the GREEN dispute: adapt the imported action/confirmation helper signatures, serialize MappingProxyType safely, align unknown-risk expectation with the committed fallback contract, align duplicate-terminal expectation with append-then-verify, and accept either fail-closed outcome for falsified reasoner guards. Do not remove or weaken any invalid-case assertion, oracle id, invariant id, guard clause, or actor test. Each repair commit subject must contain the literal tag [test-edit-authorized].
 
+## nd_contract
+status: rejected
+
+### evidence
+- GREEN production evidence is credible: oracle suite 73/73 and existing suite 164/164.
+- The remaining 25 failures are traced to the five exact RED defects.
+- RED SHA 2f8052000499280480a0103901582dc709642f11 is unchanged.
+
+### proof
+- [x] Production machinery surface is present at commit 7a238e50d95cb97675f9db199efbec2f857e55d3.
+- [ ] Authorized RED repair must make the unchanged semantic expectations executable and consistent with Slice 0.
 
 ## nd_contract
 status: delivered

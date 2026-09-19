@@ -1,18 +1,19 @@
 ---
 id: TRS-osl5
 title: "E2e: trace fixture conversations to clean outcomes"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [capstone, e2e, slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T17:55:11Z
-content_hash: "sha256:6da045c5809207b5969044d5404aa277b178870c33be7754a6fff80a06caeb3b"
+updated_at: 2026-09-19T17:55:23Z
+content_hash: "sha256:5319b66ad580293564290da5dcbacbd0b07c01cfc4f1cc4e05d3feae8e2eb431"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 follows: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm, TRS-zpo4]
+assignee: dev-TRS-osl5
 ---
 
 ## Description
@@ -328,6 +329,8 @@ Commit SHA: c485cb7d260acbbe82f13d83bf17031a1470b6ae
 - 2026-09-19T17:53:17Z auto-follows: linked to predecessor TRS-zpo4
 - 2026-09-19T17:55:10Z status: in_progress -> open
 - 2026-09-19T17:55:10Z released by speed
+- 2026-09-19T17:55:24Z status: open -> in_progress
+- 2026-09-19T17:55:24Z claimed by dev-TRS-osl5
 
 ## Links
 - Parent: [[TRS-pf94]]

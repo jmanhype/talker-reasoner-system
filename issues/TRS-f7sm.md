@@ -4,7 +4,7 @@ title: "Show clean CLI outcomes for every terminal slice state"
 status: closed
 priority: 1
 type: feature
-labels: [cli, integration, slice-0, delivered]
+labels: [cli, integration, slice-0, delivered, accepted]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed

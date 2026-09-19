@@ -8,12 +8,12 @@ labels: [slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T13:44:31Z
-content_hash: "sha256:a15391d55ab9480fcb9d4c8ae19eba982f2deae3e70911c19860a8adbf8e33a4"
+updated_at: 2026-09-19T14:13:37Z
+content_hash: "sha256:90f36b448410a55bfb8a70aabca30bc847fa6a938ee44c1252939bddd2718a9d"
 blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-74z8
-follows: [TRS-0daa]
+follows: [TRS-0daa, TRS-zpo4]
 ---
 
 ## Description
@@ -170,11 +170,13 @@ status: new
 - 2026-09-19T13:44:31Z status: open -> in_progress
 - 2026-09-19T13:44:31Z auto-follows: linked to predecessor TRS-0daa
 - 2026-09-19T13:44:31Z claimed by dev-TRS-74z8
+- 2026-09-19T14:13:37Z status: in_progress -> in_progress
+- 2026-09-19T14:13:37Z auto-follows: linked to predecessor TRS-zpo4
 
 ## Links
 - Parent: [[TRS-pf94]]
 - Blocks: [[TRS-ndv6]], [[TRS-f7sm]], [[TRS-osl5]]
 - Was blocked by: [[TRS-0daa]]
-- Follows: [[TRS-0daa]]
+- Follows: [[TRS-0daa]], [[TRS-zpo4]]
 
 ## Comments

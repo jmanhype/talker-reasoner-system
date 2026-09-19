@@ -8,8 +8,8 @@ labels: [architecture, integration, delivered]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed
-updated_at: 2026-09-19T20:18:47Z
-content_hash: "sha256:0ef9afe66aaef88d9773b8081899ad5cb553a83a36409d648874723f3892b2b5"
+updated_at: 2026-09-19T20:19:01Z
+content_hash: "sha256:da691ef0011d596e5fa5e72c6faa030be71e5f24f9fc763f743391818e13bd40"
 blocks: [TRS-h8kc, TRS-g7go]
 assignee: dev-TRS-m4b1
 ---
@@ -247,7 +247,19 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-09-19]: Evidence reviewed. The root-package move preserves all behavior, G4/Gt now resolve real imports/tests, four current edges are explicitly ratcheted, and the required gate is green with 328 passing tests.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed final SHA b4f5a1d893877ba07f52655fd052448a102f7433.
+- Delivery proof verification passed 9/9.
+- Baseline/ratchet evidence exactly matches the four diagnosed edges.
+
+### proof
+- [x] AC #1 through AC #8 verified.
 
 ## nd_contract
 status: delivered

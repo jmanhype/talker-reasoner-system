@@ -8,8 +8,8 @@ labels: [hard-tdd, walking-skeleton, red-approved, rejected, rejected-x2]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:20:41Z
-content_hash: "sha256:e69bfb744c134e506513c51e4c09ad02552bb952957a7ba445675661aa25dde3"
+updated_at: 2026-09-19T19:24:07Z
+content_hash: "sha256:b23d0608d3dfa2d70bbaa1ae943ea1cad97b2e6b7ed4ddfd49bc2fa0042a997b"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -182,6 +182,107 @@ status: new
 - `machinery check design --impl .` was an initial diagnostic mis-scan over `.venv`; it produced 462 boundary-mapping errors and was not treated as a project result. The story's literal command, `machinery check design`, exited 0 with 0 blocking findings.
 - `machinery check design --impl tests` exited 1 with exactly two expected G4 errors because `tests/` is intentionally outside contract boundaries; its Gt section still verified 8 test files, 7 machines, and 62/62 oracle rows covered by conformance parse.
 - `machinery check design` emitted seven non-blocking Gx carrier warnings for invariants attested through prose/tests rather than machine units: `action-schema-fail-closed`, `hot-state-minimized`, `hot-state-ttl`, `model-boundaries-explicit`, `policy-three-outcomes`, `talker-no-authority`, and `transcriber-no-authority`. Blocking count remained zero; these are covered by the RED property tests and remain GREEN obligations.
+## Implementation Evidence (DELIVERED)
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- `pytest -q tests/test_machinery_oracles.py tests/test_machinery_invariants.py` -> exit 0: **162 passed in 0.24s**.
+- `pytest -q` -> exit 0: **326 passed in 2.02s**.
+- `modelith lint design/domain.modelith.yaml --completeness error` -> exit 0: **0 errors, 0 warnings**.
+- `machinery lint design/machines` -> exit 0: **0 error/drift findings across 7 machines**.
+- `machinery oracle design/machines` -> exit 0: **62 rows across 7 generated oracles**.
+- `machinery check design` -> exit 0: **0 blocking ERROR/DRIFT findings**.
+- `pvg verify src/talk_reasoner/machinery.py src/talk_reasoner/actions.py src/talk_reasoner/contracts.py src/talk_reasoner/jobs.py src/talk_reasoner/cli.py tests/test_machinery_oracles.py tests/test_machinery_invariants.py --include-tests --format=text` -> exit 0: **VERIFY PASSED (7 files, 0 issues)**.
+- `pvg gates --changed 630386c` -> exit 0: **GATES PASS (11 warnings, 0 skipped; design PASS)**.
+- `pvg story verify-tdd --base 630386c` -> PASS across 4 commits.
+- `git diff --check` -> exit 0.
+
+Summary: GREEN complete. The parser/oracle suite, 62 transition conformance rows, 36 invariant properties, guard-falsification cases, offline checks, existing 164-test suite, and full 326-test repository suite all pass.
+
+Coverage:
+- Oracle stable-id coverage: **62/62 (100%)**.
+- Invariant property coverage: **36/36 (100%)**.
+- Full test execution coverage for this repo suite: **326/326 (100%)**.
+
+### Commit
+- Branch: `story/TRS-8k9t`
+- Final SHA: `b9210850c8785cd4bcf1589e355b1dcd0aac10bc`
+- Commit chain:
+  - `2f80520` `test(TRS-8k9t): tdd-red -- lock 62 oracle rows and 36 invariants`
+  - `7a238e5` `feat(TRS-8k9t): implement offline machinery gate`
+  - `de429a3` `test(TRS-8k9t): [test-edit-authorized] repair invariant fixtures`
+  - `b921085` `refactor(TRS-8k9t): extract oracle row parser`
+- Diff: 8 files, 1353 insertions, 3 deletions.
+- Diff-budget note: the 62-row + 36-property RED suite alone is 899 lines; production adds the required offline parser/executor. The resulting 1353-line story diff is about 1.50x the stated 900-line budget, not a multiple-times gross overrun, but PM should explicitly accept this scope explanation.
+
+### Implementation Surface
+- `src/talk_reasoner/machinery.py`: typed oracle parser, invariant parser, transition cases, local actor executors, and strict contract errors.
+- `src/talk_reasoner/actions.py`: complete schema bounds and mandatory reviewed provenance.
+- `src/talk_reasoner/contracts.py`: minimized/credential-free event rejection.
+- `src/talk_reasoner/jobs.py`: active reasoner-consent binding, including no-action proposals.
+- `design/ARCHITECTURE.md`: ignores `.venv` and deliberately leaves M0 `machinery.py` outside G4 extraction until M1.
+- `tests/test_machinery_invariants.py`: only the PM-authorized fixture/signature repairs; semantic assertions retained.
+
+### Stable-ID and Invariant Coverage
+- Stable IDs: **62/62**, exactly the table already itemized in the approved RED evidence.
+- Invariant IDs: **36/36**, exactly the table already itemized in the approved RED evidence.
+- Authorization: RED repair commit `de429a3` carries `[test-edit-authorized]`; `pvg story verify-tdd` passes.
+
+### AC Verification
+| AC | Requirement | Status | Evidence |
+|---|---|---|---|
+| 1 | RED first, right failure, locked | PASS | RED SHA `2f80520`; PM authorization recorded; TDD guard passes. |
+| 2 | Parser loads/rejects oracle inputs | PASS | Parser malformed/empty/duplicate/missing/extra tests pass. |
+| 3 | Runtime parse all seven files | PASS | `machinery oracle` + conformance suite cover all seven files. |
+| 4 | All 62 stable ids | PASS | 62/62 parameterized conformance rows pass. |
+| 5 | Exact 36 invariant ids and properties | PASS | 36/36 property tests pass. |
+| 6 | Guard clauses and local actors | PASS | Independent-clause and real local actor tests pass. |
+| 7 | Offline-only implementation | PASS | Full suite and local dependency assertions pass; no remote dependency import. |
+| 8 | Modelith/machinery gates green | PASS | All four required design commands exit 0; 0 blocking findings. |
+| 9 | Existing suite remains green | PASS | Full suite 326/326, including prior 164 tests. |
+
+### pvg verify
+- `VERIFY: PASSED (7 files scanned, 0 issues)`.
+
+LEARNINGS:
+- GREEN exposed incompatible helper reuse in RED; a narrowly authorized adapter preserved all invalid-case semantics.
+- Unknown-risk fallback and ledger duplicate detection must follow the committed Slice-0 contracts: fallback at routing, append-then-verify at the ledger.
+- No-action reasoner proposals previously bypassed consent expiry; the production request boundary now checks active consent before transport.
+- The 62/36 denominators consume the nominal test budget by themselves; future stories should set test and implementation budgets separately.
+- Extracting `_oracle_row` kept the new parser below the complexity threshold; legacy complexity warnings remain visible.
+
+### OBSERVATIONS (non-blocking)
+- Required `machinery check design` reports seven non-blocking Gx carrier warnings for prose/test-attested invariants; blocking count is zero.
+- `pvg gates` exits 0 but reports 11 warnings: ten legacy/pre-existing complexity warnings and the intentionally large 603-nonblank-line invariant fixture.
+- Diagnostic `machinery check design --impl .` is not the story’s required command and cannot simultaneously run G4 and Gt while `tests/**` is contract-ignored. Required literal design check and `pvg gates --changed` both pass.
+
+### DISCOVERED_BUG
+  title: Legacy complexity thresholds remain over budget
+  context: `pvg gates --changed 630386c` passes, but reports complexity warnings in existing `actions.py`, `cli.py`, `contracts.py`, and `jobs.py` functions plus the large invariant fixture. No behavior fails, but future refactoring stories should burn this debt down.
+  affected_files: src/talk_reasoner/actions.py, src/talk_reasoner/cli.py, src/talk_reasoner/contracts.py, src/talk_reasoner/jobs.py, tests/test_machinery_invariants.py
+  discovered_during: TRS-8k9t
+
+## nd_contract
+status: delivered
+
+### evidence
+- Final SHA `b9210850c8785cd4bcf1589e355b1dcd0aac10bc`.
+- Full suite 326/326; target suite 162/162; required design gates green.
+- Authorized RED repair marker and TDD guard pass.
+
+### proof
+- [x] AC #1: RED phase approved and only PM-authorized repairs made.
+- [x] AC #2: parser contract passes malformed/empty/duplicate/missing/extra cases.
+- [x] AC #3: all seven oracle files parse at runtime.
+- [x] AC #4: 62/62 stable ids pass transition conformance.
+- [x] AC #5: 36/36 invariant ids execute meaningful properties.
+- [x] AC #6: guard-falsification and local actor tests pass.
+- [x] AC #7: implementation remains offline and local.
+- [x] AC #8: required Modelith/machinery gates exit 0 with zero blocking findings.
+- [x] AC #9: full suite, including prior tests, passes 326/326.
+
 ## nd_contract
 status: in_progress
 

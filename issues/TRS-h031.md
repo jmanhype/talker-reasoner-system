@@ -1,13 +1,15 @@
 ---
 id: TRS-h031
 title: "Machinery M0 oracle walking skeleton"
-status: open
+status: closed
 priority: 1
 type: epic
 created_at: 2026-09-19T18:16:57Z
 created_by: speed
-updated_at: 2026-09-19T18:16:57Z
-content_hash: "sha256:f472562ff03fdec6cdb2929de895faf576ac0d86df9d26e55b80da55ad862aea"
+updated_at: 2026-09-19T19:31:09Z
+content_hash: "sha256:fc7db0f83927ca138aa7e56e9e94582dc1b89bff6b8fcaf5682bd14064cb4987"
+closed_at: 2026-09-19T19:31:08Z
+close_reason: "All M0 stories accepted; offline machinery and capstone gates are green."
 ---
 
 ## Description
@@ -75,7 +77,7 @@ status: new
 
 
 ## History
-
+- 2026-09-19T19:31:09Z status: open -> closed
 
 ## Links
 

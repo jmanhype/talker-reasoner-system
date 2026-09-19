@@ -8,8 +8,8 @@ labels: [hard-tdd, walking-skeleton, red-approved, rejected-x2, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:24:23Z
-content_hash: "sha256:db10e129fa08431025a63fb10c9991840acaeee9326dbca1e5dbc93f71e37967"
+updated_at: 2026-09-19T19:25:01Z
+content_hash: "sha256:75667902b4666908b5789dc3fa8cf7fc5b73c5d8548121e329441d93b881f66f"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -629,3 +629,16 @@ EXPECTED: Executable RED properties must test the intended invalid cases without
 DELIVERED: Production passes 73/73 oracle tests and 164/164 existing tests, but 25 invariant failures trace to helper-signature mistakes and two direct contradictions in the frozen RED file.
 GAP: The RED assertions cannot execute as authored and cannot all be true while the committed existing suite remains green.
 FIX: Apply only the recorded TEST-EDIT AUTHORIZED repairs to tests/test_machinery_invariants.py and commit with [test-edit-authorized]; then rerun the unchanged semantic suites.
+
+### 2026-09-19T19:25:01Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Final GREEN SHA: b9210850c8785cd4bcf1589e355b1dcd0aac10bc.
+- Full suite: 326 passed; hard-TDD suite: 162 passed.
+- Required design, quality, and TDD gates pass; details are in the final Implementation Evidence note.
+
+### proof
+- [x] AC #1 through AC #9 verified.
+- [x] Diff-budget overrun and non-blocking warnings disclosed.

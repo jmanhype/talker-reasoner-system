@@ -9,9 +9,9 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
 updated_at: 2026-09-19T05:29:37Z
-content_hash: "sha256:efe315dbdebab60a10c4dcca88035fa1ada38cfc25cf086407ac195789bd4096"
+content_hash: "sha256:263578374cb41820f26ef6631215f516736177bcfb381abc1a9f32dce3eea15e"
 blocked_by: [TRS-74z8, TRS-9md6]
-blocks: [TRS-f7sm]
+blocks: [TRS-f7sm, TRS-osl5]
 ---
 
 ## Description
@@ -168,10 +168,11 @@ status: new
 - 2026-09-19T05:29:38Z dep_added: blocked_by TRS-74z8
 - 2026-09-19T05:29:38Z dep_added: blocked_by TRS-9md6
 - 2026-09-19T05:29:38Z dep_added: blocks TRS-f7sm
+- 2026-09-19T05:29:39Z dep_added: blocks TRS-osl5
 
 ## Links
 - Parent: [[TRS-pf94]]
-- Blocks: [[TRS-f7sm]]
+- Blocks: [[TRS-f7sm]], [[TRS-osl5]]
 - Blocked by: [[TRS-74z8]], [[TRS-9md6]]
 
 ## Comments

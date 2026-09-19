@@ -9,7 +9,7 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
 updated_at: 2026-09-19T17:59:52Z
-content_hash: "sha256:a26cebe5efdbc93acd737ce3c924e3b027f40782ce546470b4a1b3072d1ac219"
+content_hash: "sha256:d4d8f753f79998a4582a94bf7e5328bcd27c870411b632ed45dc3ede1683cc75"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 follows: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm, TRS-zpo4]
@@ -147,6 +147,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## Implementation Evidence
 
 Commands run:

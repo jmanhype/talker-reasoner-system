@@ -9,7 +9,7 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T19:27:05Z
-content_hash: "sha256:6249dd9459176d816d21cca0e7f9407a91ccfcbb96c1786048d13f40609e032a"
+content_hash: "sha256:3cbe780657375c0af32cc531cbbbd471316b257e1af36325793dd5e68c8738b5"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -110,7 +110,15 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Claimed final M0 capstone after accepted/merged TRS-8k9t.
+- Base epic SHA: 771509656cf7bc4bc343c31a86a0a224c6b5bb4d.
+
+### proof
+- [ ] Implement offline E2E gate and frozen report contract.
 
 ## History
 - 2026-09-19T18:16:58Z dep_added: blocked_by TRS-8k9t

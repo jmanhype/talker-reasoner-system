@@ -51,7 +51,7 @@ def _import_roots(path: Path) -> set[str]:
 
 
 def _live_dependency_classes() -> list[str]:
-    roots_by_path = {path: _import_roots(path) for path in list((ROOT / "src").rglob("*.py")) + list((ROOT / "tests").rglob("*.py"))}
+    roots_by_path = {path: _import_roots(path) for path in list((ROOT / "talk_reasoner").rglob("*.py")) + list((ROOT / "tests").rglob("*.py"))}
     return sorted(
         dependency_class
         for dependency_class, forbidden in FORBIDDEN_LIVE_IMPORTS.items()
@@ -102,7 +102,7 @@ def test_complete_offline_m0_gate_emits_exact_pass_report() -> None:
         "sixty_two_unique": len(transitions) == 62 and len({row.stable_id for row in transitions}) == 62,
         "thirty_six_invariants": len(invariants) == 36 and len(set(invariants)) == 36,
         "all_transitions_conform": _all_transitions_conform(oracles),
-        "complete_suite_collected": collection_exit_code == 0 and collected_test_count == 327,
+        "complete_suite_collected": collection_exit_code == 0 and collected_test_count == 330,
         "no_live_dependencies": not live_dependency_classes,
     }
     report = {

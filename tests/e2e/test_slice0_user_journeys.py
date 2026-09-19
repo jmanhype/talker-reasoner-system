@@ -37,7 +37,7 @@ class FastClock:
 
 
 def _environment() -> dict[str, str]:
-    environment = os.environ.copy(); environment["PYTHONPATH"] = str(ROOT / "src")
+    environment = os.environ.copy(); environment["PYTHONPATH"] = str(ROOT)
     return {name: value for name, value in environment.items() if not CREDENTIAL_OUTPUT.search(name)}
 
 
@@ -189,6 +189,6 @@ def test_terminal_lifecycle_report_includes_result_age_and_exact_denominators() 
 
 
 def test_local_slice_has_no_network_or_credential_surface() -> None:
-    source = "\n".join(path.read_text(encoding="utf-8") for path in (ROOT / "src/talk_reasoner").glob("*.py"))
+    source = "\n".join(path.read_text(encoding="utf-8") for path in (ROOT / "talk_reasoner").glob("*.py"))
     assert not [name for name in NETWORK_IMPORTS if re.search(rf"(?m)^\s*(import|from)\s+{name}\b", source)]
     assert not re.search(r"(?i)\b(os\.environ|getenv\s*\()", source)

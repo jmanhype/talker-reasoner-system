@@ -208,6 +208,7 @@ Status: closed
 Refactor only where needed so current Python modules match the declared boundaries and G4 can resolve imports. Add the TypeScript edge package skeleton without live audio.
 
 DoD: `machinery check design --impl .` is green or every current violation is explicitly baselined; all M0 tests remain green; no behavior changes except typed boundary extraction.
+Status: closed
 
 **M2 - Voice session and turn contracts**
 

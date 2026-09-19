@@ -1,0 +1,15 @@
+milestone: 1
+commit: da8bae7bfddd5eff5f1ef309ae7f3542d3982068
+verdict: ACCEPTED
+dod_ids: []
+attestations:
+  - machinery check design --impl . exits zero with zero blocking findings
+  - G4 resolves 19 imports across 8 Python and 2 TypeScript files
+  - Gt scans 12 test files and covers all 7 machines and 62 oracle rows
+  - four current architecture violations are explicitly baselined and ratcheted
+  - the complete suite passes 330 of 330 tests
+  - no live audio, model, credential, durable-service, remote-tool, or semantic-memory dependency is enabled
+findings:
+  - Non-blocking legacy complexity warnings remain and are tracked for later refactoring.
+reviewer: milestone acceptance review, operator-approved Codex workflow
+date: 2026-09-19

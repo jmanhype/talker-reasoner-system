@@ -110,7 +110,7 @@ def source_has_only_local_dependencies() -> bool:
     pattern = "|".join(forbidden_imports())
     return not any(
         re.search(rf"(?m)^\s*(?:import|from)\s+(?:{pattern})\b", path.read_text(encoding="utf-8"))
-        for path in (ROOT / "src" / "talk_reasoner").glob("*.py")
+        for path in (ROOT / "talk_reasoner").glob("*.py")
     )
 
 def p_session_processing_boundary() -> None:
@@ -439,8 +439,8 @@ def p_talker_no_authority() -> None:
 def p_model_boundaries_explicit() -> None:
     machinery()
     modules = {
-        "routing": (ROOT / "src" / "talk_reasoner" / "routing.py").read_text(encoding="utf-8"),
-        "rendering": (ROOT / "src" / "talk_reasoner" / "rendering.py").read_text(encoding="utf-8"),
+        "routing": (ROOT / "talk_reasoner" / "routing.py").read_text(encoding="utf-8"),
+        "rendering": (ROOT / "talk_reasoner" / "rendering.py").read_text(encoding="utf-8"),
     }
     assert not re.search(r"(?m)^\s*(?:from|import)\s+talk_reasoner\.(?:jobs|actions|transports)\b", modules["routing"])
     assert not re.search(r"(?m)^\s*(?:from|import)\s+talk_reasoner\.(?:transports|cli)\b", modules["rendering"])

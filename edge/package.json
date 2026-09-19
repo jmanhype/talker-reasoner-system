@@ -1,0 +1,10 @@
+{
+  "name": "@talk-reasoner/edge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "ports/**/*.ts"
+  ]
+}

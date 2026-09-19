@@ -178,7 +178,7 @@ def test_ledger_is_hash_scoped_private_and_versioned() -> None:
 
 
 def test_reasoner_boundary_is_offline_and_has_no_platform_imports() -> None:
-    root = Path(__file__).parents[1] / "src" / "talk_reasoner"
+    root = Path(__file__).parents[1] / "talk_reasoner"
     forbidden = ("requests", "httpx", "aiohttp", "socket", "redis", "psycopg", "subprocess", "letta", "mem0")
     assert not [(path.name, name) for path in (root / "transports.py", root / "jobs.py") for name in forbidden
                 if re.search(rf"(?m)^\s*(import|from)\s+{name}\b", path.read_text(encoding="utf-8"))]

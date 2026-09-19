@@ -4,7 +4,7 @@ title: "E2e: trace fixture conversations to clean outcomes"
 status: open
 priority: 1
 type: feature
-labels: [capstone, e2e, slice-0, delivered]
+labels: [capstone, e2e, slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed

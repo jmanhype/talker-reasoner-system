@@ -1,19 +1,20 @@
 ---
 id: TRS-ndv6
 title: "Run async reasoner proposals through local transport"
-status: in_progress
+status: closed
 priority: 1
 type: feature
 labels: [async, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T16:31:04Z
-content_hash: "sha256:8ab7caba52050e3236eebae072f73e138bb78c54c06585f3952360ffffab4f34"
-blocks: [TRS-f7sm, TRS-osl5]
+updated_at: 2026-09-19T16:31:14Z
+content_hash: "sha256:e48794ce264d1550b1d2ff38c54697674541693e027bdb08bebeb204f9e859d6"
 was_blocked_by: [TRS-74z8, TRS-9md6]
 assignee: dev-TRS-ndv6
 follows: [TRS-74z8, TRS-9md6, TRS-0daa]
+closed_at: 2026-09-19T16:31:14Z
+close_reason: "Accepted: independently reran compilation, story/full suites (58/58 and 110/110), pvg verify, git diff check, static dependency scan, transition-matrix review, LOC/budget checks, and hashes. Async slow-path behavior and terminal immutability are verified with no network, execution, credentials, or external services."
 ---
 
 ## Description
@@ -238,10 +239,12 @@ status: delivered
 - 2026-09-19T15:56:07Z claimed by dev-TRS-ndv6
 - 2026-09-19T16:29:54Z status: in_progress -> in_progress
 - 2026-09-19T16:29:54Z auto-follows: linked to predecessor TRS-0daa
+- 2026-09-19T16:31:14Z status: in_progress -> closed
+- 2026-09-19T16:31:14Z dep_removed: no_longer_blocks TRS-f7sm
+- 2026-09-19T16:31:14Z dep_removed: no_longer_blocks TRS-osl5
 
 ## Links
 - Parent: [[TRS-pf94]]
-- Blocks: [[TRS-f7sm]], [[TRS-osl5]]
 - Was blocked by: [[TRS-74z8]], [[TRS-9md6]]
 - Follows: [[TRS-74z8]], [[TRS-9md6]], [[TRS-0daa]]
 

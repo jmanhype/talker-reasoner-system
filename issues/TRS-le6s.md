@@ -9,7 +9,8 @@ parent: TRS-d8vq
 created_at: 2026-09-19T18:13:49Z
 created_by: speed
 updated_at: 2026-09-19T18:13:49Z
-content_hash: "sha256:7d681bea19ed254b60be84c3aca877d7c15a18d412a2a23248674240bf4b6a1c"
+content_hash: "sha256:b48415fed32043ed6cc6e281d372f5265f7ef15e78a9374dd5926d38940a2fdb"
+blocked_by: [TRS-stlj]
 ---
 
 ## Description
@@ -110,9 +111,10 @@ status: new
 
 
 ## History
-
+- 2026-09-19T18:13:49Z dep_added: blocked_by TRS-stlj
 
 ## Links
 - Parent: [[TRS-d8vq]]
+- Blocked by: [[TRS-stlj]]
 
 ## Comments

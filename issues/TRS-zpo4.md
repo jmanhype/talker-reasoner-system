@@ -10,6 +10,7 @@ created_by: speed
 updated_at: 2026-09-19T04:59:03Z
 content_hash: "sha256:b729cc1ff643535e4c08066ba4481d0af2853aaf0008b53057687b65f17f57f8"
 assignee: dev-TRS-zpo4
+labels: [delivered]
 ---
 
 ## Description

@@ -9,7 +9,7 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
 updated_at: 2026-09-19T16:56:27Z
-content_hash: "sha256:1f090f1c802f4977f023bc7c2ecb505eaa0c4c0fdaf10d1bf8c45f0c799a04ec"
+content_hash: "sha256:04f43fc847579b17bf0bc3381f352e5c85928eb8d78b24d7a69d561ba160e9f8"
 blocks: [TRS-osl5]
 was_blocked_by: [TRS-74z8, TRS-9md6, TRS-ndv6]
 assignee: dev-TRS-f7sm
@@ -159,6 +159,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-09-19.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
 
 
 ## History

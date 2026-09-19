@@ -4,7 +4,7 @@ title: "Run async reasoner proposals through local transport"
 status: in_progress
 priority: 1
 type: feature
-labels: [async, slice-0]
+labels: [async, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed

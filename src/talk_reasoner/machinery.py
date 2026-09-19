@@ -99,6 +99,16 @@ def _error(detail: str) -> None:
     raise MachineryContractError(detail)
 
 
+def _oracle_row(line: str, path: Path) -> OracleTransition:
+    cells = tuple(cell.strip() for cell in line.strip("|").split("|"))
+    if len(cells) != len(_ORACLE_HEADER):
+        _error(f"malformed row width in {path.name}")
+    if cells[1] == "-" or not cells[1] or not all(cells):
+        _error(f"missing stable id or incomplete transition row in {path.name}")
+    actions = () if cells[6] == "-" else tuple(item.strip() for item in cells[6].split(","))
+    return OracleTransition(*cells[:6], actions)
+
+
 def parse_oracle(path: Path) -> tuple[OracleTransition, ...]:
     """Parse one committed transition table without tolerating malformed rows."""
     if not path.is_file():
@@ -118,17 +128,11 @@ def parse_oracle(path: Path) -> tuple[OracleTransition, ...]:
             if rows:
                 break
             continue
-        cells = tuple(cell.strip() for cell in line.strip("|").split("|"))
-        if len(cells) != len(_ORACLE_HEADER):
-            _error(f"malformed row width in {path.name}")
-        if cells[1] == "-" or not cells[1]:
-            _error(f"missing stable id in {path.name}")
-        if cells[1] in seen:
-            _error(f"duplicate stable id in {path.name}: {cells[1]}")
-        if not all(cells):
-            _error(f"incomplete transition row in {path.name}")
-        seen.add(cells[1])
-        rows.append(OracleTransition(*cells[:6], () if cells[6] == "-" else tuple(item.strip() for item in cells[6].split(","))))
+        row = _oracle_row(line, path)
+        if row.stable_id in seen:
+            _error(f"duplicate stable id in {path.name}: {row.stable_id}")
+        seen.add(row.stable_id)
+        rows.append(row)
     if not rows:
         _error(f"empty transitions table: {path.name}")
     return tuple(rows)

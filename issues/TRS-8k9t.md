@@ -8,8 +8,8 @@ labels: [hard-tdd, walking-skeleton, red-approved, rejected, rejected-x2]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:20:22Z
-content_hash: "sha256:1bc01f399c7cca7b5541b0494d3fc91d99ff834c02c27f65da3853558380d3be"
+updated_at: 2026-09-19T19:20:23Z
+content_hash: "sha256:e551169f1df8eae63a045daf699628fe74915f326678692de773606f97340c86"
 blocks: [TRS-n5pa]
 ---
 
@@ -181,6 +181,18 @@ status: new
 - `machinery check design --impl .` was an initial diagnostic mis-scan over `.venv`; it produced 462 boundary-mapping errors and was not treated as a project result. The story's literal command, `machinery check design`, exited 0 with 0 blocking findings.
 - `machinery check design --impl tests` exited 1 with exactly two expected G4 errors because `tests/` is intentionally outside contract boundaries; its Gt section still verified 8 test files, 7 machines, and 62/62 oracle rows covered by conformance parse.
 - `machinery check design` emitted seven non-blocking Gx carrier warnings for invariants attested through prose/tests rather than machine units: `action-schema-fail-closed`, `hot-state-minimized`, `hot-state-ttl`, `model-boundaries-explicit`, `policy-three-outcomes`, `talker-no-authority`, and `transcriber-no-authority`. Blocking count remained zero; these are covered by the RED property tests and remain GREEN obligations.
+
+
+## nd_contract
+status: rejected
+
+### evidence
+- PM rejection applied via pvg story reject on 2026-09-19.
+
+### proof
+- [ ] Story requires another developer delivery before it can be accepted.
+
+
 ## PM Decision
 TEST-EDIT AUTHORIZED: tests/test_machinery_invariants.py -- repair only the five RED authoring defects recorded in the GREEN dispute: adapt the imported action/confirmation helper signatures, serialize MappingProxyType safely, align unknown-risk expectation with the committed fallback contract, align duplicate-terminal expectation with append-then-verify, and accept either fail-closed outcome for falsified reasoner guards. Do not remove or weaken any invalid-case assertion, oracle id, invariant id, guard clause, or actor test. Each repair commit subject must contain the literal tag [test-edit-authorized].
 

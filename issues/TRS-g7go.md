@@ -4,11 +4,11 @@ title: "E2e: verify the complete M1 architecture gate"
 status: closed
 priority: 1
 type: task
-labels: [e2e, capstone, architecture, delivered]
+labels: [e2e, capstone, architecture, delivered, accepted]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:12:27Z
 created_by: speed
-updated_at: 2026-09-19T20:27:10Z
+updated_at: 2026-09-19T20:27:11Z
 content_hash: "sha256:81de42e2537c6e4693052f2265181f467119c3e6ef2edc774d15012fa3b6781f"
 was_blocked_by: [TRS-m4b1, TRS-h8kc]
 assignee: dev-TRS-g7go

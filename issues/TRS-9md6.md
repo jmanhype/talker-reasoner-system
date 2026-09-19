@@ -1,17 +1,19 @@
 ---
 id: TRS-9md6
 title: "Guard fixed local actions with fail-closed validation"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T05:29:37Z
-content_hash: "sha256:8086ade08843ac77dd32cf685cf1580724bf3a5dfaded12647d2749a35fab22e"
+updated_at: 2026-09-19T14:15:02Z
+content_hash: "sha256:2c6d9476868890ab05685012244022fa9676286e1df272ab9e56f00856cc7fcb"
 blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-0daa]
+assignee: dev-TRS-9md6
+follows: [TRS-0daa]
 ---
 
 ## Description
@@ -168,10 +170,14 @@ status: new
 - 2026-09-19T05:29:38Z dep_added: blocks TRS-f7sm
 - 2026-09-19T05:29:39Z dep_added: blocks TRS-osl5
 - 2026-09-19T13:41:58Z dep_removed: was_blocked_by TRS-0daa
+- 2026-09-19T14:15:02Z status: open -> in_progress
+- 2026-09-19T14:15:02Z auto-follows: linked to predecessor TRS-0daa
+- 2026-09-19T14:15:02Z claimed by dev-TRS-9md6
 
 ## Links
 - Parent: [[TRS-pf94]]
 - Blocks: [[TRS-ndv6]], [[TRS-f7sm]], [[TRS-osl5]]
 - Was blocked by: [[TRS-0daa]]
+- Follows: [[TRS-0daa]]
 
 ## Comments

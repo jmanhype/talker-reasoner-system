@@ -9,12 +9,12 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:36Z
 created_by: speed
 updated_at: 2026-09-19T13:41:59Z
-content_hash: "sha256:2eb1114f3851ca23ec456749a245bcd47b3b4f72bcfc13a9b530285f917f5315"
+content_hash: "sha256:ac37c29c29787d9252fe454410e7bb2347b715bf18d19a610e6647e2acf9bacc"
 assignee: dev-TRS-0daa
 follows: [TRS-zpo4]
 closed_at: 2026-09-19T13:41:58Z
 close_reason: "Accepted: independently reran git diff --check, compilation, full pytest (14/14), fixture-count checks, forbidden dependency/credential scans, pvg verify, and hash inspection. The corpus is exactly 6 per route; ledger integration is unmocked and verifies 36 events; production remains local/offline."
-led_to: [TRS-74z8]
+led_to: [TRS-74z8, TRS-9md6]
 ---
 
 ## Description
@@ -356,6 +356,6 @@ status: delivered
 ## Links
 - Parent: [[TRS-pf94]]
 - Follows: [[TRS-zpo4]]
-- Led to: [[TRS-74z8]]
+- Led to: [[TRS-74z8]], [[TRS-9md6]]
 
 ## Comments

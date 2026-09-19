@@ -8,8 +8,8 @@ labels: [capstone, e2e, slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T16:58:19Z
-content_hash: "sha256:7b2e63a222850c566852e666f6b29458e446280c77455ce2b029d562e1131da7"
+updated_at: 2026-09-19T17:53:16Z
+content_hash: "sha256:7f3fbf04c989b41d66b8ba078519c2421f2c5885ce9dd5161ab7decb14b30dfa"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 assignee: dev-TRS-osl5
@@ -145,7 +145,76 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
 
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-osl5
+git diff --check
+python3 -m compileall -q src tests
+pytest -q tests/e2e/test_slice0_user_journeys.py
+pytest -q
+pvg verify src tests/e2e/test_slice0_user_journeys.py --include-tests --check-e2e --check-mocks --format=text
+```
+
+Results:
+
+- `git diff --check`: exit 0.
+- Compilation: exit 0.
+- E2E suite: 9/9 passed in 1.70 seconds.
+- Full suite: 163/163 passed in 1.70 seconds.
+- `pvg verify`: mock check passed; 1 integration/e2e file scanned with 0 mock usages.
+- Added one file, `tests/e2e/test_slice0_user_journeys.py`, with 159 lines, within the story budget.
+
+## CI/Test Results
+
+```text
+git diff --check: PASS (exit 0)
+compileall: PASS (exit 0)
+tests/e2e/test_slice0_user_journeys.py: 9 passed
+full suite: 163 passed
+pvg verify --include-tests --check-e2e --check-mocks: PASS
+```
+
+## Final metric report
+
+```json
+{
+  "schema_version": "slice0-e2e-report-v1",
+  "fixture_count": 18,
+  "route_counts": {"chitchat": 6, "needs_tools": 6, "unclear": 6},
+  "terminal_counts": {"rendered": 12, "waiting_confirmation": 6},
+  "routing": {"correct": 18, "total": 18, "accuracy": 1.0},
+  "missed_work": {"count": 0, "denominator": 6},
+  "false_wakeups": {"count": 0, "denominator": 6},
+  "event_chain": {"valid": 18, "total": 18},
+  "privacy": {"raw_content_records": 0, "credential_exposures": 0},
+  "runtime": {"network_calls": 0, "credential_reads": 0},
+  "confirmation_journeys": {"accepted": 1, "declined": 1},
+  "stale_or_interrupted_journeys": 5,
+  "validation_failure_journeys": 1,
+  "decision": "pass"
+}
+```
+
+Summary: added the real Slice 0 E2E capstone. Every one of the 18 fixtures runs through `python -m talk_reasoner` as a subprocess with a credential-scrubbed environment. The suite verifies clean stdout, compact JSON stderr, exact route and terminal outcomes, reasoner wakeup behavior, timing fields, valid event-chain evidence, privacy, and forbidden-content exclusion. It then exercises exact confirmation accept/decline, turn supersession, material-intent change, stale TTL, unsafe-presentation downgrade, explicit downgrade, and validation failure through the production local job/renderer path. The CLI intentionally has no interactive input in Slice 0, so its real terminal output is the exact confirmation prompt; affirmative and negative decisions are advanced through the same production LocalScriptedTransport, validator, policy, job machine, renderer, and ledger used behind that CLI boundary. No runtime behavior was changed.
+
+Commit SHA: c485cb7d260acbbe82f13d83bf17031a1470b6ae
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. Chitchat renders immediately, wakes no reasoner, and emits route/response evidence | PASS | All 6 chitchat fixtures run through the real CLI; stdout is the one clean response, `reasoner_ms` is 0, and ledger count is 2. |
+| 2. Unclear asks one useful clarification and invokes no reasoner/tool | PASS | All 6 unclear fixtures produce exactly one clarification, `reasoner_ms` is 0, and ledger count is 2. |
+| 3. Needs-tools runs async work then validation/preflight and renders safely without execution | PASS | All 6 tools fixtures produce one filler plus one exact confirmation through the real CLI, with 8 valid ledger events and no executor. |
+| 4. Confirmation accepts and declines safely with consent evidence | PASS | Exact accept uses `ConfirmAction`, exact decline uses `Cancel`; both use the real policy/job/renderer/ledger path and render safe outcomes. |
+| 5. Cancellation, stale TTL/age, supersession, and intent change suppress late normal results | PASS | Parameterized E2E advances real waiting jobs through turn supersession, material-intent change, and stale TTL; canceled results render empty. |
+| 6. Report has all route, lifecycle, privacy, provenance, latency, and integrity denominators | PASS | Final metric report reports 18 fixtures, 6 per route, 0/6 missed work, 0/6 false wakeups, 18/18 valid chains, and explicit pass. |
+| 7. Ledger verifies with no gaps, invalid hashes, duplicate terminals, or mutations | PASS | Every CLI evidence payload reports a valid chain; accept, decline, stale, downgrade, and failure jobs call `verify_ledger` successfully. |
+| 8. Zero network, credential, raw prompt/audio, hidden prompt, raw model I/O, or unhashed sensitive argument persistence | PASS | Subprocess environment removes credential-like variables; outputs exclude fixture transcripts and credential patterns; source scan proves no network or environment credential surface. |
+| 9. Explicit pass/hold/rollback/kill decision uses denominators and no fabricated metrics | PASS | Final report decision is `pass`, derived from 18/18 routes correct, 18/18 valid chains, 0 privacy failures, and 0 runtime dependency uses. |
 
 ## History
 - 2026-09-19T05:29:38Z dep_added: blocked_by TRS-0daa

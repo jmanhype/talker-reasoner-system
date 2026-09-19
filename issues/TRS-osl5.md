@@ -8,8 +8,8 @@ labels: [capstone, e2e, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T17:59:01Z
-content_hash: "sha256:4642cd554f65de3807fce73bc862a172c27d7a64942e5aa4d5344409c1915f29"
+updated_at: 2026-09-19T17:59:36Z
+content_hash: "sha256:26958592536d5c00e5c32ebe8e21c6d03f496597e11f269ce3127b4ec538fd34"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 follows: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm, TRS-zpo4]
@@ -470,3 +470,25 @@ Commit SHA: c485cb7d260acbbe82f13d83bf17031a1470b6ae
 - Follows: [[TRS-0daa]], [[TRS-74z8]], [[TRS-9md6]], [[TRS-ndv6]], [[TRS-f7sm]], [[TRS-zpo4]]
 
 ## Comments
+
+### 2026-09-19T17:59:36Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- E2E suite independently rerun at 10/10 after extension.
+- Full suite independently rerun at 164/164.
+- pvg verify and git diff check passed.
+- Final story commit: c27251e.
+
+### proof
+- [x] AC #1: Chitchat/unclear/needs-tools user journeys verified through real CLI.
+- [x] AC #2: Exact clarification and no reasoner wakeup verified.
+- [x] AC #3: Async slow path, validation/preflight, and safe rendering verified.
+- [x] AC #4: Confirmation accept/decline paths verified.
+- [x] AC #5: Cancellation, stale TTL/result age, supersession, downgrade, and failure paths verified.
+- [x] AC #6: Full metrics and denominators reported.
+- [x] AC #7: Ledger integrity verified.
+- [x] AC #8: Zero network/credential/raw-content exposure verified.
+- [x] AC #9: Explicit pass decision verified.
+

@@ -1,16 +1,18 @@
 ---
 id: TRS-zpo4
 title: "Run D&F for the whole-system Talker-Reasoner MVP"
-status: in_progress
+status: closed
 priority: 1
 type: task
 parent: TRS-pf94
 created_at: 2026-09-19T04:41:13Z
 created_by: speed
-updated_at: 2026-09-19T04:59:43Z
-content_hash: "sha256:464190df1e34330974a1f4a5dbd233d2d028a4856af42287737ef8f1f39f8bc4"
+updated_at: 2026-09-19T04:59:53Z
+content_hash: "sha256:3b8e6b2d39079472cfaf7eeb9989fbe68cbb2013d3ee1dc0901f106204ddadea"
 assignee: dev-TRS-zpo4
 labels: [delivered]
+closed_at: 2026-09-19T04:59:53Z
+close_reason: "Accepted: independently reran git diff --check, hash and line-count verification, required boundary/deferral scans, and secret-pattern scan. The three D&F documents are self-contained, preserve the four model-boundary facts, define async/policy/privacy/provenance behavior, and provide measurable gates."
 ---
 
 ## Description
@@ -202,6 +204,7 @@ status: delivered
 - 2026-09-19T04:42:15Z status: open -> in_progress
 - 2026-09-19T04:42:15Z claimed by dev-TRS-zpo4
 - 2026-09-19T04:59:03Z status: in_progress -> in_progress
+- 2026-09-19T04:59:53Z status: in_progress -> closed
 
 ## Links
 - Parent: [[TRS-pf94]]

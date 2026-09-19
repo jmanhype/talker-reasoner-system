@@ -1,17 +1,18 @@
 ---
 id: TRS-8k9t
 title: "M0 walking skeleton: enforce all machinery oracles offline"
-status: in_progress
+status: closed
 priority: 1
 type: feature
 labels: [hard-tdd, walking-skeleton, red-approved, rejected-x2, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:25:20Z
-content_hash: "sha256:9a49c78d03c0887c08a86e14c2ae48b2269ccba8d03869450a1078db486f9353"
-blocks: [TRS-n5pa]
+updated_at: 2026-09-19T19:25:21Z
+content_hash: "sha256:9761240b8a49b3af3c6acf1819fef10613fe86c025b993c7cd3b2a4e988a91ab"
 assignee: dev-TRS-8k9t
+closed_at: 2026-09-19T19:25:21Z
+close_reason: "Accepted: machinery oracle/invariant gate is green with 326/326 tests and authorized RED repairs."
 ---
 
 ## Description
@@ -629,10 +630,11 @@ status: delivered
 - 2026-09-19T19:20:41Z status: open -> in_progress
 - 2026-09-19T19:20:41Z claimed by dev-TRS-8k9t
 - 2026-09-19T19:24:08Z status: in_progress -> in_progress
+- 2026-09-19T19:25:21Z status: in_progress -> closed
+- 2026-09-19T19:25:21Z dep_removed: no_longer_blocks TRS-n5pa
 
 ## Links
 - Parent: [[TRS-h031]]
-- Blocks: [[TRS-n5pa]]
 
 ## Comments
 

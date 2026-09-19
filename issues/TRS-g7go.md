@@ -9,7 +9,7 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:12:27Z
 created_by: speed
 updated_at: 2026-09-19T20:26:55Z
-content_hash: "sha256:cb0b2273a34b11903f837be291f007845f1589486b2433664b13f243e33b8423"
+content_hash: "sha256:d14a5857dd93943ae543e0017e331176a88b55ede7c00f085c7d3b8267542a76"
 was_blocked_by: [TRS-m4b1, TRS-h8kc]
 assignee: dev-TRS-g7go
 follows: [TRS-m4b1, TRS-h8kc]
@@ -365,3 +365,15 @@ status: in_progress
 - Follows: [[TRS-m4b1]], [[TRS-h8kc]]
 
 ## Comments
+
+### 2026-09-19T20:26:55Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Final M1 capstone SHA: ab27e09208a987a00fd16cb782e693a1054a7a27.
+- Target gate: 1 passed. Full suite: 330 passed.
+- Report decision: pass; all conditions true.
+
+### proof
+- [x] AC #1 through AC #8 verified in Implementation Evidence.

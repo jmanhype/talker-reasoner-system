@@ -187,7 +187,7 @@ def test_tool_actor_contract_is_offline_hashed_and_never_remote() -> None:
     assert result.next_state == "Succeeded"
     assert actions(result.actions) == ("recordFilteredResultHash",)
     assert "invokeAllowlistedTool" not in actions(result.actions)
-    source = (ROOT / "src" / "talk_reasoner").glob("*.py")
+    source = (ROOT / "talk_reasoner").glob("*.py")
     joined = "\n".join(path.read_text(encoding="utf-8") for path in source)
     for forbidden in ("requests", "httpx", "aiohttp", "socket", "subprocess"):
         assert forbidden not in joined

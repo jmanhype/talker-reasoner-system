@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-19",
+  "edges": {
+    "trs.reasoning -\u003e trs.routing": [
+      "talk_reasoner/jobs.py"
+    ],
+    "trs.renderer -\u003e trs.action-governor": [
+      "talk_reasoner/cli.py",
+      "talk_reasoner/rendering.py"
+    ],
+    "trs.renderer -\u003e trs.reasoning": [
+      "talk_reasoner/cli.py",
+      "talk_reasoner/rendering.py"
+    ],
+    "trs.renderer -\u003e trs.routing": [
+      "talk_reasoner/cli.py"
+    ]
+  }
+}

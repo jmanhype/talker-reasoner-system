@@ -132,7 +132,7 @@ All inter-process schemas are JSON or MCP typed objects. Errors use stable rejec
 
 ## 10. Event-contract table
 
-Enumeration sources: `design/domain.modelith.yaml` entities/actions/scenarios, `docs/ARCHITECTURE.md` Slice 0 flows, and `src/talk_reasoner` contracts. No runtime broker exists yet; `delivery` names the target mechanism and the first implementation remains in-process/append-only unless a queue is explicitly added.
+Enumeration sources: `design/domain.modelith.yaml` entities/actions/scenarios, `docs/ARCHITECTURE.md` Slice 0 flows, and `talk_reasoner` contracts. No runtime broker exists yet; `delivery` names the target mechanism and the first implementation remains in-process/append-only unless a queue is explicitly added.
 
 | event | producer | consumer | payload | delivery | ordering | dedupe key |
 |---|---|---|---|---|---|---|
@@ -213,75 +213,77 @@ boundaries:
   - id: trs.voice-edge
     kind: component
     element: voiceEdge
-    code: ["src/edge/**", "src/voice_edge/**"]
-    exposes: ["src/edge/ports/**"]
+    code: ["edge/**", "voice_edge/**"]
+    exposes: ["edge/ports/**"]
     provides: ["audio-session", "turn-epoch"]
     consumes: ["response-render"]
   - id: trs.routing
     kind: component
     element: routing
-    code: ["src/talk_reasoner/routing.py", "src/routing/**"]
+    code: ["talk_reasoner/routing.py", "routing/**"]
     modules: ["talk_reasoner.routing"]
-    exposes: ["src/talk_reasoner/routing.py", "src/routing/*.py"]
+    exposes: ["talk_reasoner/routing.py", "routing/*.py"]
     provides: ["route-decision"]
   - id: trs.reasoning
     kind: component
     element: reasoning
-    code: ["src/talk_reasoner/jobs.py", "src/talk_reasoner/transports.py", "src/reasoning/**"]
+    code: ["talk_reasoner/jobs.py", "talk_reasoner/transports.py", "reasoning/**"]
     modules: ["talk_reasoner.jobs", "talk_reasoner.transports"]
-    exposes: ["src/talk_reasoner/jobs.py", "src/talk_reasoner/transports.py", "src/reasoning/*.py"]
+    exposes: ["talk_reasoner/jobs.py", "talk_reasoner/transports.py", "reasoning/*.py"]
     provides: ["reasoner-job", "reasoner-proposal"]
     consumes: ["action-validation"]
   - id: trs.action-governor
     kind: component
     element: actionGovernor
-    code: ["src/talk_reasoner/actions.py", "src/governor/**"]
+    code: ["talk_reasoner/actions.py", "governor/**"]
     modules: ["talk_reasoner.actions"]
-    exposes: ["src/talk_reasoner/actions.py", "src/governor/*.py"]
+    modules: ["talk_reasoner.actions"]
+    exposes: ["talk_reasoner/actions.py", "governor/*.py"]
     provides: ["action-validation", "action-policy"]
     consumes: ["tool-execution"]
   - id: trs.tool-catalog
     kind: component
     element: toolCatalog
-    code: ["config/actions/**", "src/catalog/**"]
-    exposes: ["src/catalog/reader.py", "src/catalog/admin.py"]
+    code: ["config/actions/**", "catalog/**"]
+    exposes: ["catalog/reader.py", "catalog/admin.py"]
     provides: ["tool-catalog"]
   - id: trs.tool-gateway
     kind: component
     element: toolGateway
-    code: ["src/tool_gateway/**"]
-    exposes: ["src/tool_gateway/execute.py", "src/tool_gateway/filter.py"]
+    code: ["tool_gateway/**"]
+    exposes: ["tool_gateway/execute.py", "tool_gateway/filter.py"]
     provides: ["tool-execution", "filtered-tool-result"]
   - id: trs.renderer
     kind: component
     element: renderer
-    code: ["src/renderer/**", "src/talk_reasoner/rendering.py", "src/talk_reasoner/cli.py", "src/talk_reasoner/__main__.py"]
-    exposes: ["src/renderer/present.py"]
+    code: ["renderer/**", "talk_reasoner/rendering.py", "talk_reasoner/cli.py", "talk_reasoner/__main__.py"]
+    modules: ["talk_reasoner.rendering", "talk_reasoner.cli", "talk_reasoner.__main__"]
+    exposes: ["renderer/present.py"]
     provides: ["response-render"]
   - id: trs.event-ledger
     kind: component
     element: eventLedger
-    code: ["src/talk_reasoner/contracts.py", "src/ledger/**"]
+    code: ["talk_reasoner/contracts.py", "ledger/**"]
     modules: ["talk_reasoner.contracts"]
-    exposes: ["src/talk_reasoner/contracts.py", "src/ledger/*.py"]
+    exposes: ["talk_reasoner/contracts.py", "ledger/*.py"]
     provides: ["audit-ledger", "event-integrity"]
   - id: trs.hot-state
     kind: component
     element: hotState
-    code: ["src/state/hot/**"]
-    exposes: ["src/state/hot/snapshot.py"]
+    code: ["state/hot/**"]
+    exposes: ["state/hot/snapshot.py"]
     provides: ["hot-session-state"]
   - id: trs.memory-governor
     kind: component
     element: memoryGovernor
-    code: ["src/memory/**"]
-    exposes: ["src/memory/governor.py"]
+    code: ["memory/**"]
+    exposes: ["memory/governor.py"]
     provides: ["governed-memory"]
   - id: trs.observability
     kind: component
     element: observability
-    code: ["src/observability/**"]
-    exposes: ["src/observability/metrics.py"]
+    code: ["observability/**"]
+    exposes: ["observability/metrics.py"]
     provides: ["metrics-and-replay"]
 externals:
   - id: external.personaplex
@@ -326,12 +328,11 @@ externals:
 ignore:
   - ".venv/**"
   - ".claude/**"
-  - "tests/**"
   - "docs/**"
   - "design/**"
   - "scripts/**"
-  - "src/talk_reasoner/__init__.py"
-  - "src/talk_reasoner/machinery.py"
+  - "talk_reasoner/__init__.py"
+  - "talk_reasoner/machinery.py"
 dependency_rules:
   allow:
     - trs.voice-edge -> trs.routing
@@ -358,6 +359,11 @@ dependency_rules:
     - trs.hot-state -> external.redis
     - trs.memory-governor -> trs.event-ledger
     - trs.memory-governor -> external.memory
+  baseline:
+    - "trs.reasoning -> trs.routing"   # 2026-09-19 seen in talk_reasoner/jobs.py
+    - "trs.renderer -> trs.action-governor"   # 2026-09-19 seen in talk_reasoner/cli.py and 1 more file
+    - "trs.renderer -> trs.reasoning"   # 2026-09-19 seen in talk_reasoner/cli.py and 1 more file
+    - "trs.renderer -> trs.routing"   # 2026-09-19 seen in talk_reasoner/cli.py
   deny:
     - "trs.* -> external.magg"
     - "trs.* -> external.contextforge"

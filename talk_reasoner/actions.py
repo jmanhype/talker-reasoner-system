@@ -13,7 +13,7 @@ from typing import Any, Literal, NamedTuple
 
 from talk_reasoner.contracts import EVENT_SCHEMA_VERSION, LedgerEvent, scoped_hash
 
-CATALOG_PATH = Path(__file__).parents[2] / "config" / "actions" / "slice0-v1.json"
+CATALOG_PATH = Path(__file__).parents[1] / "config" / "actions" / "slice0-v1.json"
 CATALOG_SCHEMA_VERSION = "slice0-action-catalog-v1"; ACTION_SCHEMA_VERSION = "slice0-action-v1"; PROPOSAL_SCHEMA_VERSION = "slice0-proposal-v1"
 POLICY_SCHEMA_VERSION = "slice0-action-policy-v1"; STATE_SCHEMA_VERSION = "state-v1"; PROVENANCE_SCHEMA_VERSION = "slice0-provenance-v1"
 CONSENT_VERSION = "consent-v1"; CONFIRMATION_VERSION = "confirmation-v1"; FIXED_ACTIONS = frozenset(("search", "read_state", "write_state"))

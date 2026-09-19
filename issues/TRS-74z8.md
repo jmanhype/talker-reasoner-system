@@ -1,17 +1,19 @@
 ---
 id: TRS-74z8
 title: "Route typed fixtures through calibrated three-route policy"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T05:29:37Z
-content_hash: "sha256:87c375612fd329ac03a8ac02b83d19c1593186ce9302762ed2668c7d7133e786"
+updated_at: 2026-09-19T13:44:31Z
+content_hash: "sha256:a15391d55ab9480fcb9d4c8ae19eba982f2deae3e70911c19860a8adbf8e33a4"
 blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-0daa]
+assignee: dev-TRS-74z8
+follows: [TRS-0daa]
 ---
 
 ## Description
@@ -165,10 +167,14 @@ status: new
 - 2026-09-19T05:29:38Z dep_added: blocks TRS-f7sm
 - 2026-09-19T05:29:38Z dep_added: blocks TRS-osl5
 - 2026-09-19T13:41:58Z dep_removed: was_blocked_by TRS-0daa
+- 2026-09-19T13:44:31Z status: open -> in_progress
+- 2026-09-19T13:44:31Z auto-follows: linked to predecessor TRS-0daa
+- 2026-09-19T13:44:31Z claimed by dev-TRS-74z8
 
 ## Links
 - Parent: [[TRS-pf94]]
 - Blocks: [[TRS-ndv6]], [[TRS-f7sm]], [[TRS-osl5]]
 - Was blocked by: [[TRS-0daa]]
+- Follows: [[TRS-0daa]]
 
 ## Comments

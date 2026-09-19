@@ -9,7 +9,7 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T19:20:41Z
-content_hash: "sha256:e04105e20094abaecc94d73ab69f609a2408d57064791957911bb9a142408952"
+content_hash: "sha256:e69bfb744c134e506513c51e4c09ad02552bb952957a7ba445675661aa25dde3"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -182,7 +182,15 @@ status: new
 - `machinery check design --impl .` was an initial diagnostic mis-scan over `.venv`; it produced 462 boundary-mapping errors and was not treated as a project result. The story's literal command, `machinery check design`, exited 0 with 0 blocking findings.
 - `machinery check design --impl tests` exited 1 with exactly two expected G4 errors because `tests/` is intentionally outside contract boundaries; its Gt section still verified 8 test files, 7 machines, and 62/62 oracle rows covered by conformance parse.
 - `machinery check design` emitted seven non-blocking Gx carrier warnings for invariants attested through prose/tests rather than machine units: `action-schema-fail-closed`, `hot-state-minimized`, `hot-state-ttl`, `model-boundaries-explicit`, `policy-three-outcomes`, `talker-no-authority`, and `transcriber-no-authority`. Blocking count remained zero; these are covered by the RED property tests and remain GREEN obligations.
+## nd_contract
+status: in_progress
 
+### evidence
+- Authorized GREEN rework claimed after TEST-EDIT AUTHORIZATION.
+- Production commit: 7a238e50d95cb97675f9db199efbec2f857e55d3.
+
+### proof
+- [ ] Apply only the five authorized RED repairs and make the unchanged semantic suites pass.
 
 ## nd_contract
 status: rejected

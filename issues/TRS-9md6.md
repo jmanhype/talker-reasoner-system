@@ -4,7 +4,7 @@ title: "Guard fixed local actions with fail-closed validation"
 status: closed
 priority: 1
 type: feature
-labels: [slice-0, delivered, accepted]
+labels: [slice-0, accepted]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed

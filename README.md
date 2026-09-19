@@ -13,6 +13,7 @@ the first vertical slice.
 ## Source of record
 
 - Operator synthesis: `docs/sources/whole-system-2026-09-19.md`
+- Canonical C4 and machinery architecture: `design/ARCHITECTURE.md`
 - Original research session: Codex thread
   `01a0b607-e9df-7d90-8a3e-3193b5d35b32`
 - Public VAOS precursor gist:

@@ -1,0 +1,74 @@
+{
+  "id": "toolExecution",
+  "initial": "Proposed",
+  "version": "1.0.0",
+  "_oracle_tag": "TEXE",
+  "_comment": "ToolExecution placement: one executor task per executionId. Persistence: result hash and lifecycle evidence only. Concurrency: idempotencyKey plus actionHash single dispatch.",
+  "_delays": {
+    "EXECUTION_TIMEOUT": "10000 ms - first conservative local/MCP tool execution bound; tighten per catalog definition after measurement"
+  },
+  "context": {
+    "executionId": null,
+    "status": "Proposed",
+    "resultHash": null,
+    "latencyMs": null,
+    "costClass": "free",
+    "idempotencyKey": null,
+    "actionHash": null,
+    "catalogVersion": null
+  },
+  "states": {
+    "Proposed": {
+      "on": {
+        "authorize": [
+          { "target": "Authorized", "guard": "actionAllowedAndConfirmationsSatisfied", "actions": "bindCatalogAndIdempotency" },
+          { "target": "Rejected", "actions": "recordPolicyRejection" }
+        ],
+        "fail": { "target": "Failed", "actions": "recordExecutorFailure" }
+      },
+      "_ignores": {
+        "dispatch": "dispatch without authorization is rejected by policy",
+        "complete": "no executor result exists",
+        "timeout": "no dispatch is active"
+      }
+    },
+    "Authorized": {
+      "on": {
+        "dispatch": { "target": "Dispatched", "guard": "definitionIsAllowlistedAndActive" },
+        "fail": { "target": "Failed", "actions": "recordExecutorFailure" }
+      },
+      "_ignores": {
+        "authorize": "authorization is already bound to one actionHash",
+        "complete": "dispatch has not started",
+        "timeout": "no executor call is active"
+      }
+    },
+    "Dispatched": {
+      "invoke": {
+        "src": "invokeAllowlistedTool",
+        "input": {
+          "executionId": "context.executionId",
+          "actionHash": "context.actionHash",
+          "idempotencyKey": "context.idempotencyKey",
+          "catalogVersion": "context.catalogVersion"
+        },
+        "onDone": [
+          { "target": "Succeeded", "guard": "toolOutputPassedFiltering", "actions": "recordFilteredResultHash" },
+          { "target": "Failed", "actions": "recordUnsafeOutput" }
+        ],
+        "onError": { "target": "Failed", "actions": "recordExecutorFailure" }
+      },
+      "after": {
+        "EXECUTION_TIMEOUT": { "target": "TimedOut", "actions": "recordExecutionTimeout" }
+      },
+      "on": {
+        "fail": { "target": "Failed", "actions": "recordExecutorFailure" },
+        "timeout": { "target": "TimedOut", "actions": "recordExecutionTimeout" }
+      }
+    },
+    "Succeeded": { "type": "final" },
+    "Failed": { "type": "final" },
+    "TimedOut": { "type": "final" },
+    "Rejected": { "type": "final" }
+  }
+}

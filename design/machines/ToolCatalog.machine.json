@@ -1,0 +1,47 @@
+{
+  "id": "toolCatalog",
+  "initial": "Draft",
+  "version": "1.0.0",
+  "_oracle_tag": "TCAT",
+  "_comment": "ToolCatalog placement: immutable version lookup, not a runtime domain machine. This lifecycle tracks one candidate catalog version; serialization is atomic admin activation.",
+  "context": {
+    "catalogVersion": null,
+    "catalogHash": null,
+    "status": "Draft",
+    "policyVersion": null,
+    "definitions": []
+  },
+  "states": {
+    "Draft": {
+      "on": {
+        "define": { "target": "Draft", "actions": "upsertDraftDefinition" },
+        "review": { "target": "Reviewed", "guard": "schemasProvenanceAndPolicyComplete" }
+      },
+      "_ignores": {
+        "activate": "an unreviewed catalog cannot activate",
+        "retire": "a draft can be discarded without entering active retirement"
+      }
+    },
+    "Reviewed": {
+      "on": {
+        "activate": { "target": "Active", "guard": "catalogHashIsImmutable" }
+      },
+      "_ignores": {
+        "define": "definition changes require a new draft version",
+        "review": "this version is already reviewed; a new review requires a new hash",
+        "retire": "an unactivated reviewed version is not serving runtime traffic"
+      }
+    },
+    "Active": {
+      "on": {
+        "retire": { "target": "Retired", "actions": "recordCatalogRetirement" }
+      },
+      "_ignores": {
+        "define": "the runtime cannot mutate an active catalog",
+        "review": "the active version is already reviewed; a changed hash requires a new draft",
+        "activate": "this exact version is already active"
+      }
+    },
+    "Retired": { "type": "final" }
+  }
+}

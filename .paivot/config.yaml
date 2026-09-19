@@ -37,7 +37,7 @@ notes:
   primary:
     adapter: vlt
     config:
-      vault: Claude
+      vault: .vault
   # mirrors: (uncomment to enable visibility-only fan-out)
   #   - adapter: confluence
   #     config:

@@ -1,0 +1,71 @@
+{
+  "id": "memoryRecord",
+  "initial": "Candidate",
+  "version": "1.0.0",
+  "_comment": "MemoryRecord placement: later governed memory lifecycle. Persistence: deferred memory platform plus EventLedger provenance. Concurrency: memoryId plus version compare-and-set.",
+  "context": {
+    "memoryId": null,
+    "contentHash": null,
+    "summary": null,
+    "provenance": null,
+    "status": "Candidate",
+    "consentVersion": null,
+    "version": 0
+  },
+  "states": {
+    "Candidate": {
+      "on": {
+        "approve": [
+          { "target": "Approved", "guard": "provenanceConsentAndReviewComplete", "actions": "recordApprovalEvidence" },
+          { "target": "Rejected", "actions": "recordMemoryRejection" }
+        ],
+        "delete": { "target": "Deleted", "actions": "deleteFromPrimaryAndBackups" }
+      },
+      "_ignores": {
+        "propose": "the machine starts at Candidate; duplicate proposal is idempotent by memoryId",
+        "activate": "candidate memory is not recallable",
+        "recall": "candidate memory is not recallable",
+        "supersede": "candidate memory has no active predecessor"
+      }
+    },
+    "Approved": {
+      "on": {
+        "activate": { "target": "Active", "guard": "memoryPlatformDeletionTestPassed", "actions": "recordActivation" },
+        "delete": { "target": "Deleted", "actions": "deleteFromPrimaryAndBackups" }
+      },
+      "_ignores": {
+        "propose": "the candidate already exists",
+        "approve": "the record is already approved; reapproval requires a new version",
+        "recall": "approved memory is not active until deletion and provenance checks pass",
+        "supersede": "only active memory can be superseded"
+      }
+    },
+    "Active": {
+      "on": {
+        "recall": { "target": "Active", "actions": "recordBoundedRecallWithProvenance" },
+        "supersede": { "target": "Superseded", "actions": "recordSuccessorAndProvenance" },
+        "delete": { "target": "Deleted", "actions": "deleteFromPrimaryAndBackups" }
+      },
+      "_ignores": {
+        "propose": "a new candidate requires a new memoryId",
+        "approve": "the active record is already approved",
+        "activate": "the record is already active"
+      }
+    },
+    "Superseded": {
+      "on": {
+        "delete": { "target": "Deleted", "actions": "deleteFromPrimaryAndBackups" }
+      },
+      "_ignores": {
+        "propose": "a successor candidate owns the new proposal",
+        "approve": "the record is historical and cannot be reactivated",
+        "activate": "superseded memory is not recallable",
+        "recall": "only the successor may be recalled",
+        "supersede": "the record is already superseded"
+      }
+    },
+    "Rejected": { "type": "final" },
+    "Deleted": { "type": "final" }
+  }
+}
+

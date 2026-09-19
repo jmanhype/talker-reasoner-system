@@ -1,0 +1,45 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["System Context View: Talker Reasoner System"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    1["<div style='font-weight: bold'>Operator</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>The single authorized human<br />using and administering the<br />prototype.</div>"]
+    style 1 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    14["<div style='font-weight: bold'>PersonaPlex</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Real-time full-duplex<br />speech-to-speech talker.</div>"]
+    style 14 fill:#8e8e93,stroke:#636366,color:#ffffff
+    15["<div style='font-weight: bold'>Voxtral Realtime</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Streaming speech<br />transcription service.</div>"]
+    style 15 fill:#8e8e93,stroke:#636366,color:#ffffff
+    16["<div style='font-weight: bold'>Jev</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Calibrated ultra-fast routing<br />and reranking service.</div>"]
+    style 16 fill:#8e8e93,stroke:#636366,color:#ffffff
+    17["<div style='font-weight: bold'>Direct Reasoner</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>One direct tool-calling model<br />or local scripted transport<br />that proposes but never<br />executes.</div>"]
+    style 17 fill:#8e8e93,stroke:#636366,color:#ffffff
+    18["<div style='font-weight: bold'>MAGG</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Meta-MCP aggregator with<br />separate admin and runtime<br />surfaces.</div>"]
+    style 18 fill:#8e8e93,stroke:#636366,color:#ffffff
+    2["<div style='font-weight: bold'>Talker Reasoner System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Routes voice turns, governs<br />model proposals, renders safe<br />responses, and stages state,<br />audit, and tool execution.</div>"]
+    style 2 fill:#2e6295,stroke:#204468,color:#ffffff
+    22["<div style='font-weight: bold'>Local MCP Tool</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>One allowlisted local<br />read-only MCP capability.</div>"]
+    style 22 fill:#8e8e93,stroke:#636366,color:#ffffff
+    23["<div style='font-weight: bold'>PostgreSQL</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Durable append-only events<br />and catalog records.</div>"]
+    style 23 fill:#8e8e93,stroke:#636366,color:#ffffff
+    24["<div style='font-weight: bold'>Redis</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Hot-state backend.</div>"]
+    style 24 fill:#8e8e93,stroke:#636366,color:#ffffff
+    25["<div style='font-weight: bold'>Memory Platform</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Deferred Mem0, Cognee, Zep,<br />or Letta memory backend.</div>"]
+    style 25 fill:#8e8e93,stroke:#636366,color:#ffffff
+    26["<div style='font-weight: bold'>Clean TTS</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Separate clean speech<br />renderer for slow-path<br />responses.</div>"]
+    style 26 fill:#8e8e93,stroke:#636366,color:#ffffff
+
+    1-. "<div>Speaks or types</div><div style='font-size: 70%'>[WSS/HTTPS]</div>" .->2
+    1-. "<div>Administers servers and kits<br />through admin plane only</div><div style='font-size: 70%'>[MAGG admin]</div>" .->18
+    2-. "<div>Streams full-duplex audio</div><div style='font-size: 70%'>[WSS]</div>" .->14
+    2-. "<div>Streams transcription audio</div><div style='font-size: 70%'>[WSS/HTTP]</div>" .->15
+    2-. "<div>Renders clean slow answer</div><div style='font-size: 70%'>[HTTP]</div>" .->26
+    2-. "<div>Requests calibrated labels</div><div style='font-size: 70%'>[HTTPS]</div>" .->16
+    2-. "<div>Requests one typed proposal</div><div style='font-size: 70%'>[HTTPS/local]</div>" .->17
+    2-. "<div>Lists, inspects,<br />health-checks, or proxies one<br />allowlisted runtime tool</div><div style='font-size: 70%'>[MCP/HTTP]</div>" .->18
+    2-. "<div>Invokes the first local<br />read-only allowlisted tool</div><div style='font-size: 70%'>[MCP]</div>" .->22
+    2-. "<div>Stores governed memory</div><div style='font-size: 70%'>[HTTPS]</div>" .->25
+    2-. "<div>Stores append-only events</div><div style='font-size: 70%'>[SQL]</div>" .->23
+    2-. "<div>Stores TTL-bound snapshots</div><div style='font-size: 70%'>[Redis protocol]</div>" .->24
+
+  end

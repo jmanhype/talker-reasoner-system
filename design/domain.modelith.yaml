@@ -1,0 +1,841 @@
+kind: DomainModel
+version: v1
+title: Talker Reasoner System Domain
+description: The staged fast/slow voice-agent domain covering local fixture routing, async reasoner proposals, validated actions, policy confirmation, minimized audit, response rendering, and later governed tool and memory execution.
+glossary:
+  Operator: The single authorized human who owns the prototype, consents to processing, confirms consequential actions, and administers the capability surface.
+  FastPath: The low-latency PersonaPlex conversation loop that may respond without waking the reasoner.
+  SlowPath: The asynchronous reasoner, validation, policy, confirmation, and audited execution path.
+  AdminPlane: The human or controller-only surface that can change MCP servers, kits, tool catalogs, thresholds, and credentials.
+  RuntimePlane: The constrained surface available to a live voice turn. It can inspect and invoke allowlisted capabilities but cannot mutate the capability surface.
+  ProcessingOnly: A value that may exist during a bounded turn for processing and must be released rather than persisted.
+enums:
+  SessionStatus:
+    description: Operational state of one single-operator voice session.
+    values:
+      - name: Active
+        definition: The session can process turns.
+      - name: Degraded
+        definition: The session remains open but a live component or policy check is unavailable.
+      - name: Closed
+        definition: The session has ended and processing-only values have been released.
+  TurnStatus:
+    description: Lifecycle state of one user turn.
+    values:
+      - name: Receiving
+        definition: Audio or typed input is being collected.
+      - name: Routed
+        definition: A valid routing decision has selected a path.
+      - name: SlowPath
+        definition: A reasoner job is active for this turn.
+      - name: AwaitingConfirmation
+        definition: The turn is waiting for exact operator confirmation.
+      - name: Responding
+        definition: A filtered response is being rendered.
+      - name: Terminal
+        definition: The turn is complete, canceled, blocked, or failed.
+  RouteLabel:
+    description: The deliberately small first routing label set.
+    values:
+      - name: chitchat
+        definition: The fast talker may respond alone.
+      - name: needsTools
+        definition: The slow path must produce a validated proposal.
+      - name: unclear
+        definition: The system must clarify or fail closed.
+  RiskLevel:
+    description: Router and action risk classification.
+    values:
+      - name: low
+      - name: medium
+      - name: high
+      - name: unevaluable
+  JobStatus:
+    description: Lifecycle state of an asynchronous reasoner job.
+    values:
+      - name: Pending
+      - name: Running
+      - name: WaitingConfirmation
+      - name: Completed
+      - name: Canceled
+      - name: Downgraded
+      - name: Failed
+  TerminalReason:
+    description: Explicit terminal outcome for a slow-path job.
+    values:
+      - name: Completed
+      - name: proposalInvalid
+      - name: validationFailed
+      - name: policyFailed
+      - name: canceledByUser
+      - name: turnSuperseded
+      - name: staleTtlExpired
+      - name: resultAgeExpired
+      - name: materialIntentChanged
+      - name: unsafePresentation
+      - name: Downgraded
+  PolicyOutcome:
+    description: The complete policy preflight result set.
+    values:
+      - name: allowedWithoutConfirmation
+      - name: confirmationRequired
+      - name: rejected
+  CatalogStatus:
+    description: Review and activation state of a tool catalog version.
+    values:
+      - name: Draft
+      - name: Reviewed
+      - name: Active
+      - name: Retired
+  ExecutionStatus:
+    description: Lifecycle state of a governed tool execution.
+    values:
+      - name: Proposed
+      - name: Authorized
+      - name: Dispatched
+      - name: Succeeded
+      - name: Failed
+      - name: TimedOut
+      - name: Rejected
+  MemoryStatus:
+    description: Lifecycle state of a governed long-term memory record.
+    values:
+      - name: Candidate
+      - name: Approved
+      - name: Active
+      - name: Superseded
+      - name: Rejected
+      - name: Deleted
+  DataBoundary:
+    description: Where processing is permitted for a turn or data record.
+    values:
+      - name: localOnly
+      - name: consentedCloud
+      - name: prohibited
+entities:
+  VoiceSession:
+    definition: A single-operator audio and text conversation. It owns turn sequencing and the active processing boundary. It is not a multi-user tenant and does not own tools or credentials.
+    attributes:
+      - name: sessionId
+        type: string
+      - name: status
+        type: SessionStatus
+      - name: dataBoundary
+        type: DataBoundary
+      - name: startedAt
+        type: timestamp
+      - name: endedAt
+        type: timestamp
+    relationships:
+      - entity: ConversationTurn
+        cardinality: 1:n
+        role: ordered turns
+        ownership: owned
+    actions:
+      - name: start
+        actor: Operator
+        preserves: [session-processing-boundary]
+        description: Open a local or explicitly consented processing session.
+      - name: degrade
+        actor: RuntimePlane
+        preserves: [route-fail-closed, raw-input-ephemeral]
+        description: Mark a live dependency unavailable without bypassing policy.
+      - name: close
+        actor: RuntimePlane
+        preserves: [raw-input-ephemeral, session-processing-boundary]
+        description: End the session and release processing-only values.
+    invariants:
+      - id: session-processing-boundary
+        statement: A `VoiceSession` must record whether processing is `localOnly` or `consentedCloud`, and cloud processing requires explicit consent.
+      - id: raw-input-ephemeral
+        statement: Raw audio and raw transcript values are `ProcessingOnly` and must be released when their `ConversationTurn` or `VoiceSession` ends.
+  ConversationTurn:
+    definition: One operator utterance and its routing outcome. It owns the turn epoch and ephemeral transcript used by the fast and slow paths. It never grants action authority.
+    attributes:
+      - name: turnId
+        type: string
+      - name: turnEpoch
+        type: integer
+      - name: status
+        type: TurnStatus
+      - name: ephemeralTranscript
+        type: string
+      - name: inputHash
+        type: string
+      - name: intentHash
+        type: string
+    relationships:
+      - entity: VoiceSession
+        cardinality: n:1
+        role: owning session
+      - entity: RoutingDecision
+        cardinality: 1:1
+        role: selected route
+        ownership: owned
+      - entity: ReasonerJob
+        cardinality: 1:n
+        role: slow-path jobs
+        ownership: owned
+      - entity: Response
+        cardinality: 1:1
+        role: filtered response
+        ownership: owned
+    actions:
+      - name: transcribe
+        actor: RuntimePlane
+        preserves: [raw-input-ephemeral, transcriber-no-authority]
+        description: Produce an ephemeral transcript and scoped input hash.
+      - name: route
+        actor: RuntimePlane
+        preserves: [route-fail-closed, router-no-authority]
+        description: Attach exactly one valid routing decision.
+      - name: advanceEpoch
+        actor: RuntimePlane
+        preserves: [job-staleness-bounded]
+        description: Supersede earlier slow work when operator intent materially advances.
+      - name: cancel
+        actor: Operator
+        preserves: [job-staleness-bounded, canceled-work-silent]
+        description: Cancel the turn and prevent normal slow-path rendering.
+      - name: awaitConfirmation
+        actor: RuntimePlane
+        preserves: [policy-before-execution, confirmation-exact-and-expiring]
+        description: Pause the turn while exact operator confirmation is required.
+      - name: finish
+        actor: RuntimePlane
+        preserves: [raw-input-ephemeral, response-filtered]
+        description: Terminalize the turn and release processing-only values.
+    invariants:
+      - id: route-fail-closed
+        statement: Every `ConversationTurn` with missing, invalid, or unevaluable routing input must select `unclear` or a guarded terminal path, never `needsTools`.
+      - id: transcriber-no-authority
+        statement: A transcription result must never validate actions, grant consent, or execute tools.
+      - id: job-staleness-bounded
+        statement: A `ReasonerJob` must become canceled or downgraded when its `ConversationTurn` epoch, stale TTL, result age, or material intent no longer authorizes rendering.
+      - id: canceled-work-silent
+        statement: A canceled slow-path result must not render as a normal answer.
+  RoutingDecision:
+    definition: The calibrated route classification for one turn. It records scores, selected label, risk, and policy versions. It is advisory and has no execution authority.
+    attributes:
+      - name: labels
+        type: string
+      - name: selectedLabel
+        type: RouteLabel
+      - name: confidence
+        type: number
+      - name: risk
+        type: RiskLevel
+      - name: thresholdsVersion
+        type: string
+      - name: calibrationVersion
+        type: string
+    relationships:
+      - entity: ConversationTurn
+        cardinality: 1:1
+        role: classified turn
+    actions:
+      - name: decide
+        actor: RuntimePlane
+        preserves: [route-fail-closed, router-no-authority, model-boundaries-explicit]
+        description: Apply versioned calibration and thresholds to one transcript.
+    invariants:
+      - id: router-no-authority
+        statement: A `RoutingDecision` must never confirm actions, contact tools, mutate state, or render a slow-path answer.
+  ReasonerJob:
+    definition: The asynchronous slow-path unit that requests one structured proposal and carries it through validation, policy, confirmation, and terminal presentation. It does not execute tools.
+    attributes:
+      - name: jobId
+        type: string
+      - name: status
+        type: JobStatus
+      - name: terminalReason
+        type: TerminalReason
+      - name: staleTtlSeconds
+        type: integer
+      - name: resultMaxAgeSeconds
+        type: integer
+      - name: responsePriority
+        type: integer
+    relationships:
+      - entity: ConversationTurn
+        cardinality: n:1
+        role: originating turn
+      - entity: ReasonerProposal
+        cardinality: 1:1
+        role: received proposal
+        ownership: owned
+    actions:
+      - name: create
+        actor: RuntimePlane
+        preserves: [slow-path-only-after-route, reasoner-proposes-only]
+        description: Create pending work only for a valid needs-tools turn.
+      - name: run
+        actor: RuntimePlane
+        preserves: [reasoner-proposes-only, model-boundaries-explicit, talker-no-authority]
+        description: Request exactly one typed proposal from the reasoner transport.
+      - name: waitForConfirmation
+        actor: RuntimePlane
+        preserves: [policy-before-execution, confirmation-exact-and-expiring]
+        description: Pause after policy requires exact operator confirmation.
+      - name: complete
+        actor: RuntimePlane
+        preserves: [policy-before-execution, response-filtered]
+        description: Complete only after all accepted actions and state updates are validated and authorized.
+      - name: cancel
+        actor: RuntimePlane
+        preserves: [job-staleness-bounded, canceled-work-silent]
+        description: Terminalize stale, superseded, or operator-canceled work.
+      - name: downgrade
+        actor: RuntimePlane
+        preserves: [canceled-work-silent, response-filtered]
+        description: Replace an unsafe or stale result with a bounded non-action summary.
+      - name: fail
+        actor: RuntimePlane
+        preserves: [contract-fail-closed, canceled-work-silent]
+        description: Terminalize invalid proposals, validation, policy, ledger, or presentation failures.
+    invariants:
+      - id: slow-path-only-after-route
+        statement: A `ReasonerJob` must be created only for a `ConversationTurn` routed to `needsTools`.
+      - id: reasoner-proposes-only
+        statement: A reasoner result is a `ReasonerProposal` and must never claim execution, grant permission, or bypass validation.
+  ReasonerProposal:
+    definition: One immutable structured suggestion containing a bounded answer, ordered action proposals or a no-action marker, state-update intent, confidence, uncertainty, hashes, and provenance. It is untrusted until validated.
+    attributes:
+      - name: schemaVersion
+        type: string
+      - name: candidateAnswer
+        type: string
+      - name: confidence
+        type: number
+      - name: uncertainty
+        type: number
+      - name: inputHash
+        type: string
+      - name: catalogHash
+        type: string
+      - name: policyVersion
+        type: string
+      - name: provenance
+        type: string
+      - name: refusalReason
+        type: string
+    relationships:
+      - entity: ReasonerJob
+        cardinality: 1:1
+        role: owning job
+      - entity: ActionProposal
+        cardinality: 1:n
+        role: ordered action proposals
+        ownership: owned
+    actions:
+      - name: submit
+        actor: RuntimePlane
+        preserves: [proposal-identity-bound, reasoner-proposes-only]
+        description: Submit one proposal whose identity and hashes bind to its request.
+    invariants:
+      - id: proposal-identity-bound
+        statement: A `ReasonerProposal` must match its job, session, turn, epoch, input hash, catalog hash, and policy version.
+      - id: contract-fail-closed
+        statement: Invalid, ambiguous, unprovenanced, or unmatched model output must fail closed rather than enter validation as accepted.
+  ActionProposal:
+    definition: One typed but untrusted proposal to invoke a cataloged action. It contains canonical argument hashes or values, justification, subject, target, and provenance. It is not permission.
+    attributes:
+      - name: actionName
+        type: string
+      - name: argumentsHash
+        type: string
+      - name: justification
+        type: string
+      - name: subject
+        type: string
+      - name: target
+        type: string
+      - name: provenance
+        type: string
+    relationships:
+      - entity: ReasonerProposal
+        cardinality: n:1
+        role: containing proposal
+      - entity: ValidatedAction
+        cardinality: 1:1
+        role: validated form
+    actions:
+      - name: propose
+        actor: RuntimePlane
+        preserves: [action-schema-fail-closed, action-no-credentials]
+        description: Offer a typed action for validation without authority to execute.
+    invariants:
+      - id: action-schema-fail-closed
+        statement: An `ActionProposal` with an unknown name, extra privileged argument, malformed type, out-of-range value, missing justification, or missing provenance must be rejected.
+      - id: action-no-credentials
+        statement: An `ActionProposal` must not contain credentials, hidden prompts, or unrestricted arguments.
+  ValidatedAction:
+    definition: The deterministic result of validating one ActionProposal against an exact catalog version, consent record, and bounded state. Validation proves shape and scope only; it is not execution or final authorization.
+    attributes:
+      - name: actionHash
+        type: string
+      - name: catalogVersion
+        type: string
+      - name: policyVersion
+        type: string
+      - name: privacyClassification
+        type: string
+      - name: idempotent
+        type: boolean
+      - name: reversible
+        type: boolean
+    relationships:
+      - entity: ActionProposal
+        cardinality: 1:1
+        role: validated source
+      - entity: PolicyDecision
+        cardinality: 1:n
+        role: policy decisions
+        ownership: owned
+      - entity: ToolExecution
+        cardinality: 1:n
+        role: possible later execution
+    actions:
+      - name: validate
+        actor: RuntimePlane
+        preserves: [action-schema-fail-closed, action-no-credentials, catalog-version-pinned]
+        description: Check canonical name, schema, bounds, scope, identity, consent, state, and provenance.
+    invariants:
+      - id: catalog-version-pinned
+        statement: A `ValidatedAction` must bind its catalog version, policy version, action hash, and catalog hash and must become invalid if any changes.
+  PolicyDecision:
+    definition: The fail-closed preflight decision for one ValidatedAction. It is the only domain concept that can classify an action as allowed, requiring confirmation, or rejected.
+    attributes:
+      - name: outcome
+        type: PolicyOutcome
+      - name: rejectionCode
+        type: string
+      - name: policyVersion
+        type: string
+      - name: decidedAt
+        type: timestamp
+    relationships:
+      - entity: ValidatedAction
+        cardinality: n:1
+        role: governed action
+      - entity: Confirmation
+        cardinality: 1:n
+        role: exact confirmations considered
+    actions:
+      - name: preflight
+        actor: RuntimePlane
+        preserves: [policy-before-execution, policy-three-outcomes]
+        description: Evaluate permission, risk, privacy, reversibility, scope, consent, and confirmation before execution.
+    invariants:
+      - id: policy-before-execution
+        statement: A `ToolExecution` may be dispatched only after a `ValidatedAction` has an allowed policy outcome and every required exact confirmation is active.
+      - id: policy-three-outcomes
+        statement: A `PolicyDecision` must resolve to exactly one of allowed without confirmation, confirmation required, or rejected; unevaluable policy is rejected.
+  Confirmation:
+    definition: Explicit operator consent for one exact validated action hash, canonical arguments, subject, target, user, session, and policy version during a bounded TTL. It is never inferred from model confidence.
+    attributes:
+      - name: confirmationHash
+        type: string
+      - name: actionHash
+        type: string
+      - name: explicit
+        type: boolean
+      - name: grantedAt
+        type: timestamp
+      - name: expiresAt
+        type: timestamp
+    relationships:
+      - entity: PolicyDecision
+        cardinality: n:1
+        role: decision being satisfied
+      - entity: ValidatedAction
+        cardinality: n:1
+        role: exact action
+    actions:
+      - name: grant
+        actor: Operator
+        preserves: [confirmation-exact-and-expiring]
+        description: Explicitly confirm one exact action.
+      - name: consume
+        actor: RuntimePlane
+        preserves: [confirmation-single-use]
+        description: Mark a confirmation used after exact policy match.
+      - name: expire
+        actor: RuntimePlane
+        preserves: [confirmation-exact-and-expiring]
+        description: Invalidate a confirmation when its TTL ends.
+    invariants:
+      - id: confirmation-exact-and-expiring
+        statement: A `Confirmation` must match the exact action hash, canonical arguments, subject, target, user, session, and policy version and must expire within its bounded TTL.
+      - id: confirmation-single-use
+        statement: A consumed `Confirmation` must not authorize a second or changed action.
+  ToolCatalog:
+    definition: A versioned, reviewed allowlist of typed action definitions, schemas, permissions, risks, scopes, bounds, provenance requirements, and rejection codes. The voice runtime never mutates it.
+    attributes:
+      - name: catalogVersion
+        type: string
+      - name: catalogHash
+        type: string
+      - name: status
+        type: CatalogStatus
+      - name: policyVersion
+        type: string
+    relationships:
+      - entity: ToolDefinition
+        cardinality: 1:n
+        role: reviewed definitions
+        ownership: owned
+    actions:
+      - name: define
+        actor: AdminPlane
+        preserves: [catalog-reviewed-before-active, runtime-cannot-mutate-capability, tool-schema-provenance]
+        description: Add or replace a definition in a draft catalog version.
+      - name: review
+        actor: AdminPlane
+        preserves: [catalog-reviewed-before-active, tool-schema-provenance]
+        description: Review schemas, provenance, risk, and policy for a proposed catalog.
+      - name: activate
+        actor: AdminPlane
+        preserves: [catalog-reviewed-before-active, runtime-cannot-mutate-capability, tool-schema-provenance]
+        description: Make one reviewed catalog version active.
+      - name: retire
+        actor: AdminPlane
+        preserves: [runtime-cannot-mutate-capability]
+        description: Remove a catalog version from future dispatch.
+    invariants:
+      - id: catalog-reviewed-before-active
+        statement: An active `ToolCatalog` must be reviewed and must identify its schema, policy, provenance, and hash.
+      - id: runtime-cannot-mutate-capability
+        statement: The `RuntimePlane` must not add, remove, reload, or reconfigure catalog or MCP capabilities.
+  ToolDefinition:
+    definition: One allowlisted capability exposed through a catalog. It names the canonical action, source plane, input and output schemas, permission, risk, privacy, reversibility, scope, and idempotency. It is not executable authority by itself.
+    attributes:
+      - name: canonicalName
+        type: string
+      - name: capability
+        type: string
+      - name: sourcePlane
+        type: string
+      - name: argumentSchemaHash
+        type: string
+      - name: resultSchemaHash
+        type: string
+      - name: permission
+        type: string
+      - name: risk
+        type: RiskLevel
+      - name: reversible
+        type: boolean
+      - name: idempotent
+        type: boolean
+    relationships:
+      - entity: ToolCatalog
+        cardinality: n:1
+        role: owning catalog
+    actions:
+      - name: define
+        actor: AdminPlane
+        preserves: [catalog-reviewed-before-active, runtime-cannot-mutate-capability, tool-schema-provenance]
+        description: Add or change a definition only in a draft catalog.
+    invariants:
+      - id: tool-schema-provenance
+        statement: Every `ToolDefinition` must carry independently reviewed input and output schema hashes and source provenance.
+  ToolExecution:
+    definition: A later-phase dispatch of one already validated and policy-authorized action through a server-side executor. It owns credentials and output filtering and is absent from the first local slice.
+    attributes:
+      - name: executionId
+        type: string
+      - name: status
+        type: ExecutionStatus
+      - name: resultHash
+        type: string
+      - name: latencyMs
+        type: integer
+      - name: costClass
+        type: string
+      - name: idempotencyKey
+        type: string
+    relationships:
+      - entity: ValidatedAction
+        cardinality: n:1
+        role: authorized action
+      - entity: ToolDefinition
+        cardinality: n:1
+        role: executor definition
+      - entity: LedgerEvent
+        cardinality: 1:n
+        role: audit events
+    actions:
+      - name: authorize
+        actor: RuntimePlane
+        preserves: [policy-before-execution, tool-allowlist-only]
+        description: Bind an allowed validated action to an active catalog definition.
+      - name: dispatch
+        actor: RuntimePlane
+        preserves: [credential-isolation, tool-allowlist-only]
+        description: Send only canonical arguments through the server-side executor.
+      - name: complete
+        actor: RuntimePlane
+        preserves: [tool-output-filtered, tool-result-not-sole-truth]
+        description: Record a filtered result hash and bounded metadata.
+      - name: fail
+        actor: RuntimePlane
+        preserves: [contract-fail-closed, tool-output-filtered]
+        description: Record an executor error without exposing secrets or raw output.
+      - name: timeout
+        actor: RuntimePlane
+        preserves: [contract-fail-closed]
+        description: Bound executor latency and terminalize late work.
+    invariants:
+      - id: tool-allowlist-only
+        statement: A `ToolExecution` may target only an active `ToolDefinition` named by the bound `ToolCatalog`.
+      - id: credential-isolation
+        statement: Credentials may exist only inside the server-side `ToolExecution` boundary and must never reach a model, transcript, proposal, ledger, response, or memory record.
+      - id: tool-output-filtered
+        statement: Unreviewed tool output must be classified and filtered before reaching a reasoner, response, memory, or persistent ledger.
+      - id: tool-result-not-sole-truth
+        statement: A tool result must not become the sole source of durable truth without provenance and an auditable record.
+  HotState:
+    definition: A bounded, short-lived session snapshot used by the live loop. It stores minimized keys and hashes with a TTL, not transcripts, credentials, or durable truth.
+    attributes:
+      - name: snapshotVersion
+        type: string
+      - name: ttlSeconds
+        type: integer
+      - name: keysHash
+        type: string
+      - name: dataBoundary
+        type: DataBoundary
+    relationships:
+      - entity: VoiceSession
+        cardinality: n:1
+        role: hot session snapshot
+    actions:
+      - name: write
+        actor: RuntimePlane
+        preserves: [hot-state-minimized, hot-state-ttl]
+        description: Write a bounded minimized snapshot for the live loop.
+      - name: expire
+        actor: RuntimePlane
+        preserves: [hot-state-ttl]
+        description: Remove an expired snapshot.
+    invariants:
+      - id: hot-state-minimized
+        statement: "`HotState` must not contain raw audio, raw transcripts, credentials, or unfiltered tool output."
+      - id: hot-state-ttl
+        statement: Every `HotState` value must have a finite TTL and deletion path.
+  LedgerEvent:
+    definition: An immutable minimized audit record linking a route, proposal, validation, policy, confirmation, execution, state change, response, report, or integrity result to scoped hashes and prior-chain metadata.
+    attributes:
+      - name: eventId
+        type: integer
+      - name: eventType
+        type: string
+      - name: inputHash
+        type: string
+      - name: contentLength
+        type: integer
+      - name: mediaType
+        type: string
+      - name: consentVersion
+        type: string
+      - name: policyVersion
+        type: string
+      - name: priorEventId
+        type: integer
+      - name: priorEventHash
+        type: string
+      - name: eventChainHash
+        type: string
+    relationships:
+      - entity: VoiceSession
+        cardinality: n:1
+        role: audited session
+      - entity: ConversationTurn
+        cardinality: n:1
+        role: audited turn
+      - entity: ToolExecution
+        cardinality: n:1
+        role: audited execution
+    actions:
+      - name: append
+        actor: RuntimePlane
+        preserves: [ledger-append-only, ledger-minimized]
+        description: Append one canonical event with prior identity and hash.
+      - name: verify
+        actor: RuntimePlane
+        preserves: [ledger-integrity-fail-closed]
+        description: Detect gaps, invalid prior hashes, duplicate terminals, and mutations.
+    invariants:
+      - id: ledger-append-only
+        statement: A recorded `LedgerEvent` must never be updated or deleted during normal operation.
+      - id: ledger-minimized
+        statement: A `LedgerEvent` must not contain raw audio, raw transcripts, credentials, hidden prompts, unhashed sensitive arguments, or unreviewed private tool output.
+      - id: ledger-integrity-fail-closed
+        statement: A broken `LedgerEvent` chain must disable the affected action path rather than allow unaudited work.
+  Response:
+    definition: The only user-facing rendering contract for a turn. It contains a filtered channel, priority, bounded text, state, provenance, and latency. It cannot execute tools or alter policy.
+    attributes:
+      - name: responseId
+        type: string
+      - name: channel
+        type: string
+      - name: renderState
+        type: string
+      - name: priority
+        type: integer
+      - name: boundedText
+        type: string
+      - name: latencyMs
+        type: integer
+    relationships:
+      - entity: ConversationTurn
+        cardinality: 1:1
+        role: rendered turn
+      - entity: ReasonerJob
+        cardinality: n:1
+        role: possible slow result
+    actions:
+      - name: render
+        actor: RuntimePlane
+        preserves: [response-filtered, canceled-work-silent]
+        description: Present only policy-safe bounded text through an allowed channel.
+      - name: block
+        actor: RuntimePlane
+        preserves: [response-filtered]
+        description: Refuse unsafe or failed presentation.
+      - name: cancel
+        actor: RuntimePlane
+        preserves: [canceled-work-silent]
+        description: Suppress a normal result after cancellation or supersession.
+    invariants:
+      - id: response-filtered
+        statement: A `Response` must contain only bounded, classified, policy-safe content and must never expose credentials, hidden prompts, or unfiltered private tool output.
+  MemoryRecord:
+    definition: A later-phase governed long-term memory candidate with content hash, summary, provenance, consent, lifecycle, and deletion state. Memory platforms are deferred and never the sole source of truth.
+    attributes:
+      - name: memoryId
+        type: string
+      - name: contentHash
+        type: string
+      - name: summary
+        type: string
+      - name: provenance
+        type: string
+      - name: status
+        type: MemoryStatus
+      - name: consentVersion
+        type: string
+    relationships:
+      - entity: VoiceSession
+        cardinality: n:1
+        role: originating session
+      - entity: LedgerEvent
+        cardinality: n:1
+        role: provenance event
+    actions:
+      - name: propose
+        actor: RuntimePlane
+        preserves: [memory-provenance-bound]
+        description: Create a candidate from approved and classified content.
+      - name: approve
+        actor: Operator
+        preserves: [memory-provenance-bound, memory-not-sole-truth]
+        description: Approve only a reviewed candidate with consent.
+      - name: activate
+        actor: RuntimePlane
+        preserves: [memory-provenance-bound, memory-not-sole-truth]
+        description: Make an approved memory record available for governed recall.
+      - name: recall
+        actor: RuntimePlane
+        preserves: [memory-provenance-bound, response-filtered]
+        description: Retrieve bounded memory context with provenance.
+      - name: supersede
+        actor: RuntimePlane
+        preserves: [memory-not-sole-truth]
+        description: Replace an active record while preserving history.
+      - name: delete
+        actor: Operator
+        preserves: [memory-deletable]
+        description: Delete a record and propagate deletion to backups and derived stores.
+    invariants:
+      - id: memory-provenance-bound
+        statement: Every `MemoryRecord` must retain content provenance, consent, review status, and a link to audited origin.
+      - id: memory-not-sole-truth
+        statement: A `MemoryRecord` platform must never be the sole copy of important state.
+      - id: memory-deletable
+        statement: Every approved `MemoryRecord` must have a tested deletion path covering primary and backup stores.
+scenarios:
+  - name: Confident chitchat stays fast
+    actors: [Operator, VoiceSession, ConversationTurn, RoutingDecision]
+    steps:
+      - The `Operator` opens a `VoiceSession`.
+      - A `ConversationTurn` is transcribed with an ephemeral transcript.
+      - "`RoutingDecision` selects `chitchat` above threshold."
+      - "`ConversationTurn` terminalizes without creating a `ReasonerJob`."
+      - "`VoiceSession` closes and releases processing-only values."
+    invariants_touched: [raw-input-ephemeral, route-fail-closed, router-no-authority, slow-path-only-after-route]
+  - name: Tool request produces but does not execute an action
+    actors: [Operator, ConversationTurn, ReasonerJob, ReasonerProposal, ValidatedAction, PolicyDecision]
+    steps:
+      - "`RoutingDecision` selects `needsTools`."
+      - "`ReasonerJob` requests one `ReasonerProposal`."
+      - An `ActionProposal` is validated as a `ValidatedAction`.
+      - "`PolicyDecision` requires confirmation."
+      - The first slice completes without creating a `ToolExecution`.
+    invariants_touched: [slow-path-only-after-route, reasoner-proposes-only, action-schema-fail-closed, policy-before-execution, tool-allowlist-only]
+  - name: Invalid router calibration fails closed
+    actors: [ConversationTurn, RoutingDecision, Response]
+    steps:
+      - The ephemeral transcript is present but calibration is missing or invalid.
+      - "`RoutingDecision` refuses `needsTools`."
+      - "`ConversationTurn` selects a guarded unclear path."
+      - "`Response` renders only a bounded clarification."
+    invariants_touched: [route-fail-closed, router-no-authority, response-filtered]
+  - name: Stale job cannot interrupt
+    actors: [Operator, ConversationTurn, ReasonerJob, Response]
+    steps:
+      - A `ReasonerJob` begins for one turn epoch.
+      - The `Operator` materially advances intent.
+      - "`ConversationTurn` advances its epoch."
+      - "`ReasonerJob` becomes canceled or downgraded."
+      - "`Response` does not present the old result as a normal answer."
+    invariants_touched: [job-staleness-bounded, canceled-work-silent, response-filtered]
+  - name: Exact confirmation is single-use
+    actors: [Operator, ValidatedAction, PolicyDecision, Confirmation]
+    steps:
+      - "`PolicyDecision` requires confirmation."
+      - The `Operator` grants a `Confirmation` for exact canonical arguments.
+      - "`PolicyDecision` consumes the confirmation."
+      - A later changed or repeated action fails policy.
+    invariants_touched: [confirmation-exact-and-expiring, confirmation-single-use, policy-before-execution]
+  - name: Ledger privacy canary
+    actors: [ConversationTurn, ReasonerJob, LedgerEvent, MemoryRecord]
+    steps:
+      - A canary appears in spoken input, proposal text, and tool output.
+      - Only scoped hashes and classified metadata are appended.
+      - "`LedgerEvent` and any future `MemoryRecord` are inspected."
+      - No non-consented canary persists.
+    invariants_touched: [raw-input-ephemeral, ledger-minimized, memory-provenance-bound, memory-deletable]
+  - name: Runtime cannot expand capability surface
+    actors: [RuntimePlane, AdminPlane, ToolCatalog, ToolDefinition, ToolExecution]
+    steps:
+      - Untrusted tool text requests addition of a new MCP server.
+      - The `RuntimePlane` attempts only list, inspect, status, or allowlisted proxy use.
+      - Only the `AdminPlane` can review and activate a new `ToolCatalog`.
+      - "`ToolExecution` rejects the non-allowlisted request."
+    invariants_touched: [runtime-cannot-mutate-capability, catalog-reviewed-before-active, tool-allowlist-only, tool-output-filtered]
+  - name: Fast and slow state remain independent
+    actors: [Operator, FastPath, SlowPath, HotState]
+    steps:
+      - The `FastPath` keeps conversational rendering independent of slow work.
+      - The `SlowPath` creates an asynchronous `ReasonerJob`.
+      - "`HotState` stores only a minimized TTL-bound snapshot."
+      - The `Operator` interrupts or changes intent before slow completion.
+      - The stale slow result is canceled or downgraded without blocking the `FastPath`.
+    invariants_touched: [hot-state-minimized, hot-state-ttl, job-staleness-bounded, canceled-work-silent]
+invariants:
+  - id: talker-no-authority
+    statement: PersonaPlex or Moshi talker output must never validate actions, grant consent, contact tools, or mutate durable state.
+  - id: model-boundaries-explicit
+    statement: The system must treat PersonaPlex as talker, Voxtral Realtime as transcription, Jev as router, and the direct reasoner as proposal source; no adapter may collapse these boundaries.

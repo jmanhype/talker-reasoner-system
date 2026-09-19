@@ -8,8 +8,8 @@ labels: [architecture, edge, offline, delivered]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:54Z
 created_by: speed
-updated_at: 2026-09-19T20:20:48Z
-content_hash: "sha256:880bc152f370a77eddc110c3d7e7773bc8019f36364d2087645b7e3bbbdd2d1c"
+updated_at: 2026-09-19T20:21:03Z
+content_hash: "sha256:f109ab0bf53f008e31e713eee29a37d967f8b3825b366eb7b3b74793140798f9"
 blocks: [TRS-g7go]
 was_blocked_by: [TRS-m4b1]
 assignee: dev-TRS-h8kc
@@ -212,7 +212,19 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-09-19]: Evidence reviewed. The edge package is private, dependency-free, strict, typed, G4-mapped, and the full suite remains green.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed final SHA 58d129e8d6534ce7b8b9bcbb6fa37bfc2740606f.
+- Delivery proof passed 9/9.
+- No live audio/runtime dependency introduced.
+
+### proof
+- [x] AC #1 through AC #7 verified.
 
 ## nd_contract
 status: delivered

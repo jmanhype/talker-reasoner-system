@@ -1,16 +1,18 @@
 ---
 id: TRS-g7go
 title: "E2e: verify the complete M1 architecture gate"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [e2e, capstone, architecture]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:12:27Z
 created_by: speed
-updated_at: 2026-09-19T20:12:57Z
-content_hash: "sha256:13608e9be169163dc7c763a951f9d4b10ab3ba5ce13bde8c1e80d3ed32e6f8b7"
+updated_at: 2026-09-19T20:21:25Z
+content_hash: "sha256:d43667ec4241473201b3e5ca6f3eaa6d584241bee15cd970ab22b645f9ded899"
 was_blocked_by: [TRS-m4b1, TRS-h8kc]
+assignee: dev-TRS-g7go
+follows: [TRS-m4b1, TRS-h8kc]
 ---
 
 ## Description
@@ -217,9 +219,14 @@ status: new
 - 2026-09-19T20:12:27Z dep_added: blocked_by TRS-h8kc
 - 2026-09-19T20:19:01Z dep_removed: was_blocked_by TRS-m4b1
 - 2026-09-19T20:21:03Z dep_removed: was_blocked_by TRS-h8kc
+- 2026-09-19T20:21:25Z status: open -> in_progress
+- 2026-09-19T20:21:25Z auto-follows: linked to predecessor TRS-m4b1
+- 2026-09-19T20:21:25Z auto-follows: linked to predecessor TRS-h8kc
+- 2026-09-19T20:21:25Z claimed by dev-TRS-g7go
 
 ## Links
 - Parent: [[TRS-w8ah]]
 - Was blocked by: [[TRS-m4b1]], [[TRS-h8kc]]
+- Follows: [[TRS-m4b1]], [[TRS-h8kc]]
 
 ## Comments

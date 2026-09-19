@@ -9,11 +9,11 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed
 updated_at: 2026-09-19T20:19:02Z
-content_hash: "sha256:8848a5edc4efefc72620b46b80765ee60a6f88f64f84eb2db4ee3eea41e1b06f"
+content_hash: "sha256:8bda5e07fab3baa75941bf3613b5467e2d2a4dca035001acaeacdccddd134ed9"
 assignee: dev-TRS-m4b1
 closed_at: 2026-09-19T20:19:01Z
 close_reason: "Accepted: implementation-wide G4/Gt architecture gate is green with explicit four-edge ratchet."
-led_to: [TRS-h8kc]
+led_to: [TRS-h8kc, TRS-g7go]
 ---
 
 ## Description
@@ -380,7 +380,7 @@ status: in_progress
 
 ## Links
 - Parent: [[TRS-w8ah]]
-- Led to: [[TRS-h8kc]]
+- Led to: [[TRS-h8kc]], [[TRS-g7go]]
 
 ## Comments
 

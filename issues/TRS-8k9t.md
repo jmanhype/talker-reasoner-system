@@ -9,10 +9,11 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T19:25:21Z
-content_hash: "sha256:7fe59cec58a74a2f2f9e0f5956a0333c3d922d66863e229296f53c06e7cfcf43"
+content_hash: "sha256:4cd9f02301db96317d5210a93debaa3a4d76164f45aba3774803f705752ce22b"
 assignee: dev-TRS-8k9t
 closed_at: 2026-09-19T19:25:21Z
 close_reason: "Accepted: machinery oracle/invariant gate is green with 326/326 tests and authorized RED repairs."
+led_to: [TRS-n5pa]
 ---
 
 ## Description
@@ -647,6 +648,7 @@ status: delivered
 
 ## Links
 - Parent: [[TRS-h031]]
+- Led to: [[TRS-n5pa]]
 
 ## Comments
 

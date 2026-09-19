@@ -8,8 +8,8 @@ labels: [cli, integration, slice-0, accepted]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T16:57:44Z
-content_hash: "sha256:e756d1cc1e8ab97705d94c995d28af928f717eaecf7e2da1cc8868b7b75b0695"
+updated_at: 2026-09-19T16:57:45Z
+content_hash: "sha256:ef5e78d29c584d10fb8f7f9c13672ae2c5e6aa4ed2104e535fbf348be351cfda"
 was_blocked_by: [TRS-74z8, TRS-9md6, TRS-ndv6]
 assignee: dev-TRS-f7sm
 follows: [TRS-74z8, TRS-9md6, TRS-ndv6, TRS-0daa]
@@ -160,6 +160,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## Implementation Evidence
 
 Commands run:

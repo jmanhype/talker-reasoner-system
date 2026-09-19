@@ -1,19 +1,21 @@
 ---
 id: TRS-osl5
 title: "E2e: trace fixture conversations to clean outcomes"
-status: in_progress
+status: closed
 priority: 1
 type: feature
 labels: [capstone, e2e, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T17:59:36Z
-content_hash: "sha256:26958592536d5c00e5c32ebe8e21c6d03f496597e11f269ce3127b4ec538fd34"
+updated_at: 2026-09-19T17:59:51Z
+content_hash: "sha256:a26cebe5efdbc93acd737ce3c924e3b027f40782ce546470b4a1b3072d1ac219"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 follows: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm, TRS-zpo4]
 assignee: dev-TRS-osl5
+closed_at: 2026-09-19T17:59:51Z
+close_reason: "Accepted: independently reran extended E2E (10/10), full suite (164/164), compileall, pvg verify, and git diff check. Real CLI journeys, terminal lifecycles, metrics/denominators, privacy/provenance, and ledger integrity all pass."
 ---
 
 ## Description
@@ -462,6 +464,7 @@ Commit SHA: c485cb7d260acbbe82f13d83bf17031a1470b6ae
 - 2026-09-19T17:55:57Z claimed by dev-TRS-osl5
 - 2026-09-19T17:55:57Z status: in_progress -> in_progress
 - 2026-09-19T17:58:03Z status: in_progress -> in_progress
+- 2026-09-19T17:59:51Z status: in_progress -> closed
 
 ## Links
 - Parent: [[TRS-pf94]]

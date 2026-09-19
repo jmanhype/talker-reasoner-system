@@ -25,8 +25,8 @@ from talk_reasoner.rendering import PresentationConstraints, RenderError, render
 from talk_reasoner.routing import classify, load_threshold_policy, route_event
 from talk_reasoner.transports import LocalScriptedTransport, NoAction, ReasonerProposal, ReasonerProvenance
 
-ORACLE_DIRECTORY = Path(__file__).parents[2] / "design" / "machines"
-DOMAIN_RENDER = Path(__file__).parents[2] / "design" / "domain.modelith.md"
+ORACLE_DIRECTORY = Path(__file__).parents[1] / "design" / "machines"
+DOMAIN_RENDER = Path(__file__).parents[1] / "design" / "domain.modelith.md"
 ORACLE_FILES = (
     ("ConversationTurn.oracle.md", "conversationTurn"),
     ("EventLedger.oracle.md", "eventLedger"),
@@ -202,9 +202,9 @@ class _LocalActors:
 
 @lru_cache(maxsize=1)
 def _local_actors() -> _LocalActors:
-    fixture = load_fixture(Path(__file__).parents[2] / "tests" / "fixtures" / "slice0" / "trs-tools-001.json")
+    fixture = load_fixture(Path(__file__).parents[1] / "tests" / "fixtures" / "slice0" / "trs-tools-001.json")
     catalog = load_action_catalog(CATALOG_PATH)
-    decision = classify(fixture, policy=load_threshold_policy(Path(__file__).parents[2] / "config" / "routing" / "slice0-v1.json"))
+    decision = classify(fixture, policy=load_threshold_policy(Path(__file__).parents[1] / "config" / "routing" / "slice0-v1.json"))
     now = datetime.now(timezone.utc).replace(microsecond=0)
     job_id = f"job-{decision.input_hash[:20]}"
     consent = ConsentRecord("consent-v1", "fixture-user", fixture.session_id, "fixture-user", frozenset({"local.read", "local.write"}),
@@ -283,7 +283,7 @@ def _conversation_evidence(case: TransitionCase) -> str:
             _error("transcript guard did not bind the scoped input hash")
         return "scoped transcript hash"
     if case.trigger == "on:route":
-        decision = classify(actor.fixture, policy=load_threshold_policy(Path(__file__).parents[2] / "config" / "routing" / "slice0-v1.json"))
+        decision = classify(actor.fixture, policy=load_threshold_policy(Path(__file__).parents[1] / "config" / "routing" / "slice0-v1.json"))
         if decision.route not in {"needs_tools", "chitchat", "unclear"}:
             _error("route guard did not produce a legal route")
         return f"local route:{decision.route}"

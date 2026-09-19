@@ -19,7 +19,7 @@ from talk_reasoner.transports import LocalScriptedTransport, MonotonicClock, Rea
 
 CLI_EVIDENCE_VERSION = "slice0-cli-evidence-v1"
 RESPONSE_SCHEMA_VERSION = "slice0-cli-response-v1"
-ROUTING_POLICY_PATH = Path(__file__).parents[2] / "config" / "routing" / "slice0-v1.json"
+ROUTING_POLICY_PATH = Path(__file__).parents[1] / "config" / "routing" / "slice0-v1.json"
 
 class CLIResult(NamedTuple):
     exit_status: int; response_id: str; route: str; terminal_state: str; ledger_valid: bool; ledger_event_count: int; evidence: MappingProxyType[str, object]

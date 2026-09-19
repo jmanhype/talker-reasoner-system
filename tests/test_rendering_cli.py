@@ -144,7 +144,7 @@ def test_cli_runs_every_fixture_with_real_local_components(path: Path) -> None:
 def test_renderer_and_cli_have_no_network_or_execution_imports() -> None:
     import re
     for name in ("requests", "httpx", "aiohttp", "socket", "subprocess"):
-        for path in (ROOT / "src/talk_reasoner/rendering.py", ROOT / "src/talk_reasoner/cli.py"):
+        for path in (ROOT / "talk_reasoner/rendering.py", ROOT / "talk_reasoner/cli.py"):
             assert not re.search(rf"(?m)^\s*(import|from)\s+{name}\b", path.read_text(encoding="utf-8"))
 
 def test_cli_fail_closed_for_renderer_error_and_invalid_fixture() -> None:

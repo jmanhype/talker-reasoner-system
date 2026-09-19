@@ -9,7 +9,7 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:12:27Z
 created_by: speed
 updated_at: 2026-09-19T20:27:11Z
-content_hash: "sha256:81de42e2537c6e4693052f2265181f467119c3e6ef2edc774d15012fa3b6781f"
+content_hash: "sha256:fe17b9612f9dc6bb10536874a3424203999dacb22b8fa2fda2563a2d80422132"
 was_blocked_by: [TRS-m4b1, TRS-h8kc]
 assignee: dev-TRS-g7go
 follows: [TRS-m4b1, TRS-h8kc]
@@ -214,6 +214,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-09-19]: Final M1 capstone evidence reviewed. The exact implementation-wide command passes, Python and TypeScript imports resolve, all oracle tests are scanned, four debts are ratcheted, and the full suite passes 330/330.
 

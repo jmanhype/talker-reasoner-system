@@ -8,8 +8,8 @@ labels: [e2e, capstone, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:30:41Z
-content_hash: "sha256:afb24e05bb1506517c2eb59b5cc4cf2f3dc3ce0db6ad7d4379da8517bd94eaf6"
+updated_at: 2026-09-19T19:30:52Z
+content_hash: "sha256:88720292ef7e509bb392489588561ede3879d3f2c2ec6ba453bb55628e782f8d"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -357,6 +357,30 @@ status: delivered
 ### evidence
 - Final SHA and exact command outputs are recorded above.
 - Report denominators: 7/62/36/327/0; decision pass.
+
+### proof
+- [x] AC #1 through AC #9 pass.
+
+### 2026-09-19T19:30:52Z speed
+## Implementation Evidence
+
+Commands run:
+- pytest -q -s tests/e2e/test_m0_offline_gate.py -> 1 passed.
+- pytest -q -> 327 passed.
+- machinery check design -> exit 0, 0 blocking findings.
+- pvg gates --changed 7715096 -> PASS, 0 warnings.
+- pvg verify tests/e2e/test_m0_offline_gate.py tests/e2e/fixtures/m0-report.json --include-tests --format=text -> PASSED.
+
+Summary: final offline M0 report has 7 machines, 62 transitions, 36 invariants, 327 tests, zero live dependency classes, and decision pass. The complete JSON report is in the preceding DELIVERED evidence block.
+
+Commit SHA: 1c616a6762b63c11ffaa5b563ae28d55ed3d19dc
+
+## nd_contract
+status: delivered
+
+### evidence
+- Final SHA and exact command outputs are recorded above.
+- Report denominators: 7 machines, 62 transitions, 36 invariants, 327 tests, 0 live dependency classes; decision pass.
 
 ### proof
 - [x] AC #1 through AC #9 pass.

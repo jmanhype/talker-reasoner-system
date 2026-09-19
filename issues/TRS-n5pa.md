@@ -8,8 +8,8 @@ labels: [e2e, capstone]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:25:21Z
-content_hash: "sha256:d523d53de9e4291b937b4da810730b85b1cb4db253e4ea88050233c1a973a653"
+updated_at: 2026-09-19T19:25:22Z
+content_hash: "sha256:9db295392b096affb6889f3f09421e6c854d830f52178eb31aa2f5a0a2b0dcb2"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -126,3 +126,6 @@ status: new
 - Follows: [[TRS-8k9t]]
 
 ## Comments
+
+### 2026-09-19T19:25:22Z speed
+loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)

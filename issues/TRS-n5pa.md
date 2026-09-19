@@ -4,7 +4,7 @@ title: "E2e: verify the complete offline M0 machinery gate"
 status: closed
 priority: 1
 type: feature
-labels: [e2e, capstone, delivered]
+labels: [e2e, capstone, delivered, accepted]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed

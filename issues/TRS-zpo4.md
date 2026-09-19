@@ -1,14 +1,14 @@
 ---
 id: TRS-zpo4
 title: "Run D&F for the whole-system Talker-Reasoner MVP"
-status: in_progress
+status: open
 priority: 1
 type: task
 parent: TRS-pf94
 created_at: 2026-09-19T04:41:13Z
 created_by: speed
 updated_at: 2026-09-19T04:42:09Z
-content_hash: "sha256:c4b09234df6cb96ef2b9daddd20640dcc0711e672a5bee0aef3f8119d9108358"
+content_hash: "sha256:925f7e926b31401ef4848f5165422c84f0141c05e2bc6a70c5f6e9ecf0374e97"
 assignee: dev-TRS-zpo4
 ---
 
@@ -134,6 +134,7 @@ status: new
 ## History
 - 2026-09-19T04:42:09Z status: open -> in_progress
 - 2026-09-19T04:42:09Z claimed by dev-TRS-zpo4
+- 2026-09-19T04:42:09Z status: in_progress -> open
 
 ## Links
 - Parent: [[TRS-pf94]]

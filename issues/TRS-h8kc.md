@@ -9,9 +9,9 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:11:54Z
 created_by: speed
 updated_at: 2026-09-19T20:12:57Z
-content_hash: "sha256:6ed6fbdae855d4a60cdfc5604ff00dfed082ac795712945e2bbf95dfd5a09cc5"
-blocked_by: [TRS-m4b1]
+content_hash: "sha256:ea5c6fd4d7d207282bbd9766c60b6e9bdbd1bcc451c120257fcb9e8be3b4af5a"
 blocks: [TRS-g7go]
+was_blocked_by: [TRS-m4b1]
 ---
 
 ## Description
@@ -215,10 +215,11 @@ status: new
 ## History
 - 2026-09-19T20:11:55Z dep_added: blocked_by TRS-m4b1
 - 2026-09-19T20:12:27Z dep_added: blocks TRS-g7go
+- 2026-09-19T20:19:01Z dep_removed: was_blocked_by TRS-m4b1
 
 ## Links
 - Parent: [[TRS-w8ah]]
 - Blocks: [[TRS-g7go]]
-- Blocked by: [[TRS-m4b1]]
+- Was blocked by: [[TRS-m4b1]]
 
 ## Comments

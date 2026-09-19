@@ -1,7 +1,7 @@
 ---
 id: TRS-m4b1
 title: "M1 architecture gate: enforce implementation imports with explicit debt"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [architecture, integration, delivered]
@@ -9,9 +9,10 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed
 updated_at: 2026-09-19T20:19:01Z
-content_hash: "sha256:da691ef0011d596e5fa5e72c6faa030be71e5f24f9fc763f743391818e13bd40"
-blocks: [TRS-h8kc, TRS-g7go]
+content_hash: "sha256:cf1b9003901adeacafcb04c1558d5e9dee9fb35f7b6fdc4c2d94aabd0eb3f6d6"
 assignee: dev-TRS-m4b1
+closed_at: 2026-09-19T20:19:01Z
+close_reason: "Accepted: implementation-wide G4/Gt architecture gate is green with explicit four-edge ratchet."
 ---
 
 ## Description
@@ -360,10 +361,12 @@ status: in_progress
 - 2026-09-19T20:13:45Z status: open -> in_progress
 - 2026-09-19T20:13:45Z claimed by dev-TRS-m4b1
 - 2026-09-19T20:18:26Z status: in_progress -> in_progress
+- 2026-09-19T20:19:01Z status: in_progress -> closed
+- 2026-09-19T20:19:01Z dep_removed: no_longer_blocks TRS-h8kc
+- 2026-09-19T20:19:01Z dep_removed: no_longer_blocks TRS-g7go
 
 ## Links
 - Parent: [[TRS-w8ah]]
-- Blocks: [[TRS-h8kc]], [[TRS-g7go]]
 
 ## Comments
 

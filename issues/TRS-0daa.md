@@ -1,18 +1,19 @@
 ---
 id: TRS-0daa
 title: "Prove typed fixture-ledger contracts locally"
-status: in_progress
+status: closed
 priority: 1
 type: feature
 labels: [walking-skeleton, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:36Z
 created_by: speed
-updated_at: 2026-09-19T13:41:46Z
-content_hash: "sha256:6b956e119a2a7ddf44b33d8d7a758d6ee35c99290d66b29da60a71a9a5a1c372"
-blocks: [TRS-74z8, TRS-9md6, TRS-osl5]
+updated_at: 2026-09-19T13:41:58Z
+content_hash: "sha256:662bf1269351aa42fcaee321ea64facf50b9b68536944d89aff73a22341e9620"
 assignee: dev-TRS-0daa
 follows: [TRS-zpo4]
+closed_at: 2026-09-19T13:41:58Z
+close_reason: "Accepted: independently reran git diff --check, compilation, full pytest (14/14), fixture-count checks, forbidden dependency/credential scans, pvg verify, and hash inspection. The corpus is exactly 6 per route; ledger integration is unmocked and verifies 36 events; production remains local/offline."
 ---
 
 ## Description
@@ -334,10 +335,13 @@ status: delivered
 - 2026-09-19T13:04:08Z auto-follows: linked to predecessor TRS-zpo4
 - 2026-09-19T13:04:08Z claimed by dev-TRS-0daa
 - 2026-09-19T13:38:44Z status: in_progress -> in_progress
+- 2026-09-19T13:41:58Z status: in_progress -> closed
+- 2026-09-19T13:41:58Z dep_removed: no_longer_blocks TRS-74z8
+- 2026-09-19T13:41:59Z dep_removed: no_longer_blocks TRS-9md6
+- 2026-09-19T13:41:59Z dep_removed: no_longer_blocks TRS-osl5
 
 ## Links
 - Parent: [[TRS-pf94]]
-- Blocks: [[TRS-74z8]], [[TRS-9md6]], [[TRS-osl5]]
 - Follows: [[TRS-zpo4]]
 
 ## Comments

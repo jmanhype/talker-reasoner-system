@@ -1,0 +1,14 @@
+[project]
+name = "talk-reasoner"
+version = "0.1.0"
+description = "Local deterministic Talker-Reasoner contracts"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=9,<10"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"

@@ -1,3 +1,7 @@
+# Python local test state
+.venv/
+__pycache__/
+.pytest_cache/
 
 # Paivot runtime state (managed by pvg)
 .vault/issues/

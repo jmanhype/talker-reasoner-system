@@ -8,8 +8,8 @@ labels: [slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T15:55:20Z
-content_hash: "sha256:7fd525d8bd3011b5c27caa48011224ad84c1ac1a075227f472d8bccdd6a7b9ff"
+updated_at: 2026-09-19T15:55:44Z
+content_hash: "sha256:6176ed71620ceb9332875930c56b156e6b98dd0e37d07793fb55d9bea230c053"
 blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-9md6
@@ -162,6 +162,24 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+- git add config/actions/slice0-v1.json src/talk_reasoner/actions.py tests/test_actions.py
+- git commit -m "feat(TRS-9md6): guard fixed local actions"
+
+### CI/Test Results
+- Story commit: 51a3969
+- Worktree clean after commit.
+- Independent story/full suites before commit: 24/24 and 52/52 passed.
+
+Summary: accepted compacted implementation committed on story/TRS-9md6 at 51a3969.
+
+Commit SHA: 51a3969
+
+### AC Verification
+- [x] All eight TRS-9md6 AC are covered by committed files and independent 52/52 suite.
+
 ## Implementation Evidence
 
 Commands run:

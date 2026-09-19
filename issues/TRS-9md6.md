@@ -1,7 +1,7 @@
 ---
 id: TRS-9md6
 title: "Guard fixed local actions with fail-closed validation"
-status: in_progress
+status: closed
 priority: 1
 type: feature
 labels: [slice-0, delivered]
@@ -9,11 +9,12 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
 updated_at: 2026-09-19T15:55:44Z
-content_hash: "sha256:6176ed71620ceb9332875930c56b156e6b98dd0e37d07793fb55d9bea230c053"
-blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
+content_hash: "sha256:75c930957e24fbaf79ca4c99c7eaf63f4fa5e42e57e61cca5ce3f6ab0187d8cd"
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-9md6
 follows: [TRS-0daa, TRS-74z8]
+closed_at: 2026-09-19T15:55:44Z
+close_reason: "Accepted: independently reran story/full suites (24/24 and 52/52), compilation, pvg verify, static dependency/privacy scans, LOC/budget checks, and hash verification. The compacted implementation is 421 LOC, covers every rejection and policy outcome, and executes nothing."
 ---
 
 ## Description
@@ -254,10 +255,13 @@ status: delivered
 - 2026-09-19T14:15:02Z claimed by dev-TRS-9md6
 - 2026-09-19T15:54:09Z status: in_progress -> in_progress
 - 2026-09-19T15:54:09Z auto-follows: linked to predecessor TRS-74z8
+- 2026-09-19T15:55:44Z status: in_progress -> closed
+- 2026-09-19T15:55:45Z dep_removed: no_longer_blocks TRS-ndv6
+- 2026-09-19T15:55:45Z dep_removed: no_longer_blocks TRS-f7sm
+- 2026-09-19T15:55:45Z dep_removed: no_longer_blocks TRS-osl5
 
 ## Links
 - Parent: [[TRS-pf94]]
-- Blocks: [[TRS-ndv6]], [[TRS-f7sm]], [[TRS-osl5]]
 - Was blocked by: [[TRS-0daa]]
 - Follows: [[TRS-0daa]], [[TRS-74z8]]
 

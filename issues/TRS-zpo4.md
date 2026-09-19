@@ -7,8 +7,8 @@ type: task
 parent: TRS-pf94
 created_at: 2026-09-19T04:41:13Z
 created_by: speed
-updated_at: 2026-09-19T04:59:03Z
-content_hash: "sha256:efe1ce8ccfc1b2d6d4e1cf0de63b42bbe1dc1373a2cbc2e573083bf6241bb536"
+updated_at: 2026-09-19T04:59:43Z
+content_hash: "sha256:464190df1e34330974a1f4a5dbd233d2d028a4856af42287737ef8f1f39f8bc4"
 assignee: dev-TRS-zpo4
 labels: [delivered]
 ---
@@ -130,6 +130,59 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system
+git diff --check
+sha256sum docs/BUSINESS.md docs/DESIGN.md docs/ARCHITECTURE.md docs/sources/whole-system-2026-09-19.md
+wc -l docs/BUSINESS.md docs/DESIGN.md docs/ARCHITECTURE.md
+rg -n 'PersonaPlex/Moshi is not a native tool-calling|Voxtral Small|Voxtral Realtime|Jev routes|chitchat|needs_tools|unclear|Redis|Postgres|Mem0|Cognee|Zep|Letta' docs/BUSINESS.md docs/DESIGN.md docs/ARCHITECTURE.md
+rg -n 'API_KEY|SECRET|TOKEN|PASSWORD' docs/BUSINESS.md docs/DESIGN.md docs/ARCHITECTURE.md
+```
+
+Independent coordinator rerun summary:
+
+- `git diff --check`: no output, exit 0.
+- D&F line count: 177 + 201 + 221 = 599, within budget.
+- Required model-boundary and staged-deferral terms were present.
+- Secret-pattern scan produced no matches.
+
+### CI/Test Results
+
+```text
+git diff --check: PASS (exit 0, no output)
+docs-only change: 3 files, 599 insertions
+secret-pattern scan: no matches
+```
+
+Summary: created self-contained Business, Design, and Architecture D&F documents for the independent whole-system Talker-Reasoner project, preserving model boundaries and defining a thin local-fixture first slice with deferred live voice/inference/memory services, async slow path, clean response rendering, policy, privacy, provenance, and measurable rollout/kill criteria.
+
+Commit SHA: 265bc9692ad93de6dc79675833eae5a16f479701da8dcb2812d75e8eb449304c
+
+This is the SHA-256 of the docs delivery manifest, not a Git commit; the new project has not yet been authorized for an initial commit.
+
+Final hashes:
+
+```text
+969b731070513a1b601b3edbbb7ccfd27a2c378e9fe3c2021df4409d5d41cb6f  docs/BUSINESS.md
+a57c059fbf19900782e261b5929a77e920139fba540d4ea2f02d5a90eac0ce17  docs/DESIGN.md
+8fe2a97d9794db881e96d6a75dfcfbbefbe5b85da8c7f0426bb7673d32121c38  docs/ARCHITECTURE.md
+c25adac0139b5aeeff6e16cdafddf1af0675785988688b6936250236edf18ec3  docs/sources/whole-system-2026-09-19.md
+```
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. Three self-contained D&F documents exist | PASS | Files and SHA-256 hashes above. |
+| 2. Thin local-fixture first slice; live/external/memory deferred | PASS | BUSINESS §4, DESIGN §3–4, ARCHITECTURE §1/§10; independent term scan. |
+| 3. Four model-boundary facts preserved | PASS | BUSINESS §2, DESIGN §3, ARCHITECTURE §2. |
+| 4. Async slow path, rendering, policy, privacy, provenance defined | PASS | DESIGN §6–9, ARCHITECTURE §7–9. |
+| 5. Measurable rollout/kill criteria suitable for story ACs | PASS | BUSINESS §7, ARCHITECTURE §11. |
+| 6. `git diff --check` passes | PASS | Independent rerun exit 0 with no output. |
 
 
 ## nd_contract

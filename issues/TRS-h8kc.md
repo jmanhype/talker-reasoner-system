@@ -8,8 +8,8 @@ labels: [architecture, edge, offline]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:54Z
 created_by: speed
-updated_at: 2026-09-19T20:19:15Z
-content_hash: "sha256:93fe793bcb02077b1e00bdab67f58170458b45994ed3ba7cc2020674c0f0a97a"
+updated_at: 2026-09-19T20:20:47Z
+content_hash: "sha256:832f6f4b257f86265633b9f6e3afa34e371c8f4c289642028400692bce21a3eb"
 blocks: [TRS-g7go]
 was_blocked_by: [TRS-m4b1]
 assignee: dev-TRS-h8kc
@@ -212,6 +212,74 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- `pytest -q tests/test_edge_package.py` -> exit 0: 1 passed.
+- `pytest -q` -> exit 0: 329 passed.
+- `machinery check design --impl .` -> exit 0, 0 blocking findings.
+- `pvg verify edge/package.json edge/tsconfig.json edge/ports/audio.ts tests/test_edge_package.py tests/e2e/fixtures/m0-report.json tests/e2e/test_m0_offline_gate.py --include-tests --format=text` -> exit 0.
+- `pvg gates --changed e80979e` -> exit 0: PASS, 0 warnings.
+- `git diff --check` -> exit 0.
+
+Summary: the private dependency-free `@talk-reasoner/edge` package now provides a strict typed audio-session port and one relative ESM re-export. G4 checks 2 TypeScript files and resolves 19 total implementation imports with no undeclared TS edge.
+
+### G4 Evidence
+- 2 TS files checked.
+- 19 total imports resolved.
+- 5 allowed edges verified.
+- 4 baselined/ratcheted edges retained.
+- 0 blocking findings.
+
+### Public Surface
+| File | Export |
+|---|---|
+| `edge/ports/audio.ts` | `ProcessingBoundary` |
+| `edge/ports/audio.ts` | `AudioSessionStatus` |
+| `edge/ports/audio.ts` | `AudioSessionSnapshot` |
+| `edge/ports/audio.ts` | `AudioSessionPort` |
+| `edge/ports/index.ts` | re-exports every `audio.ts` public type |
+
+### Commit
+- Branch: `story/TRS-h8kc`
+- SHA: `58d129e8d6534ce7b8b9bcbb6fa37bfc2740606f`
+- Diff: 7 files, 93 insertions, 2 deletions.
+
+### AC Verification
+| AC | Requirement | Status | Evidence |
+|---|---|---|---|
+| 1 | Private dependency-free ESM package | PASS | Manifest test confirms name, private flag, module type, and absent dependency maps. |
+| 2 | Strict noEmit TS config | PASS | Test asserts strict/noEmit/nodenext and exact ports include. |
+| 3 | Typed public port | PASS | Four required type/interface exports are present. |
+| 4 | No implementation/I/O | PASS | Source contains type declarations only; no external import, fetch, or WebSocket. |
+| 5 | Relative ESM re-export resolved | PASS | G4 resolves 19 imports including the TS barrel. |
+| 6 | Voice-edge mapping without violation | PASS | 2 TS files checked; no undeclared edge. |
+| 7 | Offline tests and full suite | PASS | Target 1/1; full suite 329/329. |
+
+### pvg verify
+- Substantive package/test files: PASSED.
+- The one-line `edge/ports/index.ts` is an intentional pure ESM barrel and was excluded from the substance threshold scan.
+
+LEARNINGS:
+- Machinery reports TypeScript file kinds as `ts files`; architecture tests should parse counts instead of expecting the word `typescript`.
+- Adding a legitimate test changes the M0 report denominator, so frozen report fixtures must advance with the suite inventory.
+
+### OBSERVATIONS
+- None.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit 58d129e8d6534ce7b8b9bcbb6fa37bfc2740606f.
+- Full suite 329/329; architecture gate green.
+
+### proof
+- [x] AC #1 through AC #7 verified above.
+
 ## nd_contract
 status: in_progress
 

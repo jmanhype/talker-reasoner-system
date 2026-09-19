@@ -8,8 +8,8 @@ labels: [hard-tdd, walking-skeleton, red-approved, rejected-x2, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:25:01Z
-content_hash: "sha256:75667902b4666908b5789dc3fa8cf7fc5b73c5d8548121e329441d93b881f66f"
+updated_at: 2026-09-19T19:25:20Z
+content_hash: "sha256:9a49c78d03c0887c08a86e14c2ae48b2269ccba8d03869450a1078db486f9353"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -182,6 +182,20 @@ status: new
 - `machinery check design --impl .` was an initial diagnostic mis-scan over `.venv`; it produced 462 boundary-mapping errors and was not treated as a project result. The story's literal command, `machinery check design`, exited 0 with 0 blocking findings.
 - `machinery check design --impl tests` exited 1 with exactly two expected G4 errors because `tests/` is intentionally outside contract boundaries; its Gt section still verified 8 test files, 7 machines, and 62/62 oracle rows covered by conformance parse.
 - `machinery check design` emitted seven non-blocking Gx carrier warnings for invariants attested through prose/tests rather than machine units: `action-schema-fail-closed`, `hot-state-minimized`, `hot-state-ttl`, `model-boundaries-explicit`, `policy-three-outcomes`, `talker-no-authority`, and `transcriber-no-authority`. Blocking count remained zero; these are covered by the RED property tests and remain GREEN obligations.
+## PM Decision
+ACCEPTED [2026-09-19]: Final GREEN evidence reviewed. All 162 hard-TDD tests and all 326 repository tests pass; required Modelith/machinery gates and TDD authorization checks pass. The 1.50x diff-budget overrun is explained by the mandatory 62-oracle/36-invariant denominators, and all non-blocking warnings are disclosed.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed final SHA b9210850c8785cd4bcf1589e355b1dcd0aac10bc.
+- Verified final delivery proof: 9/9 checks passed.
+- Confirmed authorized test-edit marker de429a3 and hard-TDD guard PASS.
+
+### proof
+- [x] AC #1 through AC #9 verified from final evidence.
+
 ## nd_contract
 status: delivered
 

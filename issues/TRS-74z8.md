@@ -4,7 +4,7 @@ title: "Route typed fixtures through calibrated three-route policy"
 status: closed
 priority: 1
 type: feature
-labels: [slice-0, delivered]
+labels: [slice-0, delivered, accepted]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed

@@ -9,7 +9,7 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:36Z
 created_by: speed
 updated_at: 2026-09-19T13:41:59Z
-content_hash: "sha256:662bf1269351aa42fcaee321ea64facf50b9b68536944d89aff73a22341e9620"
+content_hash: "sha256:033cd9df3bc7e6d4c6d597893df9143b7a5006d2d6a1144727cf57cad5559f5f"
 assignee: dev-TRS-0daa
 follows: [TRS-zpo4]
 closed_at: 2026-09-19T13:41:58Z
@@ -157,6 +157,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## Implementation Evidence
 
 Commands run:

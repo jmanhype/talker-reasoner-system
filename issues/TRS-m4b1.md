@@ -9,7 +9,7 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed
 updated_at: 2026-09-19T20:19:02Z
-content_hash: "sha256:cf1b9003901adeacafcb04c1558d5e9dee9fb35f7b6fdc4c2d94aabd0eb3f6d6"
+content_hash: "sha256:e59430695e6f667f57e54067630c166df8587359c02028b3e1ad75d5569177c2"
 assignee: dev-TRS-m4b1
 closed_at: 2026-09-19T20:19:01Z
 close_reason: "Accepted: implementation-wide G4/Gt architecture gate is green with explicit four-edge ratchet."
@@ -248,6 +248,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-09-19]: Evidence reviewed. The root-package move preserves all behavior, G4/Gt now resolve real imports/tests, four current edges are explicitly ratcheted, and the required gate is green with 328 passing tests.
 

@@ -8,8 +8,8 @@ labels: [e2e, capstone, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:30:27Z
-content_hash: "sha256:958f922021be8447b97a3c154e7daad6d7427af0657f19abd6f29c7207d1bd61"
+updated_at: 2026-09-19T19:30:41Z
+content_hash: "sha256:afb24e05bb1506517c2eb59b5cc4cf2f3dc3ce0db6ad7d4379da8517bd94eaf6"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -306,3 +306,57 @@ status: delivered
 
 ### proof
 - [x] AC #1 through AC #9 verified in final evidence.
+
+### 2026-09-19T19:30:41Z speed
+## Implementation Evidence
+
+Commands run:
+- 
+no tests ran in 0.00s -> 1 passed.
+- ........................................................................ [ 22%]
+........................................................................ [ 44%]
+........................................................................ [ 66%]
+........................................................................ [ 88%]
+......................................                                   [100%]
+326 passed in 1.85s -> 327 passed.
+- == Gc-carrier  invariant carrier reconciliation ==
+  note   relational layers not opted in: policy, integrity, isolation
+  checked: 36 invariants declared, 86 preserves references, 36 carried by preserves
+  ok
+== G2-c4  Architecture Contract ==
+  note   baseline: no rules; the ratchet holds no tolerated debt (mechanism unused)
+  checked: 11 boundaries, 13 externals, 24 allow rules, 60 transitive pairs, 11 deny rules, 16 provided keys, 3 consumed keys, 4 no_path assertions, 11 boundaries with exposes, 26 dsl elements, 11 boundaries bound to dsl, 14 mitigation rows, 27 dependencies with mitigation rows
+  ok
+== G3-machine  machines + oracle ==
+  checked: 7 machines, 62 transitions, 7 oracles fresh, 51 named units covered
+  ok
+== Gx-trace  cross-layer traceability ==
+  warn   invariant 'action-schema-fail-closed' is carried by preserves but realized by no machine unit or relational layer; its enforcement rests on the prose tables and the tests they name (map it in a machine matrix or a relational layer)
+  warn   invariant 'hot-state-minimized' is carried by preserves but realized by no machine unit or relational layer; its enforcement rests on the prose tables and the tests they name (map it in a machine matrix or a relational layer)
+  warn   invariant 'hot-state-ttl' is carried by preserves but realized by no machine unit or relational layer; its enforcement rests on the prose tables and the tests they name (map it in a machine matrix or a relational layer)
+  warn   invariant 'model-boundaries-explicit' is carried by preserves but realized by no machine unit or relational layer; its enforcement rests on the prose tables and the tests they name (map it in a machine matrix or a relational layer)
+  warn   invariant 'policy-three-outcomes' is carried by preserves but realized by no machine unit or relational layer; its enforcement rests on the prose tables and the tests they name (map it in a machine matrix or a relational layer)
+  warn   invariant 'talker-no-authority' is carried by preserves but realized by no machine unit or relational layer; its enforcement rests on the prose tables and the tests they name (map it in a machine matrix or a relational layer)
+  warn   invariant 'transcriber-no-authority' is carried by preserves but realized by no machine unit or relational layer; its enforcement rests on the prose tables and the tests they name (map it in a machine matrix or a relational layer)
+  checked: 16 entities, 6 lifecycle machines traced, 1 operational machines, 6 lifecycle entities with machines, 6 placement rows with machines, 2 placement rows waived, 1 build mode declared, 1 toolchain section present, 1 state-migration section present, 29 invariants enforced, 29 invariants unit-backed (guard/action/actor), 7 invariants attested only (prose)
+== Gb-plan  build plan structure ==
+  checked: 1 plans, 9 milestones, 9 DoD-bearing milestones, 1 skeleton citations
+  ok
+
+0 blocking (ERROR/DRIFT) finding(s) -> exit 0, 0 blocking findings.
+- GATES: PASS (no changed files to scan) -> PASS, 0 warnings.
+-  -> PASSED.
+
+Summary: final offline M0 report has 7 machines, 62 transitions, 36 invariants, 327 tests, zero live dependency classes, and decision . Full report is in the preceding DELIVERED evidence block.
+
+Commit SHA: 1c616a6762b63c11ffaa5b563ae28d55ed3d19dc
+
+## nd_contract
+status: delivered
+
+### evidence
+- Final SHA and exact command outputs are recorded above.
+- Report denominators: 7/62/36/327/0; decision pass.
+
+### proof
+- [x] AC #1 through AC #9 pass.

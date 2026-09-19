@@ -1,17 +1,19 @@
 ---
 id: TRS-ndv6
 title: "Run async reasoner proposals through local transport"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [async, slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T05:29:37Z
-content_hash: "sha256:07df1c2552de49387c6677dacde5f3999b85ea1ce30a55285a0f866f7dc6b196"
+updated_at: 2026-09-19T15:56:07Z
+content_hash: "sha256:b636bc5b78b4dc05ad19adc37adcf2f5fed7d3a71d936245dcb0a063e8943a23"
 blocks: [TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-74z8, TRS-9md6]
+assignee: dev-TRS-ndv6
+follows: [TRS-74z8, TRS-9md6]
 ---
 
 ## Description
@@ -171,10 +173,15 @@ status: new
 - 2026-09-19T05:29:39Z dep_added: blocks TRS-osl5
 - 2026-09-19T14:14:39Z dep_removed: was_blocked_by TRS-74z8
 - 2026-09-19T15:55:45Z dep_removed: was_blocked_by TRS-9md6
+- 2026-09-19T15:56:07Z status: open -> in_progress
+- 2026-09-19T15:56:07Z auto-follows: linked to predecessor TRS-74z8
+- 2026-09-19T15:56:07Z auto-follows: linked to predecessor TRS-9md6
+- 2026-09-19T15:56:07Z claimed by dev-TRS-ndv6
 
 ## Links
 - Parent: [[TRS-pf94]]
 - Blocks: [[TRS-f7sm]], [[TRS-osl5]]
 - Was blocked by: [[TRS-74z8]], [[TRS-9md6]]
+- Follows: [[TRS-74z8]], [[TRS-9md6]]
 
 ## Comments

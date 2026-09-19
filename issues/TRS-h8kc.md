@@ -9,7 +9,7 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:11:54Z
 created_by: speed
 updated_at: 2026-09-19T20:21:03Z
-content_hash: "sha256:0417dbbdc61dff4c3305a6ebb6a5fbc4510c56d71489f45d14f04a8ad90ce0d1"
+content_hash: "sha256:fde04ac288e5bdc2389da4af276cb4e86f43724b50fa5e98eb32cddcb6201cab"
 was_blocked_by: [TRS-m4b1]
 assignee: dev-TRS-h8kc
 follows: [TRS-m4b1]
@@ -213,6 +213,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-09-19]: Evidence reviewed. The edge package is private, dependency-free, strict, typed, G4-mapped, and the full suite remains green.
 

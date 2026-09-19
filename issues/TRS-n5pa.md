@@ -1,15 +1,15 @@
 ---
 id: TRS-n5pa
 title: "E2e: verify the complete offline M0 machinery gate"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [e2e, capstone]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:25:22Z
-content_hash: "sha256:9db295392b096affb6889f3f09421e6c854d830f52178eb31aa2f5a0a2b0dcb2"
+updated_at: 2026-09-19T19:27:05Z
+content_hash: "sha256:6249dd9459176d816d21cca0e7f9407a91ccfcbb96c1786048d13f40609e032a"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -119,6 +119,8 @@ status: new
 - 2026-09-19T19:25:21Z auto-follows: linked to predecessor TRS-8k9t
 - 2026-09-19T19:25:21Z claimed by dev-TRS-n5pa
 - 2026-09-19T19:25:22Z status: in_progress -> open
+- 2026-09-19T19:27:05Z status: open -> in_progress
+- 2026-09-19T19:27:05Z claimed by dev-TRS-n5pa
 
 ## Links
 - Parent: [[TRS-h031]]

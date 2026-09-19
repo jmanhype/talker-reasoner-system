@@ -8,8 +8,8 @@ labels: [e2e, capstone, architecture]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:12:27Z
 created_by: speed
-updated_at: 2026-09-19T20:21:25Z
-content_hash: "sha256:d43667ec4241473201b3e5ca6f3eaa6d584241bee15cd970ab22b645f9ded899"
+updated_at: 2026-09-19T20:21:26Z
+content_hash: "sha256:16a512a149571969956448d2f9ab9cbcd8f6f02849543db170191914d9dfb236"
 was_blocked_by: [TRS-m4b1, TRS-h8kc]
 assignee: dev-TRS-g7go
 follows: [TRS-m4b1, TRS-h8kc]
@@ -212,7 +212,15 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Claimed final M1 architecture capstone on 2026-09-19.
+- Base epic SHA: c0dbefeea0c03a96a623b5564a508849230abbf4
+
+### proof
+- [ ] Emit exact M1 architecture report with implementation-wide denominators and decision pass.
 
 ## History
 - 2026-09-19T20:12:27Z dep_added: blocked_by TRS-m4b1

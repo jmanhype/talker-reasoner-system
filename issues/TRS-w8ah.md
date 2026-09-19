@@ -10,6 +10,7 @@ updated_at: 2026-09-19T20:27:11Z
 content_hash: "sha256:24b8cee465450c813cca0d2fc926d0bc5116e53c15e23e7287bada9da121da27"
 closed_at: 2026-09-19T20:27:11Z
 close_reason: "All M1 architecture stories accepted; implementation-wide G4/Gt gate is green."
+labels: [accepted]
 ---
 
 ## Description

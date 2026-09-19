@@ -4,11 +4,11 @@ title: "Guard fixed local actions with fail-closed validation"
 status: closed
 priority: 1
 type: feature
-labels: [slice-0, delivered]
+labels: [slice-0, delivered, accepted]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T15:55:44Z
+updated_at: 2026-09-19T15:55:45Z
 content_hash: "sha256:75c930957e24fbaf79ca4c99c7eaf63f4fa5e42e57e61cca5ce3f6ab0187d8cd"
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-9md6

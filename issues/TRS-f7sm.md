@@ -8,8 +8,8 @@ labels: [cli, integration, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T16:56:27Z
-content_hash: "sha256:04f43fc847579b17bf0bc3381f352e5c85928eb8d78b24d7a69d561ba160e9f8"
+updated_at: 2026-09-19T16:57:30Z
+content_hash: "sha256:3be86ca4efa60fcb744084b45a3b7f5901c6867100650fe7cd558dd22cbf6b10"
 blocks: [TRS-osl5]
 was_blocked_by: [TRS-74z8, TRS-9md6, TRS-ndv6]
 assignee: dev-TRS-f7sm
@@ -159,6 +159,63 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-f7sm
+git diff --check
+/opt/homebrew/bin/python -m compileall -q src tests
+/opt/homebrew/bin/pytest -q tests/test_rendering_cli.py
+/opt/homebrew/bin/pytest -q
+pvg verify src/talk_reasoner/rendering.py src/talk_reasoner/cli.py src/talk_reasoner/__main__.py tests/test_rendering_cli.py --format=text
+PYTHONPATH=src /opt/homebrew/bin/python -m talk_reasoner tests/fixtures/slice0/trs-chitchat-001.json
+PYTHONPATH=src /opt/homebrew/bin/python -m talk_reasoner tests/fixtures/slice0/trs-unclear-001.json
+PYTHONPATH=src /opt/homebrew/bin/python -m talk_reasoner tests/fixtures/slice0/trs-tools-001.json
+```
+
+Independent coordinator results:
+
+- `git diff --check`: exit 0.
+- Compilation: exit 0.
+- Story tests: 44/44 passed.
+- Full suite: 154/154 passed.
+- `pvg verify`: passed with 4 files scanned and zero issues.
+- Real CLI probes:
+  - chitchat exit 0 and clean stdout;
+  - unclear exit 0 and one clarification;
+  - needs-tools exit 0 with one filler plus exact scoped confirmation;
+  - invalid fixture exit 2.
+- Privacy scan across captured stdout/stderr found no transcript, raw prompt, credential, password, API key, or traceback leakage.
+- Diff budget: 395 changed LOC, below 425.
+
+### CI/Test Results
+
+```text
+tests/test_rendering_cli.py: 44 passed
+full suite: 154 passed
+pvg verify: PASSED (4 files scanned, 0 issues)
+real CLI invalid-fixture exit: 2
+```
+
+Summary: implemented clean response rendering for every Slice-0 terminal state, exact confirmation copy, bounded cancellation/downgrade/failure behavior, forbidden-content rejection, privacy-safe evidence, stdout/stderr separation, module entrypoint, and fail-closed CLI exit codes.
+
+Commit SHA: 8057ef2
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. Every render state covered cleanly | PASS | Renderer state test. |
+| 2. Fast paths do not wake reasoner | PASS | Transport call-count test. |
+| 3. At most one filler and concise terminal output | PASS | Slow-path CLI tests. |
+| 4. Confirmation names exact scope/consequences/choices | PASS | Real needs-tools probe and test. |
+| 5. Cancel/downgrade/failure copy is bounded and safe | PASS | Renderer tests. |
+| 6. Forbidden content rejected | PASS | Ten-case forbidden-content test. |
+| 7. Stable response metadata/provenance | PASS | Renderer and CLI evidence assertions. |
+| 8. stdout clean; stderr compact privacy-safe JSON | PASS | All fixture CLI tests and independent scan. |
+| 9. Exit 0 normal, exit 2 fail-closed | PASS | Real CLI probes. |
 
 
 ## nd_contract

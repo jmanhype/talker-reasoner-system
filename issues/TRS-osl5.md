@@ -1,17 +1,19 @@
 ---
 id: TRS-osl5
 title: "E2e: trace fixture conversations to clean outcomes"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [capstone, e2e, slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T05:29:37Z
-content_hash: "sha256:1b0c528a04a59faddd6360d945fb42d1480d308f19a85aa99b8364be83c04220"
+updated_at: 2026-09-19T16:58:19Z
+content_hash: "sha256:7b2e63a222850c566852e666f6b29458e446280c77455ce2b029d562e1131da7"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
+assignee: dev-TRS-osl5
+follows: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 ---
 
 ## Description
@@ -157,10 +159,18 @@ status: new
 - 2026-09-19T15:55:45Z dep_removed: was_blocked_by TRS-9md6
 - 2026-09-19T16:31:14Z dep_removed: was_blocked_by TRS-ndv6
 - 2026-09-19T16:57:44Z dep_removed: was_blocked_by TRS-f7sm
+- 2026-09-19T16:58:19Z status: open -> in_progress
+- 2026-09-19T16:58:19Z auto-follows: linked to predecessor TRS-0daa
+- 2026-09-19T16:58:20Z auto-follows: linked to predecessor TRS-74z8
+- 2026-09-19T16:58:20Z auto-follows: linked to predecessor TRS-9md6
+- 2026-09-19T16:58:20Z auto-follows: linked to predecessor TRS-ndv6
+- 2026-09-19T16:58:20Z auto-follows: linked to predecessor TRS-f7sm
+- 2026-09-19T16:58:20Z claimed by dev-TRS-osl5
 
 ## Links
 - Parent: [[TRS-pf94]]
 - Blocked by: [[TRS-zpo4]]
 - Was blocked by: [[TRS-0daa]], [[TRS-74z8]], [[TRS-9md6]], [[TRS-ndv6]], [[TRS-f7sm]]
+- Follows: [[TRS-0daa]], [[TRS-74z8]], [[TRS-9md6]], [[TRS-ndv6]], [[TRS-f7sm]]
 
 ## Comments

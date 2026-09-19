@@ -8,8 +8,8 @@ labels: [slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T14:14:14Z
-content_hash: "sha256:33045b2b242f2f6a87b17b71cca212b0baace3a1ccccc0a44b4b585318fc8f0d"
+updated_at: 2026-09-19T14:14:39Z
+content_hash: "sha256:5f0d18de6e03c45ea45d74663522a6f3c09d860df729eeeafe5ce7f9543e74b5"
 blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-74z8
@@ -159,6 +159,24 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+- git add config src/talk_reasoner/routing.py tests/test_routing.py
+- git commit -m "feat(TRS-74z8): add calibrated three-route policy"
+
+### CI/Test Results
+- Story commit: d4714b8
+- Worktree clean after commit.
+- Independent full suite before commit: 28/28 passed.
+
+Summary: accepted implementation snapshot committed on story/TRS-74z8 at d4714b8.
+
+Commit SHA: d4714b8
+
+### AC Verification
+- [x] All eight TRS-74z8 AC are covered by committed files and independent 28/28 suite.
+
 ## Implementation Evidence
 
 Commands run:

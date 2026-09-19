@@ -8,8 +8,8 @@ labels: [slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T15:54:09Z
-content_hash: "sha256:5e5064eeef56596efedd5a4bb5c7d1f001473ce95ffbe96fe22e9506bd178f28"
+updated_at: 2026-09-19T15:55:20Z
+content_hash: "sha256:7fd525d8bd3011b5c27caa48011224ad84c1ac1a075227f472d8bccdd6a7b9ff"
 blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-9md6
@@ -162,6 +162,57 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-9md6
+git diff --check
+.venv/bin/python -m compileall -q src tests
+.venv/bin/python -m pytest tests/test_actions.py
+.venv/bin/python -m pytest
+pvg verify src/talk_reasoner/actions.py config/actions/slice0-v1.json tests/test_actions.py --include-tests --format=text
+```
+
+Independent coordinator results:
+
+- `git diff --check`: exit 0.
+- Compilation: exit 0.
+- Story tests: 24/24 passed.
+- Full suite: 52/52 passed.
+- `pvg verify`: passed with zero issues.
+- Diff budget: 421 total changed LOC, four under the 425 LOC ceiling.
+- Static scan found no production network, subprocess, storage-platform, or memory-platform dependency; the only forbidden-name match is the test’s negative-import assertion.
+- Report fixture still covers all 13 rejection codes once and all outcome denominators; no raw arguments enter ledger event bytes.
+
+### CI/Test Results
+
+```text
+tests/test_actions.py: 24 passed
+full suite: 52 passed
+pvg verify: PASSED, 0 issues
+changed LOC: 421 / 425 maximum
+```
+
+Summary: implemented the fixed local `search`/`read_state`/`write_state` catalog, fail-closed typed validation, exact policy outcomes, stable rejection taxonomy, exact confirmation binding/TTL, complete action-suite report metrics, and privacy-preserving ledger events without executing any action or enabling any external service.
+
+Commit SHA: 9e75200db07e174dca470b8d994ee8b101344f74436d5b612e558074ed31b63a
+
+This is the three-file pre-commit delivery-manifest SHA-256; the actual story Git commit is appended below.
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. Exact fixed catalog with complete metadata | PASS | Catalog loader and catalog-safety test. |
+| 2. Only valid, bounded, justified, provenance-complete, consent-matching, non-expired proposals accepted | PASS | 24 story tests. |
+| 3. Every required invalid family fails closed | PASS | Rejection matrix covers all 13 codes. |
+| 4. Stable versioned one-primary-code taxonomy | PASS | `RejectionCode` and report counts. |
+| 5. Exactly three policy outcomes; confirmation before consequential work | PASS | Policy tests. |
+| 6. Exact confirmation bindings and active TTL required | PASS | Mismatch/expiry tests. |
+| 7. Reports include all counts, denominators, versions, and hashes | PASS | Action-suite report test. |
+| 8. No execution/network/credentials/raw argument persistence | PASS | Static scan and ledger privacy test. |
 
 
 ## nd_contract

@@ -1,0 +1,18 @@
+{
+  "schema_version": "trs-m0-offline-report-v1",
+  "machine_names": [
+    "conversationTurn",
+    "eventLedger",
+    "memoryRecord",
+    "reasonerJob",
+    "toolCatalog",
+    "toolExecution",
+    "voiceSession"
+  ],
+  "oracle_file_count": 7,
+  "transition_count": 62,
+  "invariant_count": 36,
+  "collected_test_count": 327,
+  "live_dependency_classes": [],
+  "decision": "pass"
+}

@@ -1,16 +1,17 @@
 ---
 id: TRS-8k9t
 title: "M0 walking skeleton: enforce all machinery oracles offline"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [hard-tdd, walking-skeleton, red-approved, rejected, rejected-x2]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:20:23Z
-content_hash: "sha256:e551169f1df8eae63a045daf699628fe74915f326678692de773606f97340c86"
+updated_at: 2026-09-19T19:20:41Z
+content_hash: "sha256:e04105e20094abaecc94d73ab69f609a2408d57064791957911bb9a142408952"
 blocks: [TRS-n5pa]
+assignee: dev-TRS-8k9t
 ---
 
 ## Description
@@ -479,6 +480,8 @@ status: delivered
 - 2026-09-19T19:20:08Z status: in_progress -> in_progress
 - 2026-09-19T19:20:22Z status: in_progress -> open
 - 2026-09-19T19:20:22Z released by speed
+- 2026-09-19T19:20:41Z status: open -> in_progress
+- 2026-09-19T19:20:41Z claimed by dev-TRS-8k9t
 
 ## Links
 - Parent: [[TRS-h031]]

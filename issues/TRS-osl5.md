@@ -8,8 +8,8 @@ labels: [capstone, e2e, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T17:55:57Z
-content_hash: "sha256:d7e4431a60e35d223a2d94dac963c7f30cb56150950e9c56d396e0ee7649a53f"
+updated_at: 2026-09-19T17:55:58Z
+content_hash: "sha256:e04af520439802cca53ae8900f389882dc68a02374fd08f6d1fb822c6cb1ece7"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 follows: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm, TRS-zpo4]
@@ -145,6 +145,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-09-19.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence
 
 Commands run:

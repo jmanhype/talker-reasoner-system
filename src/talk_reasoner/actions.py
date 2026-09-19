@@ -97,6 +97,8 @@ def _schema(value: Any, label: str) -> Mapping[str, Any]:
     if not isinstance(value, dict) or value.get("type") not in {"string", "integer", "array"} or set(value) - fields: _error(f"{label} must be a typed bounded schema")
     kind = value["type"]; lower, upper = {"string": ("min_length", "max_length"), "integer": ("minimum", "maximum"), "array": ("min_items", "max_items")}[kind]
     if (lower not in value or upper not in value) and "allowed_values" not in value: _error(f"{label} requires complete bounds")
+    if lower in value and upper not in value: _error(f"{label}.{upper} is required when {lower} is present")
+    if upper in value and lower not in value and "allowed_values" not in value: _error(f"{label}.{lower} is required when {upper} is present")
     if lower in value: _integer(value[lower], f"{label}.{lower}"); _integer(value[upper], f"{label}.{upper}")
     if type(value.get("optional", False)) is not bool or (kind == "array" and value.get("items") != "string"): _error(f"{label} optional/items type is invalid")
     if not isinstance(value.get("allowed_values", []), list) or not all(isinstance(item, str) for item in value.get("allowed_values", [])): _error(f"{label}.allowed_values must be strings")
@@ -130,6 +132,7 @@ def load_action_catalog(path: Path) -> ActionCatalog:
         if permission not in permissions or risk not in permissions[permission]["allowed_risks"] or scope not in permissions[permission]["allowed_scopes"]: _error(f"unsafe permission/risk/scope combination for {name}")
         if data["privacy"] != "nonprivate" or not _boolean(data["reversible"], "reversible"): _error(f"unsafe privacy/reversibility combination for {name}")
         for field in ("idempotency", "requires_provenance"): _boolean(data[field], field)
+        if not data["requires_provenance"]: _error(f"action {name}: reviewed actions must require provenance")
         if set(data["argument_schema"]) != EXPECTED_ARGUMENTS[name]: _error(f"action {name}: canonical argument schema fields are incomplete")
         if not isinstance(data["state_keys"], list) or not all(isinstance(key, str) for key in data["state_keys"]): _error(f"action {name}: state_keys must be a string array")
         if not isinstance(data["bounds"], dict) or not data["bounds"] or any(_integer(value, "bound") < 0 for value in data["bounds"].values()): _error(f"action {name}: bounds are invalid")

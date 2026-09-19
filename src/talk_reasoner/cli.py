@@ -111,7 +111,7 @@ def _local_transport(fixture: Fixture) -> LocalScriptedTransport:
     provenance = ActionProvenance("slice0-provenance-v1", fixture.provenance.fixture_set_version, "synthetic-local", "reviewed", decision.input_hash)
     action = ActionProposal("slice0-proposal-v1", "write_state", {"key": "preferences", "value": "afternoon meetings", "terms": ["meeting"]},
                             job_id, fixture.session_id, fixture.turn_id, 0, "fixture-user", "fixture-user", "fixture://slice0",
-                            "The fixture requests one reviewed local write.", provenance, catalog.catalog_version, catalog.policy.policy_version)
+                            "The fixture asks for one reviewed local write.", provenance, catalog.catalog_version, catalog.policy.policy_version)
     proposal = ReasonerProposal("slice0-reasoner-proposal-v1", job_id, fixture.session_id, fixture.turn_id, 0,
                                 "Your local request is ready for confirmation.", (action,), None, {}, 0.94, 0.05,
                                 decision.input_hash, catalog.catalog_hash, catalog.policy.policy_version,

@@ -324,12 +324,14 @@ externals:
     element: tts
     imports: ["tool_gateway.adapters.tts", "edge.adapters.tts"]
 ignore:
+  - ".venv/**"
   - ".claude/**"
   - "tests/**"
   - "docs/**"
   - "design/**"
   - "scripts/**"
   - "src/talk_reasoner/__init__.py"
+  - "src/talk_reasoner/machinery.py"
 dependency_rules:
   allow:
     - trs.voice-edge -> trs.routing

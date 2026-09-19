@@ -201,6 +201,7 @@ Additional tests the oracles cannot derive:
 Instantiate the cross-cutting safety pattern: parse all seven transition oracles, map machine events to the existing typed Python contracts, keep raw content processing-only, and run all contract, privacy, architecture, and replay tests offline.
 
 DoD: all 62 stable ids in the seven oracle files appear in passing tests, including `CONV-02965d`; all 36 invariant property/contract tests pass; existing Slice 0 tests remain green; `machinery check design` has zero blocking findings; no network, credential, live audio, durable service, or semantic memory is enabled.
+Status: closed
 
 **M1 - Explicit architecture extraction**
 

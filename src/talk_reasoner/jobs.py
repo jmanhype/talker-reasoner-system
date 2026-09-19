@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, replace
-from datetime import datetime
+from datetime import datetime, timezone
 from types import MappingProxyType
 from typing import Literal, NamedTuple, Protocol
 
@@ -69,7 +69,12 @@ def _validate_request(request: JobRequest) -> ReasonerJobIdentity:
     if request.schema_version != REQUEST_SCHEMA_VERSION or request.decision.route != "needs_tools": raise JobRouteError("only needs_tools may start a reasoner job")
     identity = _identity(request); expected_hash = scoped_hash(request.fixture.transcript, scope="fixture-input", schema_version=request.fixture.schema_version)
     if request.decision.input_hash != expected_hash or request.fixture.session_id != request.state.session_id: raise JobRouteError("route, fixture, and state identities do not align")
-    if not request.fixture.consent.reasoner or request.turn_epoch < 0: raise JobRouteError("reasoner consent or turn epoch is invalid")
+    now = datetime.now(timezone.utc)
+    active_consent = (request.consent.granted_at.tzinfo is not None and request.consent.expires_at.tzinfo is not None
+                      and request.consent.granted_at <= now < request.consent.expires_at
+                      and request.consent.session_id == request.fixture.session_id
+                      and request.consent.policy_version == request.catalog.policy.policy_version)
+    if not request.fixture.consent.reasoner or not active_consent or request.turn_epoch < 0: raise JobRouteError("reasoner consent or turn epoch is invalid")
     if request.maximum_result_age_seconds <= 0: raise JobStateError("maximum result age must be positive")
     return identity
 

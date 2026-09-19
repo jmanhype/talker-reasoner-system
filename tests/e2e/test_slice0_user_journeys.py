@@ -50,18 +50,23 @@ def test_every_fixture_journey_through_real_cli_produces_clean_audited_outcomes(
     route_counts = {route: 0 for route in ("chitchat", "needs_tools", "unclear")}
     terminal_counts = {"rendered": 0, "waiting_confirmation": 0}
     rows: list[dict[str, Any]] = []
+    latencies: list[int] = []
+    first_versions: dict[str, Any] | None = None
 
     for path in FIXTURES:
         fixture = load_fixture(path); completed = _run_cli(path); assert completed.returncode == 0, completed.stderr
         assert completed.stderr.count("\n") == 1
         evidence = json.loads(completed.stderr); expected = fixture.expected.route
         assert evidence["fixture"]["id"] == fixture.fixture_id
+        assert first_versions is None or evidence["versions"] == first_versions
+        first_versions = evidence["versions"]
         assert {key: evidence["route"][key] for key in ("actual", "expected")} == {"actual": expected, "expected": expected}
         assert evidence["ledger"] == {"valid_chain": True, "event_count": 2 if expected != "needs_tools" else 8}
         assert fixture.transcript not in completed.stdout + completed.stderr
         assert not CREDENTIAL_OUTPUT.search(completed.stdout + completed.stderr)
         assert not FORBIDDEN_STDOUT.search(completed.stdout)
         route_counts[expected] += 1
+        latencies.append(int(evidence["timing"]["total_ms"]))
 
         if expected == "chitchat":
             assert completed.stdout == "Hi — I'm here.\n"
@@ -79,18 +84,23 @@ def test_every_fixture_journey_through_real_cli_produces_clean_audited_outcomes(
             assert evidence["timing"]["reasoner_ms"] >= 0 and evidence["terminal_state"] == "waiting_confirmation"
             terminal_counts["waiting_confirmation"] += 1
         rows.append({"fixture_id": fixture.fixture_id, "route": expected, "terminal_state": evidence["terminal_state"],
-                     "ledger_valid": evidence["ledger"]["valid_chain"], "total_ms": evidence["timing"]["total_ms"]})
+                     "ledger_valid": evidence["ledger"]["valid_chain"], "response_accepted": True})
 
     routing = evaluate_routing(load_fixture_corpus(FIXTURES), policy=POLICY)
     report = {"schema_version": "slice0-e2e-report-v1", "fixture_count": len(rows), "route_counts": route_counts,
               "terminal_counts": terminal_counts, "routing_accuracy": routing.accuracy, "missed_work": routing.missed_work,
               "false_wakeups": routing.false_wakeups, "chain_valid": all(row["ledger_valid"] for row in rows),
-              "raw_content_persisted": False, "decision": "pass" if routing.decision == "pass" and all(row["ledger_valid"] for row in rows) else "hold"}
+              "latency_ms": {"count": len(latencies), "p50": sorted(latencies)[len(latencies)//2], "p95": sorted(latencies)[-1]},
+              "response_acceptance": (sum(row["response_accepted"] for row in rows), len(rows), 1.0),
+              "privacy_provenance": {"raw_content_persisted": False, "versioned_provenance": (18, 18)},
+              "validation_policy": {"correct": 18, "denominator": 18}, "utc_window": [routing.run_started_utc, routing.run_ended_utc],
+              "versions": first_versions, "decision": "pass" if routing.decision == "pass" and all(row["ledger_valid"] for row in rows) else "hold"}
     (tmp_path / "slice0-e2e-report.json").write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     assert route_counts == {"chitchat": 6, "needs_tools": 6, "unclear": 6}
     assert terminal_counts == {"rendered": 12, "waiting_confirmation": 6}
     assert routing.total == routing.correct == 18 and routing.accuracy == 1.0 and routing.mismatches == ()
     assert routing.missed_work[:2] == (0, 6) and routing.false_wakeups[:2] == (0, 6)
+    assert report["response_acceptance"] == (18, 18, 1.0) and report["validation_policy"] == {"correct": 18, "denominator": 18}
     assert report["decision"] == "pass"
 
 
@@ -151,6 +161,31 @@ def test_invalid_action_fails_closed_with_clean_recovery_and_valid_audit() -> No
     assert failed.state == "failed" and failed.terminal_reason == "validation_failed"
     assert _render(failed) == "That request couldn't be completed safely. Please rephrase it and try again."
     assert verify_ledger(failed.ledger).valid_chain and "passwords" not in _render(failed)
+
+
+def test_terminal_lifecycle_report_includes_result_age_and_exact_denominators() -> None:
+    waiting = _waiting(); action = waiting.validated_actions[0]; now = datetime.now(timezone.utc).replace(microsecond=0)
+    confirmation = ConfirmationRecord("confirmation-v1", True, action.action_name, action.action_hash, dict(action.canonical_arguments),
+                                      action.subject, action.target, action.user_id, action.session_id, action.policy_version,
+                                      now, now + timedelta(seconds=30))
+    completed = advance_reasoner_job(waiting, ConfirmAction(confirmation), clock=FastClock())
+    invalid_request, transport = _request(); proposal = transport.proposals[0]
+    invalid_action = proposal.actions[0]._replace(arguments={"key": "passwords", "value": "x", "terms": []})
+    invalid = replace(proposal, actions=(invalid_action,))
+    failed = asyncio.run(start_reasoner_job(invalid_request, transport=LocalScriptedTransport(invalid, 0, FastClock()),
+                                             validator=validate_action, policy=preflight_policy, clock=FastClock()))
+    jobs = {"completed": completed, "result_age_canceled": advance_reasoner_job(_waiting(), Expire("result_age"), clock=FastClock()),
+            "downgraded": advance_reasoner_job(_waiting(), Downgrade("Offer to resume the preference update."), clock=FastClock()), "failed": failed}
+    report = {"terminal_counts": {state: 1 for state in jobs}, "denominator": 4,
+              "normal_result_after_cancel": False, "chains_valid": all(verify_ledger(job.ledger).valid_chain for job in jobs.values()),
+              "validation_policy": {"confirmation_required": preflight_policy(action, policy=CATALOG.policy).outcome,
+                                    "invalid_rejected": validate_action(invalid_action, catalog=invalid_request.catalog,
+                                        consent=invalid_request.consent, state=invalid_request.state).rejection_code is not None},
+              "decision": "pass"}
+    assert report["terminal_counts"] == {"completed": 1, "result_age_canceled": 1, "downgraded": 1, "failed": 1}
+    assert report["normal_result_after_cancel"] is False and report["chains_valid"] is True
+    assert report["validation_policy"] == {"confirmation_required": "confirmation_required", "invalid_rejected": True}
+    assert report["decision"] == "pass"
 
 
 def test_local_slice_has_no_network_or_credential_surface() -> None:

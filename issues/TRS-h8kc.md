@@ -4,11 +4,11 @@ title: "M1 TypeScript edge package skeleton without live audio"
 status: in_progress
 priority: 1
 type: task
-labels: [architecture, edge, offline]
+labels: [architecture, edge, offline, delivered]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:54Z
 created_by: speed
-updated_at: 2026-09-19T20:20:47Z
+updated_at: 2026-09-19T20:20:48Z
 content_hash: "sha256:42de93c38673d027fbf4ea44f502423f7b1682008d45ad07c24e3fcbac00687b"
 blocks: [TRS-g7go]
 was_blocked_by: [TRS-m4b1]

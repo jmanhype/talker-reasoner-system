@@ -8,8 +8,8 @@ labels: [slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T14:13:38Z
-content_hash: "sha256:119a7aa76a69af828fc13049c68892f5e286e2c148783406963422896b6970b8"
+updated_at: 2026-09-19T14:14:14Z
+content_hash: "sha256:33045b2b242f2f6a87b17b71cca212b0baace3a1ccccc0a44b4b585318fc8f0d"
 blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-74z8
@@ -159,6 +159,55 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-74z8
+git diff --check
+.venv/bin/python -m compileall -q src tests
+.venv/bin/python -m pytest tests/test_routing.py
+.venv/bin/python -m pytest
+pvg verify config/routing/slice0-v1.json src/talk_reasoner/routing.py tests/test_routing.py --include-tests --check-mocks --format=text
+```
+
+Independent coordinator results:
+
+- `git diff --check`: exit 0.
+- Compilation: exit 0.
+- Story tests: 14/14 passed.
+- Full suite: 28/28 passed.
+- `pvg verify`: exit 0.
+- Static scan found no production network/reasoner/job/tool imports; only the test’s forbidden-import assertion matched.
+- Frozen corpus report: 18/18 correct; confusion matrix 6/6 diagonal with zero off-diagonal; missed `needs_tools` 0/6; false wakeups 0/6; unclear precision 1.0; route event chain valid for 18 events.
+
+### CI/Test Results
+
+```text
+tests/test_routing.py: 14 passed
+full suite: 28 passed
+pvg verify: 0 issues
+```
+
+Summary: implemented deterministic local three-route classification, versioned threshold policy, boundary and safety fallback behavior, exact route reports/denominators/confusion metrics, and privacy-safe route events without any reasoner, network, tool, or memory boundary.
+
+Commit SHA: 21dd9fe6b073b9c536a65ca3b97df2892d465b5c6b3409a632c954293972a7cd
+
+This is the three-file delivery-manifest SHA-256 before the Git commit; the worktree commit is appended below.
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. Exact probability shape and routing metadata | PASS | Typed `RoutingDecision`; 14 story tests. |
+| 2. Deterministic local scoring; no network/model/tools | PASS | Determinism and forbidden-boundary tests. |
+| 3. Versioned thresholds and guarded fallbacks | PASS | Policy loader/apply-policy tests; only three routes. |
+| 4. Boundary and invalid-calibration cases cannot bypass policy | PASS | Exact 0.90/0.80 boundary tests and invalid/risk cases. |
+| 5. Complete stratified report with denominators and versions | PASS | Full corpus report and test assertions. |
+| 6. Frozen corpus 18/18, zero missed work/wakeups | PASS | Independent reported metrics and integration test. |
+| 7. Reasoner boundary absent | PASS | Static import assertion and source scan. |
+| 8. Hash-scoped privacy-safe route events | PASS | 18-event chain verification and privacy test. |
 
 
 ## nd_contract

@@ -9,7 +9,7 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T19:20:22Z
-content_hash: "sha256:5f46ac214ca9fb73e36cfae0c9702b515f7e67abf1726d24cc74445630845c9f"
+content_hash: "sha256:1bc01f399c7cca7b5541b0494d3fc91d99ff834c02c27f65da3853558380d3be"
 blocks: [TRS-n5pa]
 ---
 
@@ -473,3 +473,11 @@ status: delivered
 - Blocks: [[TRS-n5pa]]
 
 ## Comments
+
+### 2026-09-19T19:20:22Z speed
+## PM Decision
+REJECTED [2026-09-19]:
+EXPECTED: Executable RED properties must test the intended invalid cases without contradicting the committed 164-test Slice-0 contract.
+DELIVERED: Production passes 73/73 oracle tests and 164/164 existing tests, but 25 invariant failures trace to helper-signature mistakes and two direct contradictions in the frozen RED file.
+GAP: The RED assertions cannot execute as authored and cannot all be true while the committed existing suite remains green.
+FIX: Apply only the recorded TEST-EDIT AUTHORIZED repairs to tests/test_machinery_invariants.py and commit with [test-edit-authorized]; then rerun the unchanged semantic suites.

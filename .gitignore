@@ -7,3 +7,4 @@
 .vault/.dispatcher-state.json
 .vault/.vlt.lock
 .vault/.guard/
+.claude/worktrees/

@@ -8,8 +8,8 @@ labels: [hard-tdd, walking-skeleton, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:05:03Z
-content_hash: "sha256:00cc0808bbd64e952e9b52b87f717a8d9c4a51f03aef7f93a75e83b175c25100"
+updated_at: 2026-09-19T19:05:50Z
+content_hash: "sha256:ca9ce69b61331d57d3c5aae32bb3985267958b99a5f39ff937cec83e181a8ddf"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -178,7 +178,33 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
 
+Commands run:
+- `pytest -q tests/test_machinery_oracles.py tests/test_machinery_invariants.py` -> intended RED, 162 failed; all failures: `talk_reasoner.machinery is missing`.
+- `pytest -q --ignore=tests/test_machinery_oracles.py --ignore=tests/test_machinery_invariants.py` -> 164 passed.
+- `modelith lint design/domain.modelith.yaml --completeness error` -> exit 0.
+- `machinery lint design/machines` -> exit 0.
+- `machinery oracle design/machines` -> exit 0.
+- `machinery check design` -> exit 0, 0 blocking findings.
+- `pvg verify tests/test_machinery_oracles.py tests/test_machinery_invariants.py --include-tests --format=text` -> PASSED.
+- `pvg story verify-tdd --base 630386c` -> PASS.
+
+Summary: RED complete. 62/62 stable ids and 36/36 invariants are covered by 162 intentionally failing tests; existing suite is 164/164 green; changed LOC is 899. GREEN remains pending.
+
+Commit SHA: 2f8052000499280480a0103901582dc709642f11
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit 2f8052000499280480a0103901582dc709642f11 on story/TRS-8k9t.
+- Commands and results are listed under `## Implementation Evidence`.
+- RED coverage: 62/62 oracle rows and 36/36 invariant properties.
+
+### proof
+- [x] AC #1: RED tests committed with `tdd-red` and all 162 failures identify missing `talk_reasoner.machinery`.
+- [ ] AC #2 through AC #9: pending GREEN implementation/acceptance as itemized in the full RED evidence table above.
 
 ## nd_contract
 status: delivered

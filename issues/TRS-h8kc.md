@@ -9,7 +9,7 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:11:54Z
 created_by: speed
 updated_at: 2026-09-19T20:19:15Z
-content_hash: "sha256:d3748319ca09fbe90fb2486f8d6a717b316f3d980f89467e8ade9e70a85e406c"
+content_hash: "sha256:93fe793bcb02077b1e00bdab67f58170458b45994ed3ba7cc2020674c0f0a97a"
 blocks: [TRS-g7go]
 was_blocked_by: [TRS-m4b1]
 assignee: dev-TRS-h8kc
@@ -212,7 +212,15 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Claimed TypeScript edge skeleton story on 2026-09-19.
+- Base epic SHA: e80979eae3c8f7ab1880b1e340df7d63540a3ceb
+
+### proof
+- [ ] Add strict dependency-free edge package skeleton and prove G4 resolves its ESM import.
 
 ## History
 - 2026-09-19T20:11:55Z dep_added: blocked_by TRS-m4b1

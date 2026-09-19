@@ -8,8 +8,8 @@ labels: [e2e, capstone, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:30:26Z
-content_hash: "sha256:e151abe2952d9d7f6ee01c65cf04cafe229abcbf6afaea664c1d2ff41461afeb"
+updated_at: 2026-09-19T19:30:27Z
+content_hash: "sha256:958f922021be8447b97a3c154e7daad6d7427af0657f19abd6f29c7207d1bd61"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -294,3 +294,15 @@ status: in_progress
 
 ### 2026-09-19T19:25:22Z speed
 loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)
+
+### 2026-09-19T19:30:27Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Final capstone SHA: 1c616a6762b63c11ffaa5b563ae28d55ed3d19dc.
+- Target gate: 1 passed. Full suite: 327 passed.
+- Required deterministic and quality gates all pass.
+
+### proof
+- [x] AC #1 through AC #9 verified in final evidence.

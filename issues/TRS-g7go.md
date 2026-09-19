@@ -1,7 +1,7 @@
 ---
 id: TRS-g7go
 title: "E2e: verify the complete M1 architecture gate"
-status: in_progress
+status: closed
 priority: 1
 type: task
 labels: [e2e, capstone, architecture, delivered]
@@ -9,10 +9,12 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:12:27Z
 created_by: speed
 updated_at: 2026-09-19T20:27:10Z
-content_hash: "sha256:1cbf0ae235fe143b6b6dc007503d50a4ee627a2d5d802a836d816340d045062c"
+content_hash: "sha256:81de42e2537c6e4693052f2265181f467119c3e6ef2edc774d15012fa3b6781f"
 was_blocked_by: [TRS-m4b1, TRS-h8kc]
 assignee: dev-TRS-g7go
 follows: [TRS-m4b1, TRS-h8kc]
+closed_at: 2026-09-19T20:27:10Z
+close_reason: "Accepted: complete M1 architecture gate passes with exact 19/5/4/2/12 denominators and zero live dependencies."
 ---
 
 ## Description
@@ -370,6 +372,7 @@ status: in_progress
 - 2026-09-19T20:21:25Z auto-follows: linked to predecessor TRS-h8kc
 - 2026-09-19T20:21:25Z claimed by dev-TRS-g7go
 - 2026-09-19T20:26:54Z status: in_progress -> in_progress
+- 2026-09-19T20:27:10Z status: in_progress -> closed
 
 ## Links
 - Parent: [[TRS-w8ah]]

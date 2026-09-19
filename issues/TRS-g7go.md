@@ -9,7 +9,7 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:12:27Z
 created_by: speed
 updated_at: 2026-09-19T20:26:55Z
-content_hash: "sha256:2b38a70fd37edc8701b6f43640160a1d524f8fac386b5f31faae06945056db02"
+content_hash: "sha256:cb0b2273a34b11903f837be291f007845f1589486b2433664b13f243e33b8423"
 was_blocked_by: [TRS-m4b1, TRS-h8kc]
 assignee: dev-TRS-g7go
 follows: [TRS-m4b1, TRS-h8kc]
@@ -212,6 +212,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-09-19.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence
 
 PROOF:

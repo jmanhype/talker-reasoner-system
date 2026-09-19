@@ -1,16 +1,18 @@
 ---
 id: TRS-0daa
 title: "Prove typed fixture-ledger contracts locally"
-status: open
+status: in_progress
 priority: 1
 type: feature
 labels: [walking-skeleton, slice-0]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:36Z
 created_by: speed
-updated_at: 2026-09-19T05:29:36Z
-content_hash: "sha256:022e4e2882a8b9a4cd2d697eb8797e4a558966bbcb67500623a5745b36fb3516"
+updated_at: 2026-09-19T13:04:08Z
+content_hash: "sha256:70ba4a041a0c9cae4daa2eeb72ec8fc711deef7e8e156352cabe24bcf852ff93"
 blocks: [TRS-74z8, TRS-9md6, TRS-osl5]
+assignee: dev-TRS-0daa
+follows: [TRS-zpo4]
 ---
 
 ## Description
@@ -160,9 +162,13 @@ status: new
 - 2026-09-19T05:29:37Z dep_added: blocks TRS-74z8
 - 2026-09-19T05:29:37Z dep_added: blocks TRS-9md6
 - 2026-09-19T05:29:38Z dep_added: blocks TRS-osl5
+- 2026-09-19T13:04:08Z status: open -> in_progress
+- 2026-09-19T13:04:08Z auto-follows: linked to predecessor TRS-zpo4
+- 2026-09-19T13:04:08Z claimed by dev-TRS-0daa
 
 ## Links
 - Parent: [[TRS-pf94]]
 - Blocks: [[TRS-74z8]], [[TRS-9md6]], [[TRS-osl5]]
+- Follows: [[TRS-zpo4]]
 
 ## Comments

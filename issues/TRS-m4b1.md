@@ -1,6 +1,6 @@
 ---
 id: TRS-m4b1
-title: "M1 architecture gate: resolve implementation imports and ratchet debt"
+title: "M1 architecture gate: enforce implementation imports with explicit debt"
 status: open
 priority: 1
 type: task
@@ -8,7 +8,7 @@ labels: [architecture, integration]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed
-updated_at: 2026-09-19T20:12:56Z
+updated_at: 2026-09-19T20:12:57Z
 content_hash: "sha256:fc95632ebf363d03c26c285032c1749a899d1d1522bcef3aa3c3b6d5132326c8"
 blocks: [TRS-h8kc, TRS-g7go]
 ---

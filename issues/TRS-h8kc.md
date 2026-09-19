@@ -1,17 +1,19 @@
 ---
 id: TRS-h8kc
 title: "M1 TypeScript edge package skeleton without live audio"
-status: open
+status: in_progress
 priority: 1
 type: task
 labels: [architecture, edge, offline]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:54Z
 created_by: speed
-updated_at: 2026-09-19T20:12:57Z
-content_hash: "sha256:ea5c6fd4d7d207282bbd9766c60b6e9bdbd1bcc451c120257fcb9e8be3b4af5a"
+updated_at: 2026-09-19T20:19:15Z
+content_hash: "sha256:d3748319ca09fbe90fb2486f8d6a717b316f3d980f89467e8ade9e70a85e406c"
 blocks: [TRS-g7go]
 was_blocked_by: [TRS-m4b1]
+assignee: dev-TRS-h8kc
+follows: [TRS-m4b1]
 ---
 
 ## Description
@@ -216,10 +218,14 @@ status: new
 - 2026-09-19T20:11:55Z dep_added: blocked_by TRS-m4b1
 - 2026-09-19T20:12:27Z dep_added: blocks TRS-g7go
 - 2026-09-19T20:19:01Z dep_removed: was_blocked_by TRS-m4b1
+- 2026-09-19T20:19:15Z status: open -> in_progress
+- 2026-09-19T20:19:15Z auto-follows: linked to predecessor TRS-m4b1
+- 2026-09-19T20:19:15Z claimed by dev-TRS-h8kc
 
 ## Links
 - Parent: [[TRS-w8ah]]
 - Blocks: [[TRS-g7go]]
 - Was blocked by: [[TRS-m4b1]]
+- Follows: [[TRS-m4b1]]
 
 ## Comments

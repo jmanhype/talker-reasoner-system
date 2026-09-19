@@ -1,0 +1,85 @@
+{
+  "id": "conversationTurn",
+  "initial": "Receiving",
+  "version": "1.0.0",
+  "_comment": "ConversationTurn placement: one in-flight task per turn. Persistence: immutable fixture/turn metadata and scoped hashes only. Concurrency: turn epoch compare-and-cancel.",
+  "context": {
+    "turnId": null,
+    "turnEpoch": 0,
+    "status": "Receiving",
+    "ephemeralTranscript": null,
+    "inputHash": null,
+    "intentHash": null
+  },
+  "states": {
+    "Receiving": {
+      "on": {
+        "transcribe": {
+          "target": "Routed",
+          "guard": "transcriptValidAndBoundaryConsented",
+          "actions": "hashTranscriptAndRetainEphememeral"
+        },
+        "cancel": { "target": "Terminal", "actions": "cancelTurnAndSlowWork" }
+      },
+      "_ignores": {
+        "route": "routing requires a valid ephemeral transcript",
+        "advanceEpoch": "a receiving turn has no prior epoch to supersede",
+        "awaitConfirmation": "no validated action exists yet",
+        "finish": "the turn has no rendered outcome yet"
+      }
+    },
+    "Routed": {
+      "on": {
+        "route": [
+          { "target": "SlowPath", "guard": "routeIsNeedsToolsAndValid", "actions": "bindRouteToTurn" },
+          { "target": "Responding", "actions": "bindRouteToTurn" }
+        ],
+        "cancel": { "target": "Terminal", "actions": "cancelTurnAndSlowWork" }
+      },
+      "_ignores": {
+        "transcribe": "one transcript decision is bound to the turn",
+        "advanceEpoch": "the routed transcript has not yet created slow work",
+        "awaitConfirmation": "no reasoner proposal exists yet",
+        "finish": "a response has not been rendered"
+      }
+    },
+    "SlowPath": {
+      "on": {
+        "advanceEpoch": { "target": "Terminal", "actions": "cancelTurnAndSlowWork" },
+        "awaitConfirmation": { "target": "AwaitingConfirmation", "guard": "policyRequiresExactConfirmation" },
+        "cancel": { "target": "Terminal", "actions": "cancelTurnAndSlowWork" }
+      },
+      "_ignores": {
+        "transcribe": "the turn transcript is immutable after routing",
+        "route": "the route is already bound",
+        "finish": "slow work must terminalize before rendering"
+      }
+    },
+    "AwaitingConfirmation": {
+      "on": {
+        "advanceEpoch": { "target": "Terminal", "actions": "cancelTurnAndSlowWork" },
+        "cancel": { "target": "Terminal", "actions": "cancelTurnAndSlowWork" }
+      },
+      "_ignores": {
+        "transcribe": "confirmation is bound to the original transcript and action hash",
+        "route": "routing is complete",
+        "awaitConfirmation": "the turn is already waiting for one exact confirmation",
+        "finish": "confirmation must resolve before a normal response"
+      }
+    },
+    "Responding": {
+      "on": {
+        "finish": { "target": "Terminal", "actions": "releaseProcessingOnlyValues" },
+        "cancel": { "target": "Terminal", "actions": "cancelTurnAndSlowWork" }
+      },
+      "_ignores": {
+        "transcribe": "processing-only input is no longer accepted",
+        "route": "the route is already bound",
+        "advanceEpoch": "terminal rendering is canceled by the renderer priority rule",
+        "awaitConfirmation": "no confirmation is pending in this state"
+      }
+    },
+    "Terminal": { "type": "final" }
+  }
+}
+

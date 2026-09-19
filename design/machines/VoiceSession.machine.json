@@ -1,0 +1,36 @@
+{
+  "id": "voiceSession",
+  "initial": "Active",
+  "version": "1.0.0",
+  "_comment": "VoiceSession placement: one live single-operator session task. Persistence: only minimized session metadata through EventLedger; raw input remains processing-only. Concurrency: one session task and one active PersonaPlex lock.",
+  "context": {
+    "sessionId": null,
+    "status": "Active",
+    "dataBoundary": "localOnly",
+    "startedAt": null,
+    "endedAt": null,
+    "turnCount": 0
+  },
+  "states": {
+    "Active": {
+      "on": {
+        "degrade": { "target": "Degraded", "actions": "markSessionDegraded" },
+        "close": { "target": "Closed", "actions": "releaseProcessingOnlyValues" }
+      },
+      "_ignores": {
+        "start": "the session is already active; duplicate start is idempotent and ignored"
+      }
+    },
+    "Degraded": {
+      "on": {
+        "close": { "target": "Closed", "actions": "releaseProcessingOnlyValues" }
+      },
+      "_ignores": {
+        "start": "a degraded session cannot be restarted as a new session",
+        "degrade": "the session is already degraded; repeated dependency failure is recorded by observability"
+      }
+    },
+    "Closed": { "type": "final" }
+  }
+}
+

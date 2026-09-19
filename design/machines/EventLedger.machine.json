@@ -1,0 +1,52 @@
+{
+  "id": "eventLedger",
+  "initial": "Valid",
+  "_role": "operational",
+  "version": "1.0.0",
+  "_comment": "EventLedger placement: one ledger append/verify operation at a time. Persistence: local chain in Slice 0, append-only Postgres later. Concurrency: monotonic event ID sequence.",
+  "_delays": {
+    "LEDGER_WRITE_TIMEOUT": "2000 ms - local and single-node Postgres append budget before the action path fails closed"
+  },
+  "context": {
+    "eventId": 0,
+    "headHash": null,
+    "lastVerifiedEventId": 0,
+    "invalidEventIds": [],
+    "gaps": []
+  },
+  "states": {
+    "Valid": {
+      "on": {
+        "append": { "target": "Appending", "guard": "eventIsMinimizedAndChained", "actions": "prepareNextEvent" },
+        "verify": { "target": "Verifying" }
+      }
+    },
+    "Appending": {
+      "invoke": {
+        "src": "appendCanonicalEvent",
+        "input": { "eventId": "context.eventId", "headHash": "context.headHash" },
+        "onDone": { "target": "Valid", "actions": "advanceHeadHash" },
+        "onError": { "target": "Broken", "actions": "recordLedgerWriteFailure" }
+      },
+      "after": {
+        "LEDGER_WRITE_TIMEOUT": { "target": "Broken", "actions": "recordLedgerWriteFailure" }
+      }
+    },
+    "Verifying": {
+      "invoke": {
+        "src": "verifyEventChain",
+        "input": { "headHash": "context.headHash", "lastVerifiedEventId": "context.lastVerifiedEventId" },
+        "onDone": [
+          { "target": "Valid", "guard": "chainHasNoGapsOrMutations", "actions": "recordVerificationPass" },
+          { "target": "Broken", "actions": "recordIntegrityFailure" }
+        ],
+        "onError": { "target": "Broken", "actions": "recordIntegrityFailure" }
+      },
+      "after": {
+        "LEDGER_WRITE_TIMEOUT": { "target": "Broken", "actions": "recordIntegrityFailure" }
+      }
+    },
+    "Broken": { "type": "final" }
+  }
+}
+

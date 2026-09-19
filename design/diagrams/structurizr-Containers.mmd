@@ -1,0 +1,85 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["Container View: Talker Reasoner System"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    1["<div style='font-weight: bold'>Operator</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>The single authorized human<br />using and administering the<br />prototype.</div>"]
+    style 1 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    14["<div style='font-weight: bold'>PersonaPlex</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Real-time full-duplex<br />speech-to-speech talker.</div>"]
+    style 14 fill:#8e8e93,stroke:#636366,color:#ffffff
+    15["<div style='font-weight: bold'>Voxtral Realtime</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Streaming speech<br />transcription service.</div>"]
+    style 15 fill:#8e8e93,stroke:#636366,color:#ffffff
+    16["<div style='font-weight: bold'>Jev</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Calibrated ultra-fast routing<br />and reranking service.</div>"]
+    style 16 fill:#8e8e93,stroke:#636366,color:#ffffff
+    17["<div style='font-weight: bold'>Direct Reasoner</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>One direct tool-calling model<br />or local scripted transport<br />that proposes but never<br />executes.</div>"]
+    style 17 fill:#8e8e93,stroke:#636366,color:#ffffff
+    18["<div style='font-weight: bold'>MAGG</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Meta-MCP aggregator with<br />separate admin and runtime<br />surfaces.</div>"]
+    style 18 fill:#8e8e93,stroke:#636366,color:#ffffff
+    22["<div style='font-weight: bold'>Local MCP Tool</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>One allowlisted local<br />read-only MCP capability.</div>"]
+    style 22 fill:#8e8e93,stroke:#636366,color:#ffffff
+    23["<div style='font-weight: bold'>PostgreSQL</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Durable append-only events<br />and catalog records.</div>"]
+    style 23 fill:#8e8e93,stroke:#636366,color:#ffffff
+    24["<div style='font-weight: bold'>Redis</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Hot-state backend.</div>"]
+    style 24 fill:#8e8e93,stroke:#636366,color:#ffffff
+    25["<div style='font-weight: bold'>Memory Platform</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Deferred Mem0, Cognee, Zep,<br />or Letta memory backend.</div>"]
+    style 25 fill:#8e8e93,stroke:#636366,color:#ffffff
+    26["<div style='font-weight: bold'>Clean TTS</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Separate clean speech<br />renderer for slow-path<br />responses.</div>"]
+    style 26 fill:#8e8e93,stroke:#636366,color:#ffffff
+
+    subgraph 2 ["Talker Reasoner System"]
+      style 2 fill:#ffffff,stroke:#204468,color:#204468
+
+      10["<div style='font-weight: bold'>Event Ledger</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python and PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Append-only scoped-hash event<br />chain and integrity verifier<br />for minimized audit evidence.</div>"]
+      style 10 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      11[("<div style='font-weight: bold'>Hot State</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>TTL-bound minimized session<br />snapshot for the live voice<br />loop.</div>")]
+      style 11 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      12["<div style='font-weight: bold'>Memory Governor</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python]</div><div style='font-size: 80%; margin-top:10px'>Later consent-gated semantic<br />memory broker with<br />provenance, review, recall,<br />supersession, and deletion.</div>"]
+      style 12 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      13["<div style='font-weight: bold'>Observability</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python]</div><div style='font-size: 80%; margin-top:10px'>Versioned metrics, alerts,<br />traces, privacy canaries, and<br />replay evidence without raw<br />content.</div>"]
+      style 13 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      3["<div style='font-weight: bold'>Voice Edge</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript]</div><div style='font-size: 80%; margin-top:10px'>Browser and WebSocket<br />audio/session edge;<br />coordinates typed and spoken<br />input, one-stream audio<br />arbitration, interruption,<br />accessibility channels, and<br />turn epochs without reasoning<br />or execution authority.</div>"]
+      style 3 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      4["<div style='font-weight: bold'>Routing Service</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python]</div><div style='font-size: 80%; margin-top:10px'>Applies versioned<br />calibration, threshold, and<br />fail-closed policy to an<br />ephemeral transcript.</div>"]
+      style 4 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      5["<div style='font-weight: bold'>Reasoner Coordinator</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python]</div><div style='font-size: 80%; margin-top:10px'>Owns asynchronous reasoner<br />jobs and binds one typed<br />proposal to its request,<br />catalog, policy, and turn<br />epoch.</div>"]
+      style 5 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      6["<div style='font-weight: bold'>Action Governor</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python]</div><div style='font-size: 80%; margin-top:10px'>Validates action schemas and<br />scopes, applies fail-closed<br />policy preflight, and manages<br />exact confirmations.</div>"]
+      style 6 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      7["<div style='font-weight: bold'>Tool Catalog</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python and PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Versioned reviewed allowlist<br />of canonical tool schemas,<br />permissions, risks, scopes,<br />bounds, and provenance.</div>"]
+      style 7 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      8["<div style='font-weight: bold'>Tool Gateway</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python]</div><div style='font-size: 80%; margin-top:10px'>The sole executor boundary<br />for allowlisted,<br />policy-authorized actions;<br />filters results and isolates<br />credentials.</div>"]
+      style 8 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      9["<div style='font-weight: bold'>Response Renderer</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript/Python]</div><div style='font-size: 80%; margin-top:10px'>Builds bounded policy-safe<br />text and audio responses with<br />priority, cancellation, and<br />channel rules.</div>"]
+      style 9 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    end
+
+    1-. "<div>Speaks or types</div><div style='font-size: 70%'>[WSS/HTTPS]</div>" .->3
+    1-. "<div>Administers catalog versions</div><div style='font-size: 70%'>[Admin UI/API]</div>" .->7
+    1-. "<div>Administers servers and kits<br />through admin plane only</div><div style='font-size: 70%'>[MAGG admin]</div>" .->18
+    3-. "<div>Streams full-duplex audio</div><div style='font-size: 70%'>[WSS]</div>" .->14
+    3-. "<div>Streams transcription audio</div><div style='font-size: 70%'>[WSS/HTTP]</div>" .->15
+    3-. "<div>Submits normalized ephemeral<br />transcript</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->4
+    3-. "<div>Reads/writes bounded turn<br />snapshot</div><div style='font-size: 70%'>[Redis protocol]</div>" .->11
+    3-. "<div>Requests fast or slow<br />presentation</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->9
+    3-. "<div>Renders clean slow answer</div><div style='font-size: 70%'>[HTTP]</div>" .->26
+    4-. "<div>Requests calibrated labels</div><div style='font-size: 70%'>[HTTPS]</div>" .->16
+    4-. "<div>Creates asynchronous slow job</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->5
+    4-. "<div>Appends route evidence</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->10
+    5-. "<div>Requests one typed proposal</div><div style='font-size: 70%'>[HTTPS/local]</div>" .->17
+    5-. "<div>Submits proposals for<br />validation and policy</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->6
+    5-. "<div>Appends job and proposal<br />evidence</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->10
+    6-. "<div>Loads exact catalog and<br />policy version</div><div style='font-size: 70%'>[in-process/SQL]</div>" .->7
+    6-. "<div>Dispatches only authorized<br />action</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->8
+    6-. "<div>Appends validation, policy,<br />and confirmation evidence</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->10
+    8-. "<div>Lists, inspects,<br />health-checks, or proxies one<br />allowlisted runtime tool</div><div style='font-size: 70%'>[MCP/HTTP]</div>" .->18
+    8-. "<div>Invokes the first local<br />read-only allowlisted tool</div><div style='font-size: 70%'>[MCP]</div>" .->22
+    8-. "<div>Appends execution and<br />filtered-result evidence</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->10
+    9-. "<div>Appends response evidence</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->10
+    12-. "<div>Stores governed memory</div><div style='font-size: 70%'>[HTTPS]</div>" .->25
+    12-. "<div>Reads provenance and appends<br />memory lifecycle evidence</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->10
+    10-. "<div>Stores append-only events</div><div style='font-size: 70%'>[SQL]</div>" .->23
+    11-. "<div>Stores TTL-bound snapshots</div><div style='font-size: 70%'>[Redis protocol]</div>" .->24
+    10-. "<div>Publishes versioned metrics<br />and integrity state</div><div style='font-size: 70%'>[in-process/HTTP]</div>" .->13
+
+  end

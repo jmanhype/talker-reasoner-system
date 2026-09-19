@@ -1,4 +1,5 @@
 # paivot-graph project vault settings
 # Managed by: pvg settings key=value
 
+design.machinery: on
 stack_detection: false

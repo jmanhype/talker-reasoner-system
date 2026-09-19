@@ -1,0 +1,73 @@
+{
+  "id": "reasonerJob",
+  "initial": "Pending",
+  "version": "1.0.0",
+  "_comment": "ReasonerJob placement: one single-writer async task per jobId. Persistence: job lifecycle events in EventLedger; no raw proposal persistence. Concurrency: jobId queue plus legal-transition check.",
+  "_delays": {
+    "STALE_TTL": "30000 ms - initial slow-job stale cutoff from BUSINESS.md section 7"
+  },
+  "context": {
+    "jobId": null,
+    "status": "Pending",
+    "terminalReason": null,
+    "staleTtlSeconds": 30,
+    "resultMaxAgeSeconds": null,
+    "responsePriority": 0,
+    "waitingActionHashes": [],
+    "confirmedActionHashes": [],
+    "usedConfirmationHashes": [],
+    "proposalHash": null
+  },
+  "states": {
+    "Pending": {
+      "on": {
+        "run": { "target": "Running", "guard": "routeIsNeedsToolsAndFresh" },
+        "cancel": { "target": "Canceled", "actions": "recordCanceledByUser" },
+        "fail": { "target": "Failed", "actions": "recordFailClosedReason" }
+      },
+      "_ignores": {
+        "create": "the machine starts at Pending; duplicate create is idempotent by jobId",
+        "waitForConfirmation": "no proposal exists",
+        "complete": "no proposal or policy decision exists",
+        "downgrade": "no presentation result exists"
+      }
+    },
+    "Running": {
+      "invoke": {
+        "src": "requestReasonerProposal",
+        "input": { "jobId": "context.jobId", "proposalHash": "context.proposalHash" },
+        "onDone": [
+          { "target": "WaitingConfirmation", "guard": "proposalRequiresConfirmation", "actions": "bindProposalAndWaitingActions" },
+          { "target": "Completed", "actions": "bindProposalAndComplete" }
+        ],
+        "onError": { "target": "Failed", "actions": "recordFailClosedReason" }
+      },
+      "after": {
+        "STALE_TTL": { "target": "Canceled", "actions": "recordStaleTtlExpired" }
+      },
+      "on": {
+        "cancel": { "target": "Canceled", "actions": "recordCanceledByUser" },
+        "downgrade": { "target": "Downgraded", "actions": "recordSafeDowngrade" },
+        "fail": { "target": "Failed", "actions": "recordFailClosedReason" }
+      }
+    },
+    "WaitingConfirmation": {
+      "on": {
+        "complete": { "target": "Completed", "guard": "allExactConfirmationsSatisfied", "actions": "consumeConfirmations" },
+        "cancel": { "target": "Canceled", "actions": "recordCanceledByUser" },
+        "downgrade": { "target": "Downgraded", "actions": "recordSafeDowngrade" },
+        "fail": { "target": "Failed", "actions": "recordFailClosedReason" }
+      },
+      "_ignores": {
+        "create": "job already exists",
+        "run": "proposal is already bound",
+        "waitForConfirmation": "job is already waiting for exact confirmation"
+      }
+    },
+    "Completed": { "type": "final" },
+    "Canceled": { "type": "final" },
+    "Downgraded": { "type": "final" },
+    "Failed": { "type": "final" }
+  }
+}
+

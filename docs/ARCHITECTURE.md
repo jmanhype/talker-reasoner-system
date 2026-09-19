@@ -1,6 +1,7 @@
 # Architecture — Talker-Reasoner System MVP
 
 Status: Discovery & Framing draft for story `TRS-zpo4`
+Canonical machinery architecture: `design/ARCHITECTURE.md`
 Source of record: `docs/sources/whole-system-2026-09-19.md`
 Scope: local typed-fixture vertical slice plus staged target architecture
 ## 1. Architectural decision

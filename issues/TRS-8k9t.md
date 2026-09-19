@@ -9,7 +9,7 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T19:25:21Z
-content_hash: "sha256:9761240b8a49b3af3c6acf1819fef10613fe86c025b993c7cd3b2a4e988a91ab"
+content_hash: "sha256:7fe59cec58a74a2f2f9e0f5956a0333c3d922d66863e229296f53c06e7cfcf43"
 assignee: dev-TRS-8k9t
 closed_at: 2026-09-19T19:25:21Z
 close_reason: "Accepted: machinery oracle/invariant gate is green with 326/326 tests and authorized RED repairs."
@@ -183,6 +183,18 @@ status: new
 - `machinery check design --impl .` was an initial diagnostic mis-scan over `.venv`; it produced 462 boundary-mapping errors and was not treated as a project result. The story's literal command, `machinery check design`, exited 0 with 0 blocking findings.
 - `machinery check design --impl tests` exited 1 with exactly two expected G4 errors because `tests/` is intentionally outside contract boundaries; its Gt section still verified 8 test files, 7 machines, and 62/62 oracle rows covered by conformance parse.
 - `machinery check design` emitted seven non-blocking Gx carrier warnings for invariants attested through prose/tests rather than machine units: `action-schema-fail-closed`, `hot-state-minimized`, `hot-state-ttl`, `model-boundaries-explicit`, `policy-three-outcomes`, `talker-no-authority`, and `transcriber-no-authority`. Blocking count remained zero; these are covered by the RED property tests and remain GREEN obligations.
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-09-19]: Final GREEN evidence reviewed. All 162 hard-TDD tests and all 326 repository tests pass; required Modelith/machinery gates and TDD authorization checks pass. The 1.50x diff-budget overrun is explained by the mandatory 62-oracle/36-invariant denominators, and all non-blocking warnings are disclosed.
 

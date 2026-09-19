@@ -4,7 +4,7 @@ title: "Prove typed fixture-ledger contracts locally"
 status: closed
 priority: 1
 type: feature
-labels: [walking-skeleton, slice-0, delivered, accepted]
+labels: [walking-skeleton, slice-0, accepted]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:36Z
 created_by: speed

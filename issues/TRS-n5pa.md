@@ -9,7 +9,8 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T18:16:58Z
-content_hash: "sha256:6235d4aa5a1981a2efa2a5b4f724d52e1734869f5c16bcceb5730285788795fe"
+content_hash: "sha256:f8e9ca44b8f881bacc46733f157ecbcddda6c79772a357839e9b880276d45af7"
+blocked_by: [TRS-8k9t]
 ---
 
 ## Description
@@ -110,9 +111,10 @@ status: new
 
 
 ## History
-
+- 2026-09-19T18:16:58Z dep_added: blocked_by TRS-8k9t
 
 ## Links
 - Parent: [[TRS-h031]]
+- Blocked by: [[TRS-8k9t]]
 
 ## Comments

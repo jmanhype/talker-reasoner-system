@@ -9,7 +9,8 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T18:16:58Z
-content_hash: "sha256:323b3dde5f6d23835b63a2a24558269ed407ab0519765fcac255ef6821330790"
+content_hash: "sha256:e61009a7101e7f26fcd2f0d2acec508b0547ac217db2dafddd0328b08c9f9aaf"
+blocks: [TRS-n5pa]
 ---
 
 ## Description
@@ -179,9 +180,10 @@ status: new
 
 
 ## History
-
+- 2026-09-19T18:16:58Z dep_added: blocks TRS-n5pa
 
 ## Links
 - Parent: [[TRS-h031]]
+- Blocks: [[TRS-n5pa]]
 
 ## Comments

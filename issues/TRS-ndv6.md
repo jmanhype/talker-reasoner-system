@@ -8,8 +8,8 @@ labels: [async, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T16:29:54Z
-content_hash: "sha256:308d70c7c1306f4ea9695883fd55261d6931102235965e3e4c819759630160bd"
+updated_at: 2026-09-19T16:31:04Z
+content_hash: "sha256:8ab7caba52050e3236eebae072f73e138bb78c54c06585f3952360ffffab4f34"
 blocks: [TRS-f7sm, TRS-osl5]
 was_blocked_by: [TRS-74z8, TRS-9md6]
 assignee: dev-TRS-ndv6
@@ -164,6 +164,55 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-ndv6
+git diff --check
+.venv/bin/python -m compileall -q src tests
+.venv/bin/python -m pytest tests/test_jobs.py
+.venv/bin/python -m pytest
+pvg verify src/talk_reasoner/transports.py src/talk_reasoner/jobs.py tests/test_jobs.py --format=text
+```
+
+Independent coordinator results:
+
+- `git diff --check`: exit 0.
+- Compilation: exit 0.
+- Story tests: 58/58 passed.
+- Full suite: 110/110 passed.
+- `pvg verify`: passed with 3 files scanned and zero issues.
+- Diff budget: 474 changed LOC, one under the 475 LOC ceiling.
+- Static dependency scan found no production network, subprocess, storage-platform, or memory-platform dependency; the only forbidden-name match is the test’s negative-import assertion.
+- Transition matrix covers 49 state combinations: 11 legal and 38 illegal.
+
+### CI/Test Results
+
+```text
+tests/test_jobs.py: 58 passed
+full suite: 110 passed
+pvg verify: PASSED (3 files scanned, 0 issues)
+```
+
+Summary: implemented deterministic offline local transport, asynchronous reasoner proposal jobs, exact legal transition enforcement, terminal-state immutability, validation and policy preflight, cancellation/supersession/TTL/age/intent/presentation handling, bounded downgrade behavior, and hash-scoped privacy-preserving job/proposal/decision/terminal ledger events.
+
+Commit SHA: 9e959f3
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. Only `needs_tools` starts transport | PASS | Route-boundary test. |
+| 2. Async slow path yields to fast loop | PASS | Concurrent-clock test. |
+| 3. Deterministic offline typed transport | PASS | LocalScriptedTransport tests. |
+| 4. Every action validates and preflights before terminal completion | PASS | Validation/policy tests. |
+| 5. Exact transition matrix and immutable terminal states | PASS | 49-combination matrix tests. |
+| 6. Interruption, supersession, TTL, age, intent, failure, and presentation paths are safe | PASS | Transition/stimulus tests. |
+| 7. Canceled cannot render normal result; downgrade/confirmation safe | PASS | Terminal behavior tests. |
+| 8. Immutable identities and hash-scoped private events | PASS | Ledger test. |
+| 9. No prohibited dependencies or execution | PASS | Static scan and full suite. |
 
 
 ## nd_contract

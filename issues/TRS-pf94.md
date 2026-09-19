@@ -1,13 +1,15 @@
 ---
 id: TRS-pf94
 title: "Whole-system Talker-Reasoner MVP"
-status: open
+status: closed
 priority: 1
 type: epic
 created_at: 2026-09-19T04:41:13Z
 created_by: speed
-updated_at: 2026-09-19T04:41:13Z
-content_hash: "sha256:9f26ae395023d532866d9534cd0ba94af595b6066ac4230abf014d643a9efd86"
+updated_at: 2026-09-19T18:01:36Z
+content_hash: "sha256:11eb8d51675fa682d04a21b85221d1510984f5da7583e055aa6235d46ed3020a"
+closed_at: 2026-09-19T18:01:36Z
+close_reason: "All stories accepted"
 ---
 
 ## Description
@@ -66,7 +68,7 @@ status: new
 
 
 ## History
-
+- 2026-09-19T18:01:36Z status: open -> closed
 
 ## Links
 

@@ -8,8 +8,8 @@ labels: [e2e, capstone, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:30:52Z
-content_hash: "sha256:88720292ef7e509bb392489588561ede3879d3f2c2ec6ba453bb55628e782f8d"
+updated_at: 2026-09-19T19:31:08Z
+content_hash: "sha256:b0c273af9799cf778b8e3715ed1ce54765a5ed2920527cad68de0a83b1f5db7b"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -110,7 +110,19 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-09-19]: Final capstone evidence reviewed. Target E2E gate passes, full suite passes 327/327, deterministic gates pass with zero warnings, report denominators are exact, and decision is pass.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed final SHA 1c616a6762b63c11ffaa5b563ae28d55ed3d19dc.
+- Delivery proof verification passed 9/9.
+- Diff is 154 lines, below the 250-line capstone budget.
+
+### proof
+- [x] AC #1 through AC #9 verified from target report and full-suite evidence.
 
 ## nd_contract
 status: delivered

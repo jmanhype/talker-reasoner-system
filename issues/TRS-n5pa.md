@@ -8,8 +8,8 @@ labels: [e2e, capstone]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:27:05Z
-content_hash: "sha256:3cbe780657375c0af32cc531cbbbd471316b257e1af36325793dd5e68c8738b5"
+updated_at: 2026-09-19T19:30:26Z
+content_hash: "sha256:ed96d308cd0d5da96486d1042d459aaae3daadb4bd08ca045cc0670b9fb133a1"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -110,6 +110,148 @@ status: new
 
 
 ## Notes
+## Implementation Evidence (DELIVERED)
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- `pytest -q -s tests/e2e/test_m0_offline_gate.py` -> exit 0: **1 passed in 0.41s**.
+- `pytest -q` -> exit 0: **327 passed in 2.48s**.
+- `pvg verify tests/e2e/test_m0_offline_gate.py tests/e2e/fixtures/m0-report.json --include-tests --format=text` -> exit 0.
+- `pvg gates --changed 7715096` -> exit 0: **GATES PASS (0 warnings, 0 skipped; design PASS)**.
+- `machinery check design` -> exit 0: **0 blocking findings**.
+- `git diff --check` -> exit 0.
+
+Summary: the complete offline M0 gate passes. It inventories and exercises the exact seven machines, 62 transitions, 36 invariants, 327 tests, zero live dependency classes, and emits decision `pass`.
+
+Coverage:
+- Machines/oracle files: 7/7.
+- Unique transitions exercised: 62/62.
+- Invariant properties: 36/36.
+- Repository tests: 327/327.
+- Live dependency classes: 0.
+
+### Commit
+- Branch: `story/TRS-n5pa`
+- SHA: `1c616a6762b63c11ffaa5b563ae28d55ed3d19dc`
+- Base: `771509656cf7bc4bc343c31a86a0a224c6b5bb4d`
+- Diff: 2 files, 154 insertions, within the under-250 LOC budget.
+
+### Final M0 Report
+```json
+{
+  "collected_test_count": 327,
+  "commands": {
+    "machinery_check": {
+      "command": "machinery check design",
+      "exit_code": 0,
+      "stderr_tail": [],
+      "stdout_tail": [
+        "  checked: 1 plans, 9 milestones, 9 DoD-bearing milestones, 1 skeleton citations",
+        "  ok",
+        "",
+        "0 blocking (ERROR/DRIFT) finding(s)"
+      ]
+    },
+    "machinery_lint": {
+      "command": "machinery lint design/machines",
+      "exit_code": 0,
+      "stderr_tail": [],
+      "stdout_tail": [
+        "== VoiceSession.machine.json: 3 states ==",
+        "  ok",
+        "",
+        "0 error/drift finding(s) across 7 machine(s)"
+      ]
+    },
+    "modelith_lint": {
+      "command": "modelith lint design/domain.modelith.yaml --completeness error",
+      "exit_code": 0,
+      "stderr_tail": [],
+      "stdout_tail": [
+        "design/domain.modelith.yaml:",
+        "  ok",
+        "",
+        "0 error(s), 0 warning(s)"
+      ]
+    }
+  },
+  "conditions": {
+    "all_transitions_conform": true,
+    "complete_suite_collected": true,
+    "gates_green": true,
+    "no_live_dependencies": true,
+    "seven_files": true,
+    "sixty_two_unique": true,
+    "thirty_six_invariants": true
+  },
+  "configuration_hashes": {
+    "config/actions/slice0-v1.json": "ccbf5e14fb1bc3a2f7d13e8365ef00cb6178f7e4a8c8058cd509acace9f58adc",
+    "config/routing/slice0-v1.json": "b893d4df476803121c022215cb8e80412b6db44794c8160b6edb3a7b3669d90f",
+    "design/domain.modelith.yaml": "b6bb2335ef317075f1ab72655c90864003cf5953a51251f4ba9500839b8d84b4"
+  },
+  "decision": "pass",
+  "invariant_count": 36,
+  "live_dependency_classes": [],
+  "machine_names": [
+    "conversationTurn",
+    "eventLedger",
+    "memoryRecord",
+    "reasonerJob",
+    "toolCatalog",
+    "toolExecution",
+    "voiceSession"
+  ],
+  "oracle_file_count": 7,
+  "schema_version": "trs-m0-offline-report-v1",
+  "tool_versions": {
+    "machinery": "machinery version v0.3.11",
+    "modelith": "modelith version 0.4.0"
+  },
+  "transition_count": 62,
+  "utc_window": {
+    "ended_at": "2026-09-19T19:30:02.568987Z",
+    "started_at": "2026-09-19T19:30:02.233873Z"
+  }
+}
+```
+
+### AC Verification
+| AC | Requirement | Status | Evidence |
+|---|---|---|---|
+| 1 | Exactly seven fresh oracle files | PASS | Report `oracle_file_count=7`; machinery lint/check exit 0 and enforce freshness. |
+| 2 | Exactly 62 unique stable ids | PASS | Report `transition_count=62`; all transitions conform. |
+| 3 | Exactly 36 invariant properties | PASS | Report `invariant_count=36`; all parse in canonical order. |
+| 4 | Modelith completeness lint | PASS | Embedded command exit 0, 0 errors/warnings. |
+| 5 | Machinery lint | PASS | Embedded command exit 0, 0 error/drift findings. |
+| 6 | Machinery design check | PASS | Embedded and external commands exit 0 with 0 blocking findings. |
+| 7 | Complete Python suite | PASS | External full suite: 327/327; report inventory count: 327. |
+| 8 | No live dependencies | PASS | Report `live_dependency_classes=[]`. Local deterministic CLI subprocesses are explicitly allowed by the story. |
+| 9 | Versioned report with hashes, UTC window, denominators, decision | PASS | Final report above includes tool versions, config hashes, UTC window, exact denominators, and `decision: pass`. |
+
+### pvg verify
+- `VERIFY: PASSED`.
+
+LEARNINGS:
+- The capstone can prove full-suite inventory without recursive execution by using `pytest --collect-only` and then running the complete suite as the delivery command.
+- Namespacing configuration hashes by repository-relative path avoids collisions between routing/action files both named `slice0-v1.json`.
+- Extracting the collection inventory and transition loop kept the E2E function below the complexity threshold.
+
+### OBSERVATIONS (unrelated)
+- None.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Final SHA `1c616a6762b63c11ffaa5b563ae28d55ed3d19dc`.
+- Target gate: 1 passed; full suite: 327 passed.
+- Required deterministic gates: all exit 0; pvg gates reports 0 warnings.
+
+### proof
+- [x] AC #1 through AC #9 verified above.
+
 ## nd_contract
 status: in_progress
 

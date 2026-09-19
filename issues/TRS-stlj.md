@@ -9,8 +9,7 @@ parent: TRS-d8vq
 created_at: 2026-09-19T18:13:25Z
 created_by: speed
 updated_at: 2026-09-19T18:16:02Z
-content_hash: "sha256:590f73de82cfecca3c91a974a7aefbdaf8772b470cc83aca7519aeb25b9a10d2"
-blocks: [TRS-le6s]
+content_hash: "sha256:06777fa8d7fababd6591e4dcebd7476275028a3bed6db163b6796c1995a5570e"
 ---
 
 ## Description
@@ -649,9 +648,9 @@ status: new
 
 ## History
 - 2026-09-19T18:13:49Z dep_added: blocks TRS-le6s
+- 2026-09-19T18:16:23Z dep_removed: no_longer_blocks TRS-le6s
 
 ## Links
 - Parent: [[TRS-d8vq]]
-- Blocks: [[TRS-le6s]]
 
 ## Comments

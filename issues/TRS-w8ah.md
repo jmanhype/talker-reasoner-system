@@ -6,8 +6,8 @@ priority: 1
 type: epic
 created_at: 2026-09-19T20:10:48Z
 created_by: speed
-updated_at: 2026-09-19T20:27:11Z
-content_hash: "sha256:24b8cee465450c813cca0d2fc926d0bc5116e53c15e23e7287bada9da121da27"
+updated_at: 2026-09-19T20:29:07Z
+content_hash: "sha256:7bb809d658eef96065d08cc89308c5de69081956476da02c6452047215e8badf"
 closed_at: 2026-09-19T20:27:11Z
 close_reason: "All M1 architecture stories accepted; implementation-wide G4/Gt gate is green."
 labels: [accepted]
@@ -73,7 +73,31 @@ status: new
 
 
 ## Notes
+## Epic Completion Evidence
 
+PROOF:
+Commands run:
+- pytest -q -> 330 passed.
+- machinery check design --impl . --commit da8bae7bfddd5eff5f1ef309ae7f3542d3982068 -> exit 0, 0 blocking findings, Ga/G4/Gt green.
+- pvg gates --changed fee1a59 -> PASS with inherited non-blocking warnings.
+- pvg verify representative architecture/edge/capstone files -> PASSED.
+
+M1 closure commit: b46598967bb70907806e29c48a1a4096b631aba7.
+Accepted stories: TRS-m4b1, TRS-h8kc, TRS-g7go.
+Final report: 19 imports, 5 allowed edges, 4 baselined/ratcheted edges, 8 Python files, 2 TS files, 12 test files, 7 machines, 62 transitions, 36 invariants, 330 tests, zero live dependency classes, decision pass.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Epic closed after all M1 stories passed PM acceptance.
+- M1 acceptance file bound to reviewed implementation commit da8bae7bfddd5eff5f1ef309ae7f3542d3982068.
+
+### proof
+- [x] Architecture gate story accepted.
+- [x] TypeScript edge skeleton accepted.
+- [x] E2e M1 capstone accepted.
+- [x] Completion gates green.
 
 ## History
 - 2026-09-19T20:27:11Z status: open -> closed

@@ -7,8 +7,8 @@ type: task
 parent: TRS-pf94
 created_at: 2026-09-19T04:41:13Z
 created_by: speed
-updated_at: 2026-09-19T04:42:09Z
-content_hash: "sha256:925f7e926b31401ef4848f5165422c84f0141c05e2bc6a70c5f6e9ecf0374e97"
+updated_at: 2026-09-19T04:42:10Z
+content_hash: "sha256:2ffffac29736447da93ed18719c80714592b071289d5daa2cce89acb26f11d7b"
 assignee: dev-TRS-zpo4
 ---
 
@@ -140,3 +140,6 @@ status: new
 - Parent: [[TRS-pf94]]
 
 ## Comments
+
+### 2026-09-19T04:42:09Z speed
+loop: reset orphaned in_progress to open (no developer worktree found; prior session presumed dead)

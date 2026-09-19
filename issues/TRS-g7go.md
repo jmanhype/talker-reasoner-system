@@ -8,8 +8,8 @@ labels: [e2e, capstone, architecture, delivered]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:12:27Z
 created_by: speed
-updated_at: 2026-09-19T20:26:55Z
-content_hash: "sha256:d14a5857dd93943ae543e0017e331176a88b55ede7c00f085c7d3b8267542a76"
+updated_at: 2026-09-19T20:27:10Z
+content_hash: "sha256:1cbf0ae235fe143b6b6dc007503d50a4ee627a2d5d802a836d816340d045062c"
 was_blocked_by: [TRS-m4b1, TRS-h8kc]
 assignee: dev-TRS-g7go
 follows: [TRS-m4b1, TRS-h8kc]
@@ -212,7 +212,19 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-09-19]: Final M1 capstone evidence reviewed. The exact implementation-wide command passes, Python and TypeScript imports resolve, all oracle tests are scanned, four debts are ratcheted, and the full suite passes 330/330.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed final SHA ab27e09208a987a00fd16cb782e693a1054a7a27.
+- Delivery proof passed 9/9.
+- Report conditions all true and decision is pass.
+
+### proof
+- [x] AC #1 through AC #8 verified.
 
 ## nd_contract
 status: delivered

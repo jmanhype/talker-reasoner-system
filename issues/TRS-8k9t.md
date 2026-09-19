@@ -8,8 +8,8 @@ labels: [hard-tdd, walking-skeleton, red-approved, rejected-x2, delivered]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:24:08Z
-content_hash: "sha256:e1340b4bd2750e14c9856ea312e88906399ffe23b7fc34cabd669c7ca78b132a"
+updated_at: 2026-09-19T19:24:23Z
+content_hash: "sha256:db10e129fa08431025a63fb10c9991840acaeee9326dbca1e5dbc93f71e37967"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -182,7 +182,18 @@ status: new
 - `machinery check design --impl .` was an initial diagnostic mis-scan over `.venv`; it produced 462 boundary-mapping errors and was not treated as a project result. The story's literal command, `machinery check design`, exited 0 with 0 blocking findings.
 - `machinery check design --impl tests` exited 1 with exactly two expected G4 errors because `tests/` is intentionally outside contract boundaries; its Gt section still verified 8 test files, 7 machines, and 62/62 oracle rows covered by conformance parse.
 - `machinery check design` emitted seven non-blocking Gx carrier warnings for invariants attested through prose/tests rather than machine units: `action-schema-fail-closed`, `hot-state-minimized`, `hot-state-ttl`, `model-boundaries-explicit`, `policy-three-outcomes`, `talker-no-authority`, and `transcriber-no-authority`. Blocking count remained zero; these are covered by the RED property tests and remain GREEN obligations.
+## nd_contract
+status: delivered
 
+### evidence
+- Final GREEN SHA: b9210850c8785cd4bcf1589e355b1dcd0aac10bc.
+- Commands and results are recorded under `## Implementation Evidence`.
+- Full suite: 326 passed. Target hard-TDD suite: 162 passed.
+
+### proof
+- [x] AC #1 through AC #9 are verified in the final AC table.
+- [x] Required design, quality, and hard-TDD gates pass.
+- [x] Diff-budget overrun and non-blocking warnings are disclosed for PM review.
 
 ## nd_contract
 status: delivered

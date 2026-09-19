@@ -8,8 +8,8 @@ labels: [walking-skeleton, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:36Z
 created_by: speed
-updated_at: 2026-09-19T13:38:44Z
-content_hash: "sha256:38ae8fc6622f41580317044a6bb69989196e6a5d56740952027cf772e116e7cb"
+updated_at: 2026-09-19T13:40:47Z
+content_hash: "sha256:20e507089720b7fb4f38ff3f1c9b39559b649ff9dfc7a593fe894f1e00618783"
 blocks: [TRS-74z8, TRS-9md6, TRS-osl5]
 assignee: dev-TRS-0daa
 follows: [TRS-zpo4]
@@ -156,6 +156,74 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run independently by the coordinator:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-0daa
+git diff --check
+.venv/bin/python -m compileall -q src tests
+.venv/bin/python -m pytest
+pvg verify .gitignore pyproject.toml scripts/setup_offline.sh src/talk_reasoner tests --include-tests --check-mocks --format=text
+find tests/fixtures/slice0 -type f -name '*.json' | wc -l
+```
+
+Results:
+
+- `git diff --check`: exit 0, no output.
+- Compilation: exit 0.
+- Full pytest: 14 collected, 14 passed, 0 failed, exit 0.
+- `pvg verify`: exit 0; mock scan passed. Its scanner reported no integration/e2e directory, while the story-mandated unmocked integration assertions live in `tests/test_contracts.py` and exercise real fixture loading plus ledger behavior.
+- Fixture counts: 18 total; exactly 6 `chitchat`, 6 `needs_tools`, and 6 `unclear`.
+- Static source scan found no network/platform service imports in production source; the only matching platform names occur in the test’s forbidden-import assertion tuple.
+- No credential-pattern scan matches were reported.
+
+### CI/Test Results
+
+```text
+============================= test session starts ==============================
+platform darwin -- Python 3.12.9, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-0daa
+configfile: pyproject.toml
+testpaths: tests
+collected 14 items
+
+tests/test_contracts.py ..............                                   [100%]
+
+============================== 14 passed in 0.04s ===============================
+MOCK CHECK: PASSED (0 integration/e2e test files scanned, 0 mock usages)
+```
+
+Summary: implemented the local typed fixture corpus, strict fixture validation, scoped hashing, canonical event serialization, immutable event/ledger contracts, append-only chain verification, tamper/gap/duplicate detection, offline Python setup, and privacy/local-dependency tests for Slice 0.
+
+Commit SHA: 8ec7a813fdb036d6559e15f93068f295984ffbce5b8599aebe034cf24de6f196
+
+This is the SHA-256 of the 25-file delivery manifest, not a Git commit; the story work is intentionally uncommitted pending PM review.
+
+Principal hashes:
+
+```text
+bc4c7bfee6773a76d615d903ac6b039d99415ba2649181c76f1edc2e123959ef  .gitignore
+6597f2c00830db33372286cf83f13335327fafe17128001cf192c738e5bc29b6  pyproject.toml
+6864fac1c557d7a7d105b163448c6b05770659442d565a3c38031a444ebbc1f3  scripts/setup_offline.sh
+e343bb3c0dbc84e3e1dc1212fba1d2ec62ba3add43d8e852b18d2de7c3f066e2  src/talk_reasoner/__init__.py
+2dddc36527d9b9222ca8a5dc727915f5dfa104db040e2866fad49b9a7a19110a  src/talk_reasoner/contracts.py
+fce40d814635ab713733ba1dd92bba9b2ecff28a37840b0ba7afa1ee0b9a5ae4  tests/test_contracts.py
+```
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. At least 18 fixtures, 6 per exact route | PASS | Independent count: 18 total; 6/6/6. |
+| 2. Strict typed fixture validation fails closed | PASS | `load_fixture`, malformed-fixture tests, 14/14 suite. |
+| 3. Deterministic scoped hash; no raw-content storage | PASS | `scoped_hash` and privacy assertions. |
+| 4. Canonical stable event serialization with required metadata | PASS | `canonical_event_bytes`, event tests. |
+| 5. Ledger detects gaps, invalid prior hashes, duplicate terminals, mutations | PASS | `append_event`, `verify_ledger`, tamper tests. |
+| 6. Complete public annotations and immutable data where practical | PASS | typed frozen dataclasses/NamedTuples in `contracts.py`; source review. |
+| 7. Complete corpus plus representative 36-event ledger verifies | PASS | integration test reports valid chain and all defect collections empty. |
+| 8. No credentials, raw transcripts in ledger, network, or platform services | PASS | static scans and unmocked integration assertions. |
 
 
 ## nd_contract

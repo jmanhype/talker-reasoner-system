@@ -9,7 +9,8 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
 updated_at: 2026-09-19T05:29:37Z
-content_hash: "sha256:accb71fab1d2e46abd3632374d4146cdd0f80099af362f7cc270732a59548af5"
+content_hash: "sha256:cdd217d7a246088126b9f5d7ef61b59281a4b7e7b90f892492a628a1957f8b74"
+blocked_by: [TRS-0daa]
 ---
 
 ## Description
@@ -158,9 +159,10 @@ status: new
 
 
 ## History
-
+- 2026-09-19T05:29:37Z dep_added: blocked_by TRS-0daa
 
 ## Links
 - Parent: [[TRS-pf94]]
+- Blocked by: [[TRS-0daa]]
 
 ## Comments

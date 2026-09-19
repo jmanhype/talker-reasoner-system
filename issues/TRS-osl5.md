@@ -8,8 +8,8 @@ labels: [capstone, e2e, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T17:58:03Z
-content_hash: "sha256:3b889ffaba504e6ca5f293bd09634e62a33f2d250443d5959a09033665532c9f"
+updated_at: 2026-09-19T17:59:01Z
+content_hash: "sha256:4642cd554f65de3807fce73bc862a172c27d7a64942e5aa4d5344409c1915f29"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 follows: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm, TRS-zpo4]
@@ -145,6 +145,37 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-osl5
+/opt/homebrew/bin/pytest -q tests/e2e/test_slice0_user_journeys.py
+/opt/homebrew/bin/pytest -q
+/opt/homebrew/bin/python -m compileall -q src tests
+pvg verify tests/e2e/test_slice0_user_journeys.py --include-tests --format=text
+git diff --check
+```
+
+### CI/Test Results
+
+```text
+E2E suite: 10 passed
+full suite: 164 passed
+pvg verify: PASSED (1 file scanned, 0 issues)
+git diff --check: PASS
+```
+
+Summary: extended the delivered E2E suite to report latency, response acceptance, versioned provenance, UTC window, validation/policy correctness, exact result-age expiry, and exact terminal-state denominators.
+
+Commit SHA: c27251e
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1–9 | PASS | Original real-CLI/user-journey coverage plus explicit full-metric and result-age terminal report. |
 
 
 ## nd_contract

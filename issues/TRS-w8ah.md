@@ -1,13 +1,15 @@
 ---
 id: TRS-w8ah
 title: "Machinery M1 explicit architecture extraction"
-status: open
+status: closed
 priority: 1
 type: epic
 created_at: 2026-09-19T20:10:48Z
 created_by: speed
-updated_at: 2026-09-19T20:10:48Z
-content_hash: "sha256:f82f18335330150acf86fb2449e2245cd3c9f71e8e199c70998b73fcd09af17a"
+updated_at: 2026-09-19T20:27:11Z
+content_hash: "sha256:24b8cee465450c813cca0d2fc926d0bc5116e53c15e23e7287bada9da121da27"
+closed_at: 2026-09-19T20:27:11Z
+close_reason: "All M1 architecture stories accepted; implementation-wide G4/Gt gate is green."
 ---
 
 ## Description
@@ -73,7 +75,7 @@ status: new
 
 
 ## History
-
+- 2026-09-19T20:27:11Z status: open -> closed
 
 ## Links
 

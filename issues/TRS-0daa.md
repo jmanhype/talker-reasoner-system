@@ -8,8 +8,8 @@ labels: [walking-skeleton, slice-0, delivered]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:36Z
 created_by: speed
-updated_at: 2026-09-19T13:41:06Z
-content_hash: "sha256:59a4d85fe4496bfcef61e0d1da15c3b3ab8c122ef24cc0d85037ffd83977be4b"
+updated_at: 2026-09-19T13:41:46Z
+content_hash: "sha256:6b956e119a2a7ddf44b33d8d7a758d6ee35c99290d66b29da60a71a9a5a1c372"
 blocks: [TRS-74z8, TRS-9md6, TRS-osl5]
 assignee: dev-TRS-0daa
 follows: [TRS-zpo4]
@@ -156,6 +156,24 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+- git add .gitignore pyproject.toml scripts src tests
+- git commit -m "feat(TRS-0daa): prove fixture-ledger contracts"
+
+### CI/Test Results
+- Story commit: fb44cbf
+- Worktree clean after commit.
+- Previously independent full suite: 14/14 passed.
+
+Summary: accepted implementation snapshot committed on story/TRS-0daa at fb44cbf.
+
+Commit SHA: fb44cbf
+
+### AC Verification
+- [x] All eight TRS-0daa AC remain covered by the committed files and prior 14/14 independent run.
+
 ## Implementation Evidence
 
 Commands run:

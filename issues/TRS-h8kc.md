@@ -4,7 +4,7 @@ title: "M1 TypeScript edge package skeleton without live audio"
 status: closed
 priority: 1
 type: task
-labels: [architecture, edge, offline, delivered]
+labels: [architecture, edge, offline, delivered, accepted]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:54Z
 created_by: speed

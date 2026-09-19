@@ -9,8 +9,8 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:25:58Z
 created_by: speed
 updated_at: 2026-09-19T05:25:58Z
-content_hash: "sha256:a3dacad68d2118d0d11e62dd22d3a4a162af57fa9889a4f7e9a0b31aa6dfeea7"
-blocked_by: [TRS-r6uo, TRS-wqbs, TRS-hjbd, TRS-pmd9]
+content_hash: "sha256:ced0f8fcc27b9d2af47bb4e77c7f744f2466eb67e48d7ed815b0f651eabdff1c"
+blocked_by: [TRS-r6uo, TRS-wqbs, TRS-hjbd, TRS-pmd9, TRS-owap]
 ---
 
 ## Description
@@ -149,9 +149,10 @@ status: new
 - 2026-09-19T05:25:59Z dep_added: blocked_by TRS-wqbs
 - 2026-09-19T05:26:00Z dep_added: blocked_by TRS-hjbd
 - 2026-09-19T05:26:00Z dep_added: blocked_by TRS-pmd9
+- 2026-09-19T05:26:00Z dep_added: blocked_by TRS-owap
 
 ## Links
 - Parent: [[TRS-pf94]]
-- Blocked by: [[TRS-r6uo]], [[TRS-wqbs]], [[TRS-hjbd]], [[TRS-pmd9]]
+- Blocked by: [[TRS-r6uo]], [[TRS-wqbs]], [[TRS-hjbd]], [[TRS-pmd9]], [[TRS-owap]]
 
 ## Comments

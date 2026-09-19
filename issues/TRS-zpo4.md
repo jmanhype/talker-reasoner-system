@@ -8,7 +8,7 @@ parent: TRS-pf94
 created_at: 2026-09-19T04:41:13Z
 created_by: speed
 updated_at: 2026-09-19T04:59:03Z
-content_hash: "sha256:b729cc1ff643535e4c08066ba4481d0af2853aaf0008b53057687b65f17f57f8"
+content_hash: "sha256:efe1ce8ccfc1b2d6d4e1cf0de63b42bbe1dc1373a2cbc2e573083bf6241bb536"
 assignee: dev-TRS-zpo4
 labels: [delivered]
 ---
@@ -130,6 +130,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-09-18.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
 
 
 ## History

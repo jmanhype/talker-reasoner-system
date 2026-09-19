@@ -1,0 +1,8 @@
+{
+  "schema_version": "slice0-routing-policy-v1",
+  "thresholds_version": "slice0-v1",
+  "chitchat_confidence_min": 0.90,
+  "needs_tools_confidence_min": 0.80,
+  "invalid_fallback_route": "unclear",
+  "safety_fallback_route": "unclear"
+}

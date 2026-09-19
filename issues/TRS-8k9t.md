@@ -8,8 +8,8 @@ labels: [hard-tdd, walking-skeleton, red-approved]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
-updated_at: 2026-09-19T19:08:24Z
-content_hash: "sha256:2b5410062be6653096018eb4cb7130d4926e52bf4a026c586635a6db57bd1b6f"
+updated_at: 2026-09-19T19:20:07Z
+content_hash: "sha256:324b36b847b83932e1ee7e63c817b3d23858ea97ef80e7fe6caa9254da450f23"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -182,6 +182,62 @@ status: new
 - `machinery check design --impl .` was an initial diagnostic mis-scan over `.venv`; it produced 462 boundary-mapping errors and was not treated as a project result. The story's literal command, `machinery check design`, exited 0 with 0 blocking findings.
 - `machinery check design --impl tests` exited 1 with exactly two expected G4 errors because `tests/` is intentionally outside contract boundaries; its Gt section still verified 8 test files, 7 machines, and 62/62 oracle rows covered by conformance parse.
 - `machinery check design` emitted seven non-blocking Gx carrier warnings for invariants attested through prose/tests rather than machine units: `action-schema-fail-closed`, `hot-state-minimized`, `hot-state-ttl`, `model-boundaries-explicit`, `policy-three-outcomes`, `talker-no-authority`, and `transcriber-no-authority`. Blocking count remained zero; these are covered by the RED property tests and remain GREEN obligations.
+## Implementation Evidence (DELIVERED)
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- `pytest -q tests/test_machinery_oracles.py` -> exit 0: **73 passed**.
+- `pytest -q --ignore=tests/test_machinery_oracles.py --ignore=tests/test_machinery_invariants.py` -> exit 0: **164 passed**.
+- `pytest -q tests/test_machinery_invariants.py` -> exit 1: **64 passed, 25 failed**; combined unchanged RED suite is 237 passed / 25 failed.
+- `pvg verify src/talk_reasoner/machinery.py src/talk_reasoner/actions.py src/talk_reasoner/contracts.py src/talk_reasoner/jobs.py src/talk_reasoner/cli.py --format=text` -> exit 0: **VERIFY PASSED (5 files, 0 issues)**.
+- `machinery check design` -> exit 0: **0 blocking findings**.
+- `pvg story verify-tdd --base 630386c` -> PASS at commit `7a238e50d95cb97675f9db199efbec2f857e55d3`.
+
+Summary: GREEN production work is committed and the complete oracle suite plus all pre-existing tests pass. The remaining 25 failures are all frozen-RED authoring defects or contradictions with the pre-existing suite, not absent machinery behavior. RED files are byte-for-byte unchanged from `2f8052000499280480a0103901582dc709642f11`.
+
+### Commit
+- Branch: `story/TRS-8k9t`
+- Commit SHA: `7a238e50d95cb97675f9db199efbec2f857e55d3`
+- RED SHA unchanged: `2f8052000499280480a0103901582dc709642f11`
+
+RED-DISPUTE: tests/test_machinery_invariants.py -- five authorized-repair classes are required; no RED assertion may be weakened semantically.
+1. The file imports `action(job_id, **changes)` and `confirmation(arguments, **changes)` from `test_jobs`, then calls them as `action(action_name, arguments)` and `confirmation()`. This causes 20 of the 25 failures (`TypeError` or wrong action name). Repair with local adapter wrappers while preserving every invalid-case assertion.
+2. `p_action_no_credentials` calls `json.dumps` directly on `MappingProxyType`; use a JSON default that materializes mappings. The intended credential assertion is unchanged.
+3. Unknown risk expects `apply_policy` to raise, but the committed pre-existing `test_routing.py::test_threshold_boundaries_and_invalid_calibration_fail_safe[unknown]` requires the documented invalid fallback to `unclear`. Repair RED to assert that exact fail-closed fallback, not a raise.
+4. Duplicate-terminal expects `append_event` to raise, but committed `test_contracts.py::test_ledger_verifies_detects_integrity_defects` requires append to succeed and `verify_ledger` to report the duplicate. Repair RED to assert verification fails closed after append.
+5. `test_reasoner_route_guard...` rejects valid fail-closed outcomes: for `input hash is bound`, the implementation returns a failed job and the test still raises; for expired reasoner consent, `_validate_request` now correctly raises `JobRouteError`, which the test forbids. Accept either fail-closed rejection outcome for each falsified clause.
+
+### AC Verification
+| AC | Status | Evidence |
+|---|---|---|
+| 1 | PASS | RED unchanged and TDD guard passes. |
+| 2-4 | PASS | All 73 oracle/parser/conformance tests pass, including 62/62 transitions. |
+| 5 | BLOCKED BY RED-DISPUTE | Parser passes exact 36 ids; 25 property tests expose authoring defects above. |
+| 6 | BLOCKED BY RED-DISPUTE | Guard tests are present; five defect classes above require authorized repair. |
+| 7 | PASS | Production has only local imports/dependencies; offline executor passes oracle suite. |
+| 8 | PASS for required design gates | `machinery check design`: 0 blocking. |
+| 9 | PARTIAL | Existing suite 164/164; unchanged combined suite 237 pass / 25 disputed failures. |
+
+LEARNINGS:
+- The RED author reused `test_jobs` helpers without adapting their signatures; GREEN exposed this immediately once the production module existed.
+- Two RED expectations contradicted committed Slice-0 behavior: unknown-risk fallback and append-then-verify ledger integrity.
+- Production fixes for no-action consent, provenance enforcement, complete schema bounds, and minimized event rejection were legitimate and kept all 164 old tests green.
+
+## nd_contract
+status: delivered
+
+### evidence
+- GREEN WIP commit `7a238e50d95cb97675f9db199efbec2f857e55d3`.
+- Oracle suite 73/73; existing suite 164/164; disputed invariant suite 64/89.
+- RED SHA unchanged and hard-TDD guard passes.
+
+### proof
+- [x] Oracle parser and all 62 transition conformance rows pass unchanged.
+- [x] Existing 164-test suite remains green.
+- [ ] 36-invariant property suite requires the five exact PM-authorized RED repairs listed above.
+
 ## nd_contract
 status: in_progress
 

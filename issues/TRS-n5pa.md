@@ -9,7 +9,7 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T19:31:08Z
-content_hash: "sha256:72e4cfb1d1e8619eb6ed2ce42515df960fb4b4dbbe3cf9bc0c383a90d514fe94"
+content_hash: "sha256:c33c7eb06635021fe40d1bc548abd63ad06401413405e1873e3deec38cdb7148"
 was_blocked_by: [TRS-8k9t]
 assignee: dev-TRS-n5pa
 follows: [TRS-8k9t]
@@ -112,6 +112,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
+
+
 ## PM Decision
 ACCEPTED [2026-09-19]: Final capstone evidence reviewed. Target E2E gate passes, full suite passes 327/327, deterministic gates pass with zero warnings, report denominators are exact, and decision is pass.
 

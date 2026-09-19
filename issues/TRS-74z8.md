@@ -1,7 +1,7 @@
 ---
 id: TRS-74z8
 title: "Route typed fixtures through calibrated three-route policy"
-status: in_progress
+status: closed
 priority: 1
 type: feature
 labels: [slice-0, delivered]
@@ -9,11 +9,12 @@ parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
 updated_at: 2026-09-19T14:14:39Z
-content_hash: "sha256:5f0d18de6e03c45ea45d74663522a6f3c09d860df729eeeafe5ce7f9543e74b5"
-blocks: [TRS-ndv6, TRS-f7sm, TRS-osl5]
+content_hash: "sha256:9816773878aff0a738600a2da816c30a2897a2fca69ada9850a8f36f5e92b7ac"
 was_blocked_by: [TRS-0daa]
 assignee: dev-TRS-74z8
 follows: [TRS-0daa, TRS-zpo4]
+closed_at: 2026-09-19T14:14:39Z
+close_reason: "Accepted: independently reran story/full suites (14/14 and 28/28), compilation, pvg verify, static boundary scan, and hash checks. Routing is local/deterministic, exactly three routes, threshold-guarded, fully reported, and privacy-safe."
 ---
 
 ## Description
@@ -249,10 +250,13 @@ status: delivered
 - 2026-09-19T13:44:31Z claimed by dev-TRS-74z8
 - 2026-09-19T14:13:37Z status: in_progress -> in_progress
 - 2026-09-19T14:13:37Z auto-follows: linked to predecessor TRS-zpo4
+- 2026-09-19T14:14:39Z status: in_progress -> closed
+- 2026-09-19T14:14:39Z dep_removed: no_longer_blocks TRS-ndv6
+- 2026-09-19T14:14:39Z dep_removed: no_longer_blocks TRS-f7sm
+- 2026-09-19T14:14:39Z dep_removed: no_longer_blocks TRS-osl5
 
 ## Links
 - Parent: [[TRS-pf94]]
-- Blocks: [[TRS-ndv6]], [[TRS-f7sm]], [[TRS-osl5]]
 - Was blocked by: [[TRS-0daa]]
 - Follows: [[TRS-0daa]], [[TRS-zpo4]]
 

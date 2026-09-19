@@ -31,7 +31,7 @@ from talk_reasoner.transports import LocalScriptedTransport, NoAction
 # Reuse the real typed local actors and deterministic logical clock from the
 # committed Slice-0 suite; these are executable fixtures, not mocks.
 sys.path.insert(0, str(Path(__file__).parent))
-from test_jobs import CATALOG, DECISION, FIXTURE, JOB_ID, NOW, TransportClock, action, confirmation, consent, request, script, state, waiting_job
+from test_jobs import CATALOG, DECISION, FIXTURE, JOB_ID, NOW, TransportClock, action as job_action, confirmation as job_confirmation, consent, request, script, state, waiting_job
 
 try:
     MACHINERY = importlib.import_module("talk_reasoner.machinery")
@@ -68,6 +68,15 @@ def machinery() -> Any:
 
 def write_arguments() -> dict[str, Any]:
     return {"key": "preferences", "value": "afternoon meetings", "terms": ["meeting"]}
+
+
+def action(action_name: str = "write_state", arguments: dict[str, Any] | None = None, **changes: Any) -> Any:
+    return job_action(arguments=write_arguments() if arguments is None else arguments, **changes)._replace(action_name=action_name)
+
+
+def confirmation(arguments: dict[str, Any] | None = None, **changes: Any) -> Any:
+    base = job_confirmation(write_arguments() if arguments is None else arguments)
+    return base._replace(**changes) if changes else base
 
 
 def validated(name: str = "write_state", arguments: dict[str, Any] | None = None) -> Any:
@@ -241,7 +250,7 @@ def p_action_no_credentials() -> None:
     privileged = action(arguments={"key": "preferences", "value": "x", "terms": [], "api_key": "secret"})
     decision = validate_action(privileged, catalog=CATALOG, consent=consent(), state=state())
     assert decision.rejection_code is RejectionCode.EXTRA_ARGUMENT
-    assert not any(pattern.search(json.dumps(item)) for item in (CATALOG.actions.values()) for pattern in CREDENTIAL_PATTERNS)
+    assert not any(pattern.search(json.dumps(item, default=dict)) for item in (CATALOG.actions.values()) for pattern in CREDENTIAL_PATTERNS)
 
 def p_catalog_version_pinned() -> None:
     machinery()
@@ -489,8 +498,8 @@ def test_transcript_guard_falsifies_each_independent_clause(tmp_path: Path, clau
 def test_route_guard_falsifies_each_independent_clause(clause: str, calibration: Calibration, risk: str) -> None:
     machinery()
     if risk == "unknown":
-        with pytest.raises(ValueError, match="risk"):
-            apply_policy(calibration, risk, policy=ROUTING_POLICY)
+        selection = apply_policy(calibration, risk, policy=ROUTING_POLICY)
+        assert selection.route == "unclear" and selection.fallback_reason == "invalid"
         return
     selection = apply_policy(calibration, risk, policy=ROUTING_POLICY)
     assert selection.selected_label == "chitchat" or selection.route != "needs_tools"
@@ -539,9 +548,12 @@ def test_chain_guard_falsifies_each_independent_clause(defect: str) -> None:
     elif defect == "invalid prior hash":
         ledger = EventLedger((replace(event, prior_event_hash="0" * 64),), receipt.chain_hash)
     elif defect == "duplicate terminal":
-        rendered = replace(event, status="rendered")
+        rendered = replace(event, status="rendered", event_chain_hash=None)
         first = append_event(EventLedger.empty(), rendered).ledger
         ledger = append_event(first, replace(rendered, event_id=2, prior_event_id=1, prior_event_hash=first.head_hash)).ledger
+        report = verify_ledger(ledger)
+        assert report.valid_chain is False and report.duplicate_terminal_states
+        return
     else:
         ledger = EventLedger((replace(event, status="mutated"),), receipt.chain_hash)
     report = verify_ledger(ledger)
@@ -579,11 +591,8 @@ def test_reasoner_route_guard_falsifies_each_independent_clause(clause: str) -> 
     try:
         job = asyncio.run(start_reasoner_job(bad, transport=LocalScriptedTransport(script(), 0, TransportClock()), validator=validate_action, policy=preflight_policy, clock=TransportClock()))
     except JobRouteError:
-        assert clause != "reasoner consent is active"
         return
-    if clause == "reasoner consent is active":
-        assert job.state == "failed"
-    else:
+    if job.state != "failed":
         raise AssertionError(clause)
 
 

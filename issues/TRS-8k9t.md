@@ -4,7 +4,7 @@ title: "M0 walking skeleton: enforce all machinery oracles offline"
 status: open
 priority: 1
 type: feature
-labels: [hard-tdd, walking-skeleton, red-approved, rejected]
+labels: [hard-tdd, walking-skeleton, red-approved, rejected, rejected-x2]
 parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed

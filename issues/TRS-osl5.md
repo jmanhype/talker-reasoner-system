@@ -8,8 +8,8 @@ labels: [capstone, e2e, slice-0, accepted]
 parent: TRS-pf94
 created_at: 2026-09-19T05:29:37Z
 created_by: speed
-updated_at: 2026-09-19T17:59:52Z
-content_hash: "sha256:d4d8f753f79998a4582a94bf7e5328bcd27c870411b632ed45dc3ede1683cc75"
+updated_at: 2026-09-19T18:02:48Z
+content_hash: "sha256:5eae68ef86b68c6f86a6e906c36626966b82944738abe433fd35a7f57bc3e108"
 blocked_by: [TRS-zpo4]
 was_blocked_by: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm]
 follows: [TRS-0daa, TRS-74z8, TRS-9md6, TRS-ndv6, TRS-f7sm, TRS-zpo4]
@@ -147,7 +147,19 @@ status: new
 
 
 ## Notes
+## PM Decision
+ACCEPTED [2026-09-19]: Independent evidence review and concurrent final delivery c27251ea2c9d4aeeeb52ed81d01e43b48b691791 meet the bar. Re-ran exact-commit c485 ladder (9/9 E2E, 163/163 full, compileall, pvg verify), then independently reran the extended final story branch (10/10 E2E, 164/164 full, compileall, pvg verify), checked the 194-LOC one-file diff/typing/no-stub gates, and verified all nine ACs through the real CLI plus terminal lifecycle coverage.
 
+## nd_contract
+status: accepted
+
+### evidence
+- Reviewed developer proof and final c27251e extension.
+- E2E: 10 passed; full suite: 164 passed; pvg verify/mock check passed.
+- TRS-pf94 auto-close completed after all children were closed.
+
+### proof
+- [x] AC-by-AC verified from tests and delivered evidence
 
 ## nd_contract
 status: accepted

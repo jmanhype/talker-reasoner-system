@@ -8,8 +8,8 @@ labels: [architecture, integration, delivered]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed
-updated_at: 2026-09-19T20:18:26Z
-content_hash: "sha256:2261d805bbbe34b0555a3782598db739241c313977f44a685b9921a922cd8071"
+updated_at: 2026-09-19T20:18:47Z
+content_hash: "sha256:0ef9afe66aaef88d9773b8081899ad5cb553a83a36409d648874723f3892b2b5"
 blocks: [TRS-h8kc, TRS-g7go]
 assignee: dev-TRS-m4b1
 ---
@@ -354,3 +354,15 @@ status: in_progress
 - Blocks: [[TRS-h8kc]], [[TRS-g7go]]
 
 ## Comments
+
+### 2026-09-19T20:18:47Z speed
+## nd_contract
+status: delivered
+
+### evidence
+- Final architecture-gate SHA: b4f5a1d893877ba07f52655fd052448a102f7433.
+- Full suite: 328 passed. Required implementation-wide architecture gate: exit 0, 0 blocking findings.
+- G4/Gt: 18 imports resolved, 5 allowed edges verified, 4 baselined/ratcheted edges, 10 test files scanned, 62 oracle rows covered.
+
+### proof
+- [x] AC #1 through AC #8 verified in the Implementation Evidence block.

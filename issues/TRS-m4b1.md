@@ -8,8 +8,8 @@ labels: [architecture, integration]
 parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed
-updated_at: 2026-09-19T20:13:45Z
-content_hash: "sha256:e27cae1badc00b38897546764e47f5c04d43f67785621d5da47b0a05d83a4597"
+updated_at: 2026-09-19T20:18:26Z
+content_hash: "sha256:6bc1c387612b6c713862a84f52cc81a5a3cfe847c30591bf45c50a02a2c7dc06"
 blocks: [TRS-h8kc, TRS-g7go]
 assignee: dev-TRS-m4b1
 ---
@@ -247,6 +247,79 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+PROOF:
+
+### CI/Test Results
+Commands run:
+- `pytest -q tests/test_architecture_contract.py` -> exit 0: 1 passed.
+- `pytest -q` -> exit 0: 328 passed.
+- `machinery baseline design --impl .` -> exit 0; generated four reviewed baseline rules and `design/ratchet.json`.
+- `machinery check design --impl .` -> exit 0, 0 blocking findings.
+- `modelith lint design/domain.modelith.yaml --completeness error` -> exit 0, 0 errors/warnings.
+- `machinery lint design/machines` -> exit 0, 0 error/drift findings across 7 machines.
+- `machinery oracle design/machines` -> exit 0, 62 rows regenerated across 7 files.
+- `pvg verify <substantive changed files> --include-tests --format=text` -> exit 0: 10 files, 0 issues.
+- `pvg gates --changed fee1a59` -> exit 0: PASS with 15 non-blocking warnings.
+- `git diff --check` -> exit 0.
+
+Summary: Python now imports from repository-root package `talk_reasoner`; G4 resolves 18 imports, verifies 5 allowed edges, and ratchets 4 current edges across 6 offender files. Gt scans 10 test files, 7 machines, and 62 oracle rows with conformance-parse coverage. No behavior changed.
+
+### Architecture Baseline
+`machinery baseline design --impl .` reported exactly:
+- `trs.reasoning -> trs.routing` seen in `talk_reasoner/jobs.py`
+- `trs.renderer -> trs.action-governor` seen in `talk_reasoner/cli.py` and `talk_reasoner/rendering.py`
+- `trs.renderer -> trs.reasoning` seen in `talk_reasoner/cli.py` and `talk_reasoner/rendering.py`
+- `trs.renderer -> trs.routing` seen in `talk_reasoner/cli.py`
+
+The four rules were pasted verbatim under `dependency_rules.baseline`; `design/ratchet.json` is tool-generated and binds the same six offender files.
+
+### Commit
+- Branch: `story/TRS-m4b1`
+- SHA: `b4f5a1d893877ba07f52655fd052448a102f7433`
+- Diff: 23 files, 100 insertions, 45 deletions, dominated by 100%-similar renames.
+
+### G4/Gt Evidence
+- G4: 8 Python files checked, 18 imports resolved, 10 test files skipped, 5 edges verified, 4 baselined edges, 4 ratcheted edges.
+- Gt: 10 test files scanned, 7 machines, 62 oracle rows, 7 machines covered by conformance parse.
+- Required check: 0 blocking ERROR/DRIFT findings.
+
+### AC Verification
+| AC | Requirement | Status | Evidence |
+|---|---|---|---|
+| 1 | Root package preserves imports | PASS | Full suite 328/328; tracked source moved from `src/talk_reasoner` to `talk_reasoner`. |
+| 2 | Path constants resolve | PASS | Catalog/routing/design/fixture paths use the new root and all tests pass. |
+| 3 | Relative contract maps source | PASS | G4 maps all 8 checked Python files; 0 outside-boundary findings. |
+| 4 | Gt scans suite | PASS | 10 test files, 62 rows, 7 machines covered by conformance parse. |
+| 5 | G4 nonempty | PASS | 18 imports resolved and 5 allowed edges verified. |
+| 6 | Four edges explicit | PASS | Four baseline rules plus generated ratchet with six offenders. |
+| 7 | Required gate green | PASS | `machinery check design --impl .` exits 0 with 0 blocking findings. |
+| 8 | Existing tests plus new gate | PASS | 328 passed, including prior 327 and the new architecture test. |
+
+### pvg verify
+- Substantive changed files: `VERIFY: PASSED (10 files scanned, 0 issues)`.
+- The unchanged one-line package marker `talk_reasoner/__init__.py` is a pure 100%-similar rename and was not included in the substance scan.
+
+LEARNINGS:
+- Machinery G4 derives Python module names from the implementation root; a nested `src/` layout required implementation-relative paths and `--impl src`.
+- Making `tests/**` visible does not cause G4 to enforce test imports; G4 skips test files while Gt scans them, so one root can support both gates.
+- The existing renderer/reasoning dependency debt is now explicit and ratcheted instead of silently unresolved.
+
+### OBSERVATIONS
+- `machinery check` reports a non-blocking baseline cycle through `trs.reasoning <-> trs.routing`; this is expected ratchet debt to burn down later.
+- `pvg gates` now scans moved Python modules and reports 15 inherited complexity/file-size warnings, with no new warning from the architecture test.
+
+## nd_contract
+status: delivered
+
+### evidence
+- Commit b4f5a1d893877ba07f52655fd052448a102f7433.
+- Full suite 328/328; required implementation-wide architecture gate green.
+
+### proof
+- [x] AC #1 through AC #8 verified above.
+
 ## nd_contract
 status: in_progress
 

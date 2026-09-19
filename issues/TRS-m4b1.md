@@ -9,7 +9,7 @@ parent: TRS-w8ah
 created_at: 2026-09-19T20:11:24Z
 created_by: speed
 updated_at: 2026-09-19T20:13:45Z
-content_hash: "sha256:d23be5020ef829f2f209a0d67fd8f26c98d471fa816a6f2ee81f5899920c479f"
+content_hash: "sha256:e27cae1badc00b38897546764e47f5c04d43f67785621d5da47b0a05d83a4597"
 blocks: [TRS-h8kc, TRS-g7go]
 assignee: dev-TRS-m4b1
 ---
@@ -247,7 +247,15 @@ status: new
 
 
 ## Notes
+## nd_contract
+status: in_progress
 
+### evidence
+- Claimed M1 architecture gate story on 2026-09-19.
+- Base main SHA: fee1a59dba870bc18414af7ec8a240497dd77868
+
+### proof
+- [ ] Implement implementation-wide G4/Gt architecture gate without behavior change.
 
 ## History
 - 2026-09-19T20:11:55Z dep_added: blocks TRS-h8kc

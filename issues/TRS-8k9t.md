@@ -9,7 +9,7 @@ parent: TRS-h031
 created_at: 2026-09-19T18:16:58Z
 created_by: speed
 updated_at: 2026-09-19T19:05:03Z
-content_hash: "sha256:a28e4a6b8562e91398545f4dac1b6acbfd409d0f9b26c2e606af72c4f6b55610"
+content_hash: "sha256:00cc0808bbd64e952e9b52b87f717a8d9c4a51f03aef7f93a75e83b175c25100"
 blocks: [TRS-n5pa]
 assignee: dev-TRS-8k9t
 ---
@@ -178,6 +178,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-09-19.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence (DELIVERED)
 
 PROOF:

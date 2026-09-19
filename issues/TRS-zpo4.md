@@ -8,11 +8,12 @@ parent: TRS-pf94
 created_at: 2026-09-19T04:41:13Z
 created_by: speed
 updated_at: 2026-09-19T04:59:53Z
-content_hash: "sha256:3a7a6739ae897a8158b85c86036dfd40b5518ff3779ba63a42753d3d7b46638c"
+content_hash: "sha256:95d2516404c3ec3159a48db951413a100e6b6d989de77b27038c5202373a5287"
 assignee: dev-TRS-zpo4
 labels: [accepted]
 closed_at: 2026-09-19T04:59:53Z
 close_reason: "Accepted: independently reran git diff --check, hash and line-count verification, required boundary/deferral scans, and secret-pattern scan. The three D&F documents are self-contained, preserve the four model-boundary facts, define async/policy/privacy/provenance behavior, and provide measurable gates."
+blocks: [TRS-do2n]
 ---
 
 ## Description
@@ -217,9 +218,11 @@ status: delivered
 - 2026-09-19T04:42:15Z claimed by dev-TRS-zpo4
 - 2026-09-19T04:59:03Z status: in_progress -> in_progress
 - 2026-09-19T04:59:53Z status: in_progress -> closed
+- 2026-09-19T05:27:54Z dep_added: blocks TRS-do2n
 
 ## Links
 - Parent: [[TRS-pf94]]
+- Blocks: [[TRS-do2n]]
 
 ## Comments
 

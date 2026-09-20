@@ -7,7 +7,7 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T01:05:36Z
-content_hash: "sha256:94275be7108c69f48ba799e796f9c84a5a81735bbfad06c3361577b865cb6507"
+content_hash: "sha256:40370ff8abfd2bc116cedfbffe54733b2cfc3bbea38a77687ca3de337ef64ff7"
 parent: TRS-pvv1
 labels: [capstone, hard-tdd, red-approved]
 was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
@@ -120,6 +120,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: red-approved
+
+### evidence
+- RED tests approved via pvg story approve-red on 2026-09-19. Design RED gate: design gate green (machinery check design; design-side gates only (no staged gate list; impl gates run at pvg gates and the seal); design.machinery=on); story references no oracle stable ids, id-coverage not applicable.
+
+### proof
+- [ ] GREEN developer must implement against the approved RED tests without modifying them.
 
 
 ## nd_contract

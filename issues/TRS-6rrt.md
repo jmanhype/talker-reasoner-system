@@ -7,13 +7,13 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:26:07Z
-content_hash: "sha256:45337eb4da3b66bb199d2157270474b090d3a2044bd18451904986942e13b218"
+content_hash: "sha256:f0a29b320146fc4cb8461a495f854b551f8a4e13c065f95b98424cc75105327f"
 parent: TRS-pvv1
 labels: [walking-skeleton, hard-tdd, red-approved, accepted]
 assignee: dev-TRS-6rrt
 closed_at: 2026-09-20T00:26:07Z
 close_reason: "Accepted: independently reran targeted suite 8/8, full suite 338/338, strict TypeScript compilation, machinery implementation/machine/oracle/Modelith gates, hard-TDD verification, scoped pvg gates/verify, and diff checks. RED was genuine; three harness/baseline conflicts were explicitly PM-authorized and committed with [test-edit-authorized]; production GREEN remains separately committed."
-led_to: [TRS-fcji]
+led_to: [TRS-fcji, TRS-ji8y]
 ---
 
 ## Description
@@ -390,6 +390,6 @@ status: delivered
 
 ## Links
 - Parent: [[TRS-pvv1]]
-- Led to: [[TRS-fcji]]
+- Led to: [[TRS-fcji]], [[TRS-ji8y]]
 
 ## Comments

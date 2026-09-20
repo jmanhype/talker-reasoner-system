@@ -205,7 +205,7 @@ def _behavior(tmp_path: Path) -> dict[str, object]:
             cwd=ROOT / "edge", text=True, capture_output=True, timeout=60, check=False,
         )
         assert compiled.returncode == 0, compiled.stdout + compiled.stderr
-        executable = output / "driver.js"
+        executable = output / ".voice-edge-red" / "driver.js"
         run = subprocess.run(
             ["node", str(executable)], cwd=ROOT / "edge", text=True,
             capture_output=True, timeout=30, check=False,

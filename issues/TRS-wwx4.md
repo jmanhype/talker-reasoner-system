@@ -7,7 +7,7 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T01:05:57Z
-content_hash: "sha256:d43a536ad699dfeef35f43738ea75e92718dc161645cf859055101b61a79fc51"
+content_hash: "sha256:1486b67ae06692b15dbf15e9e92612453fb4b1f6835d4d7480ded936c72a84eb"
 parent: TRS-pvv1
 labels: [capstone, hard-tdd, red-approved]
 was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
@@ -120,7 +120,15 @@ status: new
 
 
 ## Notes
+## PM Test-Edit Authorization
 
+Authorize the TRS-wwx4 GREEN completion repair required by its approved E2e test:
+
+- add the missing frozen `tests/e2e/fixtures/m2-report.json` from the real passing journey;
+- advance M0/M1 collected-test denominator from 362 to 363;
+- advance M1 scanned-test-file denominator from 15 to 16.
+
+The commit subject must include `[test-edit-authorized]`. No oracle assertion may be weakened.
 
 ## nd_contract
 status: red-approved

@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:33:48Z
-content_hash: "sha256:b82098c1cf440903e8e17e4a575a57b5058b72dd8825b69f0f3380c0bc8ba147"
+updated_at: 2026-09-20T00:41:36Z
+content_hash: "sha256:444e21204282453e0a9b3d04fcbc2885a83a14e52a9d5877f9edfe6f92b7991d"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd, red-approved]
@@ -115,6 +115,15 @@ status: new
 
 
 ## Notes
+## PM Test-Edit and Budget Authorization
+
+Authorized sanctioned repair for TRS-fcji RED/GREEN:
+
+1. In `tests/test_voice_presentation_arbitration.py`, capture `overlapArbiter.snapshot` after the ordinary second submission and before active-user supersession. Emit that captured value in the `oneStream` section. The unchanged no-argument property is later read for the post-supersession state and cannot deterministically represent two different active streams at once.
+2. Advance M0/M1 collected-test denominator from 338 to 348, M1 scanned test files from 13 to 14, and M1 TypeScript files from 4 to 5. These are additive consequences of the approved RED file and required arbiter module.
+3. Adjudicate the story budget overrun: the original “under 450 changed LOC” estimate did not account for the 423-line executable TypeScript compiler/Node RED harness. Authorize this story’s combined 616-line RED-plus-GREEN change because it remains two files, adds no dependency, and implements the full stated accessibility/arbitration AC; future M2 stories should budget executable harness + implementation separately.
+
+The test repair must use `[test-edit-authorized]` in its commit subject and must not weaken any assertion.
 
 
 ## nd_contract

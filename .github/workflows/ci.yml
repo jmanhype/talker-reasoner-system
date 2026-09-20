@@ -28,6 +28,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Install pinned design tools
+        run: |
+          go install github.com/RamXX/machinery/cmd/machinery@v0.3.11
+          go install github.com/stacklok/modelith/cmd/modelith@v0.4.0
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
       - name: Run Python tests
         run: uv run --group dev pytest -q
       - name: Check TypeScript edge

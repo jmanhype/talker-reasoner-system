@@ -200,9 +200,9 @@ def _behavior(fast_response: dict[str, object]) -> dict[str, object]:
     source.write_text(DRIVER.replace("__INPUT_JSON__", encoded), encoding="utf-8")
     try:
         compiled = subprocess.run([
-            "tsc", ".voice-m2-red/driver.ts", "--outDir", str(output), "--target", "es2022",
+            "tsc", "driver.ts", "--outDir", str(output), "--target", "es2022",
             "--module", "nodenext", "--moduleResolution", "nodenext", "--strict", "--skipLibCheck",
-        ], cwd=ROOT / "edge", text=True, capture_output=True, timeout=60, check=False)
+        ], cwd=scratch, text=True, capture_output=True, timeout=60, check=False)
         assert compiled.returncode == 0, compiled.stdout + compiled.stderr
         run = subprocess.run(
             ["node", str(output / ".voice-m2-red" / "driver.js")], cwd=ROOT / "edge",

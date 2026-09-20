@@ -196,10 +196,10 @@ def _behavior() -> dict[str, object]:
     try:
         compiled = subprocess.run(
             [
-                "tsc", ".voice-turn-red/driver.ts", "--outDir", str(output), "--target", "es2022",
+                "tsc", "driver.ts", "--outDir", str(output), "--target", "es2022",
                 "--module", "nodenext", "--moduleResolution", "nodenext", "--strict", "--skipLibCheck",
             ],
-            cwd=ROOT / "edge", text=True, capture_output=True, timeout=60, check=False,
+            cwd=scratch, text=True, capture_output=True, timeout=60, check=False,
         )
         assert compiled.returncode == 0, compiled.stdout + compiled.stderr
         executable = output / ".voice-turn-red" / "driver.js"

@@ -7,7 +7,7 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:43:14Z
-content_hash: "sha256:8bb60d3cd1dab2d1149eb9deb5f9e43729c79298bec980b09ec65454a809e875"
+content_hash: "sha256:a5129f97f3639c1847585768917df44b5498b1558388e7a2e972438b9d4ac0fc"
 parent: TRS-pvv1
 labels: [hard-tdd, red-approved, accepted]
 was_blocked_by: [TRS-6rrt]
@@ -116,6 +116,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
 
 
 ## nd_contract

@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:10:37Z
-content_hash: "sha256:144aa63ea8fc69797bce4d282c36a6f9ce92d7acc69273006763efc8623164ef"
+updated_at: 2026-09-20T00:23:32Z
+content_hash: "sha256:c4ac20ca0354af1f9bb2afddf206cfc3e083933426ad8086fcc877bfdcfd4a43"
 parent: TRS-pvv1
 blocks: [TRS-ji8y, TRS-fcji, TRS-wwx4]
 labels: [walking-skeleton, hard-tdd, red-approved]
@@ -117,6 +117,15 @@ status: new
 
 
 ## Notes
+## PM Test-Edit Authorization
+
+Authorized sanctioned repair for TRS-6rrt RED/GREEN:
+
+1. Repair the generated TypeScript driver's executable path in `tests/test_voice_edge_contracts.py`. The current path ignores TypeScript's inferred common-source-root output layout; this is a harness defect, not behavior uncertainty.
+2. Update `tests/test_edge_package.py` from the M1-only exact include list `["ports/**/*.ts"]` to the M2 list `["ports/**/*.ts", "state/**/*.ts"]`. The new RED requirement and old test are directly contradictory.
+3. Advance frozen M0/M1 inventory baselines from 330 collected tests to 338, 12 scanned test files to 13, 2 TypeScript files to 4, and 19 resolved imports to 21. These are additive consequences of the approved RED test file and two M2 state modules.
+
+The repair must be committed with `[test-edit-authorized]` in the subject. It must not weaken any oracle assertion or remove a negative guard.
 
 
 ## nd_contract

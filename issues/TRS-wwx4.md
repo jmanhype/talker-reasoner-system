@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:59:53Z
-content_hash: "sha256:f4ec416689aebc2bf5a0af45953f97a8cac11c8f746f8db4a27cdc8cc4a006e8"
+updated_at: 2026-09-20T01:05:35Z
+content_hash: "sha256:0881cc9c8ae0bc7fcab28d151f8263e15072d4852f8048460d7bb73b2b4dc2cb"
 parent: TRS-pvv1
 labels: [capstone, hard-tdd]
 was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
@@ -120,6 +120,58 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-wwx4
+pytest -q -s tests/e2e/test_m2_voice_turn_gate.py
+git diff --check
+git status --short --branch
+shasum -a 256 tests/e2e/test_m2_voice_turn_gate.py
+machinery check design --impl .
+```
+
+### CI/Test Results
+
+```text
+targeted M2 E2e RED: 1 failed in 0.82s
+journey report emitted decision=pass with all 18 conditions true
+RED cause: tests/e2e/fixtures/m2-report.json is intentionally absent
+git diff --check: PASS
+machinery check design --impl .: 0 blocking findings; 16 test files; 7 machines; 62 oracle rows
+```
+
+Summary: genuine capstone RED. The real local journey already proves the integrated behavior, but the frozen final report contract is missing, so the gate correctly fails rather than claiming completion without evidence.
+
+Commit SHA: b1802615ab3eebc2b3e63373cdf581c93b0bb1ab
+
+### AC Verification
+
+| RED requirement | Result | Evidence |
+|---|---|---|
+| Real E2e journey | PASS | Strict TS state modules, Python renderer, deterministic reasoner job, cancellation, and arbiter execute |
+| Exact VOIC/CONV denominators | PASS | 3 + 12 stable ids parsed and reported |
+| Privacy conditions | PASS | 4/4 |
+| Arbitration conditions | PASS | 5/5 |
+| Final report contract | FAIL as intended | Missing frozen M2 fixture |
+| Design gate | PASS | Machinery 0 blocking |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit SHA: `b1802615ab3eebc2b3e63373cdf581c93b0bb1ab`.
+- Test SHA-256: `da66adc51c823a6e7d7f28da86f25a49ee55d4f1f6914b444cf45eccc1f284fd`.
+- Independent RED result: 1 failed.
+- Independent machinery result: 0 blocking.
+
+### proof
+- [x] RED E2e test authored and committed.
+- [x] Journey behavior observed before final report contract exists.
+- [x] Missing report fixture is the sole RED failure.
+- [x] Ready for RED approval and GREEN fixture/gate completion.
 
 
 ## History

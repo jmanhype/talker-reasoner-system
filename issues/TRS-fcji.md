@@ -9,7 +9,7 @@ created_by: speed
 updated_at: 2026-09-20T00:43:14Z
 content_hash: "sha256:8bb60d3cd1dab2d1149eb9deb5f9e43729c79298bec980b09ec65454a809e875"
 parent: TRS-pvv1
-labels: [hard-tdd, red-approved, delivered, accepted]
+labels: [hard-tdd, red-approved, accepted]
 was_blocked_by: [TRS-6rrt]
 assignee: dev-TRS-fcji
 follows: [TRS-6rrt]

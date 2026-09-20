@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:23:32Z
-content_hash: "sha256:c4ac20ca0354af1f9bb2afddf206cfc3e083933426ad8086fcc877bfdcfd4a43"
+updated_at: 2026-09-20T00:26:06Z
+content_hash: "sha256:de5168f2133eff3a8e321c320368f96d5ddb885c69be9f555082d60e8533ff5c"
 parent: TRS-pvv1
 blocks: [TRS-ji8y, TRS-fcji, TRS-wwx4]
 labels: [walking-skeleton, hard-tdd, red-approved]
@@ -117,6 +117,88 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-6rrt
+pytest -q tests/test_voice_edge_contracts.py
+pytest -q
+tsc -p edge
+machinery check design --impl .
+machinery lint design/machines
+machinery oracle design/machines
+modelith lint design/domain.modelith.yaml --completeness error
+pvg story verify-tdd --base f7bc6e0
+pvg gates edge/state/VoiceSession.ts edge/state/ConversationTurn.ts edge/tsconfig.json
+pvg verify edge/state/VoiceSession.ts edge/state/ConversationTurn.ts edge/tsconfig.json --format=text
+git diff --check
+```
+
+### CI/Test Results
+
+```text
+targeted voice-edge suite: 8 passed in 3.47s final coordinator run
+full suite: 338 passed in 6.09s
+strict TypeScript compile: exit 0
+machinery check design --impl .: 0 blocking findings; 4 TS files; 21 imports; 5 edges; 13 test files; 62 oracle rows
+machinery lint design/machines: 0 error/drift findings across 7 machines
+machinery oracle design/machines: all 7 oracles regenerated fresh; 62 rows
+modelith lint --completeness error: 0 errors, 0 warnings
+hard-TDD verify: 3 commits checked; 0 unauthorized test edits
+scoped pvg gates: PASS, 0 warnings/skips
+scoped pvg verify: PASSED, 2 files scanned, 0 issues
+git diff --check: PASS
+precise changed-text secret-value regex: 0 hits
+```
+
+Note: `pvg gates --changed f7bc6e0..HEAD` currently exits 128 inside this linked worktree even though the equivalent `git diff --name-only f7bc6e0..HEAD` succeeds. Explicit-path `pvg gates` over every changed implementation file passes and is recorded above.
+
+The initial broad secret-word scan reported only deliberate negative fixture/pattern strings (`password`, `sk-` prefix test data); the precise credential-value regex found zero hits.
+
+### PM-authorized RED harness repair
+
+The GREEN worker disputed three genuine harness/baseline conflicts. PM authorization was recorded in nd before editing tests:
+
+- corrected TypeScript compiler output path;
+- updated edge include list to `ports/**/*.ts` plus `state/**/*.ts`;
+- advanced M0/M1 denominators to 338 tests, 13 scanned test files, 4 TS files, and 21 imports.
+
+The repair commit carries `[test-edit-authorized]`; `pvg story verify-tdd --base f7bc6e0` passes.
+
+Summary: the story now provides the offline M2 walking skeleton. Real strict TypeScript `VoiceSession` and `ConversationTurn` objects execute through compiler/Node drivers, cover the three VOIC rows and skeleton CONV rows, retain transcript values only during the live turn, release them on finish/close, and introduce no live dependency.
+
+Commit SHA: fd27f563f64addccc5e0b0fa7e7c6dd1ee489823
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. VOIC-305554 degrade | PASS | Executable state test passes |
+| 2. VOIC-e62d1f active close/release | PASS | Processing-only map empties |
+| 3. VOIC-32ea66 degraded close/release | PASS | Processing-only map empties |
+| 4. CONV-02965d guarded transcript/hash | PASS | Boundary/credential/empty guards and scoped hash pass |
+| 5. CONV-73bae3 non-tool route | PASS | Receiving -> Routed -> Responding |
+| 6. CONV-dab39a finish/release | PASS | Responding -> Terminal; ephemeral transcript null |
+| 7. Restart/closed mutation semantics | PASS | Duplicate active start idempotent; invalid restarts throw |
+| 8. No live dependency | PASS | Full machinery/Modelith gates and import scan pass |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit: `ebdb66b3707943a3e1ecbf58a55980b63aeb142d`.
+- Authorized test repair: `967d73fc2d91bbac14204002e22b149b4b664112`.
+- GREEN commit: `fd27f563f64addccc5e0b0fa7e7c6dd1ee489823`.
+- Full suite: 338 passed.
+
+### proof
+- [x] AC #1 through #8 verified with executable tests and coordinator reruns.
+- [x] Hard-TDD RED/authorized-repair/GREEN history passes structural verification.
+- [x] No live voice/model/durable/tool dependency introduced.
+
+
 ## PM Test-Edit Authorization
 
 Authorized sanctioned repair for TRS-6rrt RED/GREEN:

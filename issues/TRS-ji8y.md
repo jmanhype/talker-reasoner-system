@@ -1,13 +1,13 @@
 ---
 id: TRS-ji8y
 title: "Guard M2 slow-path turns under epoch cancellation"
-status: in_progress
+status: open
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:49:38Z
-content_hash: "sha256:a27b4f9770ae3b8fa83570ac371b874b83d94b5f847dc4adbeb9444b1575f165"
+content_hash: "sha256:43dd698549cec71974e2b485279afba3aed5e2082a7ef9e7a11e72e34e6c6075"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd, delivered]
@@ -198,6 +198,7 @@ status: delivered
 - 2026-09-20T00:43:35Z claimed by dev-TRS-ji8y
 - 2026-09-20T00:49:37Z status: in_progress -> in_progress
 - 2026-09-20T00:49:37Z auto-follows: linked to predecessor TRS-fcji
+- 2026-09-20T00:49:38Z status: in_progress -> open
 
 ## Links
 - Parent: [[TRS-pvv1]]

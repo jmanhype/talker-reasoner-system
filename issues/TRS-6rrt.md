@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:10:05Z
-content_hash: "sha256:a4a9fcc220fb62bfca5ed5cf10442ecf5a44b0eb5f95a92e0da654fd9f4b2302"
+updated_at: 2026-09-20T00:10:21Z
+content_hash: "sha256:4f717994bc01cf3a2e451e0bb60d72d4ca1306a0e5b85cdc45e263937e75ade5"
 parent: TRS-pvv1
 blocks: [TRS-ji8y, TRS-fcji, TRS-wwx4]
 labels: [walking-skeleton, hard-tdd, delivered]
@@ -117,6 +117,53 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-6rrt
+pytest -q tests/test_voice_edge_contracts.py
+git diff --check
+git status --short --branch
+git show --stat --oneline HEAD
+shasum -a 256 tests/test_voice_edge_contracts.py
+machinery check design --impl .
+```
+
+### CI/Test Results
+
+```text
+targeted RED suite: 8 failed in 2.48s
+failure causes: missing edge/state/VoiceSession.ts, missing edge/state/ConversationTurn.ts, and missing state/**/*.ts strict inclusion
+git diff --check: PASS
+machinery check design --impl .: 0 blocking findings; 13 test files; 7 machines; 62 oracle rows
+```
+
+Summary: RED evidence formatting repair for the delivery-proof parser. The authoritative RED commit remains `ebdb66b3707943a3e1ecbf58a55980b63aeb142d`; the test hash remains `dbe561717a4adebfbce3b7eab24ee7605c96f50488d12c04919519e59f5a3003`.
+
+Commit SHA: ebdb66b3707943a3e1ecbf58a55980b63aeb142d
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| RED tests authored | PASS | `tests/test_voice_edge_contracts.py`, 313 lines |
+| Genuine executable RED | PASS | 8 failed through strict TypeScript compilation/Node driver |
+| No production implementation | PASS | RED commit changes only the test file |
+| Design remains valid | PASS | Machinery gate reports 0 blocking findings |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit SHA: `ebdb66b3707943a3e1ecbf58a55980b63aeb142d`.
+- Targeted RED result: 8 failed.
+- Machinery result: 0 blocking findings.
+
+### proof
+- [x] RED artifact complete.
+- [x] Ready for RED approval.
 
 
 ## nd_contract

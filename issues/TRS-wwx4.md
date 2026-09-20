@@ -6,10 +6,11 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:01:54Z
+updated_at: 2026-09-20T00:01:55Z
 content_hash: "sha256:cf75308a78a4d7340099d0d6d0716cb5e88dd4cc6e4dbe3425db67bf39663ba5"
 parent: TRS-pvv1
 blocked_by: [TRS-6rrt, TRS-ji8y, TRS-fcji]
+labels: [capstone, hard-tdd]
 ---
 
 ## Description

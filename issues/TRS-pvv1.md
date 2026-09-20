@@ -3,10 +3,10 @@ id: TRS-pvv1
 title: "M2 voice session and turn contracts"
 status: open
 priority: 1
-type: task
+type: epic
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:01:53Z
+updated_at: 2026-09-20T00:02:10Z
 content_hash: "sha256:09c97762a7ea8c330ea97f73d4656f2b6d1bdc7ee19e44ce8d24d445fff89060"
 ---
 

@@ -7,7 +7,7 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:26:07Z
-content_hash: "sha256:c0d65aa175cfc6239628b688371e0b39cc5d44c6349af3cf31a93448cbd1883d"
+content_hash: "sha256:df49c7562c438844f99cc58a455128f9b720d871f0d2f2ea1e4289dfcf13a65d"
 parent: TRS-pvv1
 labels: [walking-skeleton, hard-tdd, red-approved, accepted]
 assignee: dev-TRS-6rrt
@@ -118,6 +118,16 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: accepted
+
+### evidence
+- PM closeout applied via pvg story accept on 2026-09-19.
+
+### proof
+- [x] Story closed after accepted label was applied.
 
 
 ## nd_contract

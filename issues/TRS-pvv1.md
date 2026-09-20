@@ -6,8 +6,8 @@ priority: 1
 type: epic
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:02:33Z
-content_hash: "sha256:48f51e00536caa1b6c692ef338ece675e9bfa5b5c45a3e9c4907d03a52544403"
+updated_at: 2026-09-20T01:21:03Z
+content_hash: "sha256:8150851cb7a3808e3ed04c17549cb45b799b0d7f8f29212e6fefce4f6cb2c2f6"
 ---
 
 ## Description
@@ -73,6 +73,56 @@ status: new
 
 
 ## Notes
+## Epic Completion Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system
+pytest -q
+machinery check design --impl .
+machinery lint design/machines
+machinery oracle design/machines
+modelith lint design/domain.modelith.yaml --completeness error
+pvg gates design edge talk_reasoner config tests --seal
+pvg lint --backlog
+pvg rtm check
+git diff --check
+```
+
+Measured completion:
+
+- Final implementation commit: `25b54c9610c61730d751bf9c2e9aa0dbddc77c22`
+- Milestone acceptance commit: `d723f2b`
+- Full suite: 363/363 passed.
+- M2 E2e report: 18/18 conditions true, decision `pass`.
+- Privacy checks: 4/4.
+- Arbitration checks: 5/5.
+- VoiceSession rows: 3/3.
+- ConversationTurn rows: 12/12.
+- Tool executions: 0.
+- Machinery implementation gate: 0 blocking findings.
+- Machine lint/oracle: 0 error/drift findings across 7 machines.
+- Modelith completeness: 0 errors, 0 warnings.
+- Repository-owned path gates seal: PASS with inherited non-blocking complexity warnings.
+- Backlog lint: PASS, 0 errors.
+- RTM: 62/62 oracle requirements covered.
+
+Note: an initial unscoped `pvg gates --seal` scanned generated `.venv` packages and `.git/hooks` samples and failed on unrelated generated code. The repository-owned path seal passes; this is a tool-scope issue, not an M2 source failure.
+
+## nd_contract
+status: accepted
+
+### evidence
+- Accepted stories: TRS-6rrt, TRS-fcji, TRS-ji8y, TRS-wwx4.
+- All story branches merged into `epic/TRS-pvv1`.
+- M2 status and acceptance evidence committed at `d723f2b`.
+
+### proof
+- [x] All M2 stories accepted.
+- [x] All 15 M2 oracle rows exercised.
+- [x] E2e decision pass.
+- [x] Full suite and completion gates pass.
 
 
 ## History

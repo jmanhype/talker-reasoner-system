@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
+import tempfile
 import sys
 from functools import lru_cache
 from pathlib import Path
@@ -193,13 +194,14 @@ def _behavior() -> dict[str, object]:
     source.parent.mkdir(parents=True)
     encoded_input = json.dumps(json.dumps(_driver_input(), sort_keys=True), sort_keys=True)
     source.write_text(DRIVER.replace("__INPUT_JSON__", encoded_input), encoding="utf-8")
+    compile_cwd = Path(tempfile.mkdtemp(prefix="voice-turn-tsc-"))
     try:
         compiled = subprocess.run(
             [
-                "tsc", "driver.ts", "--outDir", str(output), "--target", "es2022",
+                "tsc", str(source), "--outDir", str(output), "--target", "es2022",
                 "--module", "nodenext", "--moduleResolution", "nodenext", "--strict", "--skipLibCheck",
             ],
-            cwd=scratch, text=True, capture_output=True, timeout=60, check=False,
+            cwd=compile_cwd, text=True, capture_output=True, timeout=60, check=False,
         )
         assert compiled.returncode == 0, compiled.stdout + compiled.stderr
         executable = output / ".voice-turn-red" / "driver.js"
@@ -212,6 +214,7 @@ def _behavior() -> dict[str, object]:
         assert isinstance(value, dict)
         return value
     finally:
+        shutil.rmtree(compile_cwd, ignore_errors=True)
         shutil.rmtree(scratch)
 
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
+import tempfile
 import unicodedata
 from pathlib import Path
 from typing import NamedTuple
@@ -290,14 +291,15 @@ def _behavior() -> dict[str, object]:
         DRIVER.replace("__INPUT_JSON__", encoded_input),
         encoding="utf-8",
     )
+    compile_cwd = Path(tempfile.mkdtemp(prefix="voice-arbitration-tsc-"))
     try:
         compiled = subprocess.run(
             [
-                "tsc", "driver.ts", "--outDir", str(output),
+                "tsc", str(source), "--outDir", str(output),
                 "--target", "es2022", "--module", "nodenext", "--moduleResolution", "nodenext",
                 "--strict", "--skipLibCheck",
             ],
-            cwd=scratch, text=True, capture_output=True, timeout=60, check=False,
+            cwd=compile_cwd, text=True, capture_output=True, timeout=60, check=False,
         )
         assert compiled.returncode == 0, compiled.stdout + compiled.stderr
         executable = output / ".voice-arbitration-red" / "driver.js"
@@ -310,6 +312,7 @@ def _behavior() -> dict[str, object]:
         assert isinstance(value, dict)
         return value
     finally:
+        shutil.rmtree(compile_cwd, ignore_errors=True)
         shutil.rmtree(scratch)
 
 

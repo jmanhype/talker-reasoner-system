@@ -6,8 +6,8 @@ priority: 1
 type: epic
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:02:10Z
-content_hash: "sha256:09c97762a7ea8c330ea97f73d4656f2b6d1bdc7ee19e44ce8d24d445fff89060"
+updated_at: 2026-09-20T00:02:33Z
+content_hash: "sha256:48f51e00536caa1b6c692ef338ece675e9bfa5b5c45a3e9c4907d03a52544403"
 ---
 
 ## Description
@@ -82,3 +82,6 @@ status: new
 
 
 ## Comments
+
+### 2026-09-20T00:02:33Z speed
+Backlog lint review justifications: (1) duplicate canonical headings are produced when nd appends its managed empty sections after an authored self-contained body; the last nd_contract remains authoritative. (2) The two vertical-slice heuristic findings are false negatives: TRS-6rrt explicitly defines that the user can receive one clean non-tool response and close the session, and TRS-ji8y defines that a canceled or superseded turn can no longer surface as a normal response. No error findings exist; RTM covers all 62 oracle rows.

@@ -9,6 +9,7 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "ports/**/*.ts"
+    "ports/**/*.ts",
+    "state/**/*.ts"
   ]
 }

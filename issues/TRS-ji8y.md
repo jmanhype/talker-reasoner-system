@@ -6,11 +6,11 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:49:37Z
+updated_at: 2026-09-20T00:49:38Z
 content_hash: "sha256:04605599a9d320a887d1729e6d8cb143300bae639f2468a6a303f0db6a60b86d"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
-labels: [hard-tdd]
+labels: [hard-tdd, delivered]
 was_blocked_by: [TRS-6rrt]
 assignee: dev-TRS-ji8y
 follows: [TRS-6rrt, TRS-fcji]

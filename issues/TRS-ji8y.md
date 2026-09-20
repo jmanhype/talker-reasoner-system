@@ -1,19 +1,20 @@
 ---
 id: TRS-ji8y
 title: "Guard M2 slow-path turns under epoch cancellation"
-status: in_progress
+status: closed
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:59:32Z
-content_hash: "sha256:2f6d30e1749e5b2d247fa24b78de3450435e2d09cc100e2cb6b90ce613121c2a"
+content_hash: "sha256:2442bdbd02c41a8e74cfdcb931941aa69f226367627ae8525f5d4289382fc467"
 parent: TRS-pvv1
-blocks: [TRS-wwx4]
 labels: [hard-tdd, red-approved, delivered]
 was_blocked_by: [TRS-6rrt]
 assignee: dev-TRS-ji8y
 follows: [TRS-6rrt, TRS-fcji]
+closed_at: 2026-09-20T00:59:32Z
+close_reason: "Accepted: independently reran targeted slow-path suite 14/14, full suite 362/362, strict TypeScript compilation, machinery/machine/oracle/Modelith gates, hard-TDD verification, scoped gates/verify, and diff checks. Baseline repair was explicitly PM-authorized and committed with [test-edit-authorized]."
 ---
 
 ## Description
@@ -307,10 +308,11 @@ status: delivered
 - 2026-09-20T00:50:57Z status: open -> in_progress
 - 2026-09-20T00:50:57Z claimed by dev-TRS-ji8y
 - 2026-09-20T00:59:31Z status: in_progress -> in_progress
+- 2026-09-20T00:59:32Z status: in_progress -> closed
+- 2026-09-20T00:59:32Z dep_removed: no_longer_blocks TRS-wwx4
 
 ## Links
 - Parent: [[TRS-pvv1]]
-- Blocks: [[TRS-wwx4]]
 - Was blocked by: [[TRS-6rrt]]
 - Follows: [[TRS-6rrt]], [[TRS-fcji]]
 

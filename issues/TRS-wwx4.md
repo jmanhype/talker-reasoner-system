@@ -7,11 +7,10 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:01:55Z
-content_hash: "sha256:1ebabf55ac3e121c94c9018394744e762e68dd6110c7120c203a67fece249f53"
+content_hash: "sha256:12002586b91cc4c8456e80715355e4d5103085a069f1e5178dfd066eb1f2b711"
 parent: TRS-pvv1
-blocked_by: [TRS-ji8y]
 labels: [capstone, hard-tdd]
-was_blocked_by: [TRS-6rrt, TRS-fcji]
+was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
 ---
 
 ## Description
@@ -127,10 +126,10 @@ status: new
 - 2026-09-20T00:01:54Z dep_added: blocked_by TRS-fcji
 - 2026-09-20T00:26:07Z dep_removed: was_blocked_by TRS-6rrt
 - 2026-09-20T00:43:13Z dep_removed: was_blocked_by TRS-fcji
+- 2026-09-20T00:59:32Z dep_removed: was_blocked_by TRS-ji8y
 
 ## Links
 - Parent: [[TRS-pvv1]]
-- Blocked by: [[TRS-ji8y]]
-- Was blocked by: [[TRS-6rrt]], [[TRS-fcji]]
+- Was blocked by: [[TRS-6rrt]], [[TRS-fcji]], [[TRS-ji8y]]
 
 ## Comments

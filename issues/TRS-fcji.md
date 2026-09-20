@@ -10,7 +10,7 @@ updated_at: 2026-09-20T00:33:37Z
 content_hash: "sha256:3e7bd9d57dff0525ac5a789f76a1efe3b30c520816a729fc73cfa8e2536a203b"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
-labels: [hard-tdd]
+labels: [hard-tdd, delivered]
 was_blocked_by: [TRS-6rrt]
 assignee: dev-TRS-fcji
 follows: [TRS-6rrt]

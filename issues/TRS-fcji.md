@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:26:52Z
-content_hash: "sha256:531fcf5603d5b9f0289d74c85f0e2b35d60cfe4bda77722f588bfce78a77967d"
+updated_at: 2026-09-20T00:33:37Z
+content_hash: "sha256:61621d3713b907775d950f96e2316bde066517d6c4ebb55565431b16de8d8e9c"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd]
@@ -115,6 +115,62 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-fcji
+pytest -q tests/test_voice_presentation_arbitration.py
+git diff --check
+git status --short --branch
+shasum -a 256 tests/test_voice_presentation_arbitration.py
+machinery check design --impl .
+```
+
+### CI/Test Results
+
+```text
+targeted RED suite: 9 failed, 1 passed in 3.77s
+RED cause: edge/state/arbitration.ts does not exist
+the one pass checks the existing strict/dependency-free edge configuration
+git diff --check: PASS
+machinery check design --impl .: 0 blocking findings; 14 test files; 7 machines; 62 oracle rows
+```
+
+Summary: genuine executable RED for accessibility, typed/spoken parity, one-stream arbitration, active-user priority, stale epoch rejection, cancellation, bounds, and privacy. Tests invoke the real Python renderer, accepted ConversationTurn API, and intended strict TypeScript arbiter through compiler/Node; they do not merely grep source.
+
+Commit SHA: a2ffaa67c1c5bd49d7c731254bb5835e6de7a08e
+
+### AC Verification
+
+| RED requirement | Result | Evidence |
+|---|---|---|
+| Valid candidate shape | FAIL as intended | Missing arbiter module |
+| Parity and raw-value guards | FAIL as intended | Missing arbiter module |
+| Accessibility/channel guards | FAIL as intended | Missing arbiter module |
+| Bounds | FAIL as intended | Missing arbiter module |
+| One active stream | FAIL as intended | Missing arbiter module |
+| Active-user priority | FAIL as intended | Missing arbiter module |
+| Stale epoch rejection | FAIL as intended | Missing arbiter module |
+| Cancellation rejection | FAIL as intended | Missing arbiter module |
+| Privacy snapshot | FAIL as intended | Missing arbiter module |
+| Existing design remains green | PASS | Machinery gate 0 blocking |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit SHA: `a2ffaa67c1c5bd49d7c731254bb5835e6de7a08e`.
+- Test SHA-256: `1a8905ac3400f2d38725c6e39f1f3c1f9ac50a9a0ddeb2d80728a73a6b738c5f`.
+- Independent RED result: 9 failed, 1 passed.
+- Independent machinery result: 0 blocking findings.
+
+### proof
+- [x] RED tests authored and committed.
+- [x] RED failures are intentional missing-contract failures.
+- [x] No production implementation added.
+- [x] Ready for RED approval and GREEN dispatch.
 
 
 ## History

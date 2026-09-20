@@ -7,13 +7,13 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:49:37Z
-content_hash: "sha256:ae9674eddbec52ff71cf8296b211c927a481808a25c7ad9266d5202304be3e30"
+content_hash: "sha256:04605599a9d320a887d1729e6d8cb143300bae639f2468a6a303f0db6a60b86d"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd]
 was_blocked_by: [TRS-6rrt]
 assignee: dev-TRS-ji8y
-follows: [TRS-6rrt]
+follows: [TRS-6rrt, TRS-fcji]
 ---
 
 ## Description
@@ -184,11 +184,13 @@ status: delivered
 - 2026-09-20T00:43:35Z status: open -> in_progress
 - 2026-09-20T00:43:35Z auto-follows: linked to predecessor TRS-6rrt
 - 2026-09-20T00:43:35Z claimed by dev-TRS-ji8y
+- 2026-09-20T00:49:37Z status: in_progress -> in_progress
+- 2026-09-20T00:49:37Z auto-follows: linked to predecessor TRS-fcji
 
 ## Links
 - Parent: [[TRS-pvv1]]
 - Blocks: [[TRS-wwx4]]
 - Was blocked by: [[TRS-6rrt]]
-- Follows: [[TRS-6rrt]]
+- Follows: [[TRS-6rrt]], [[TRS-fcji]]
 
 ## Comments

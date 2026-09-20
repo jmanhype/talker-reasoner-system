@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:02:54Z
-content_hash: "sha256:dd6e61516b792d15eb802b90cb1dcd416389c03fad3dfc7c173e6cdead7d8c57"
+updated_at: 2026-09-20T00:10:05Z
+content_hash: "sha256:45dc8e4de5a89b3f0422a5fb951d6d1299f6b2902195924c13cf5d24d41ed2c1"
 parent: TRS-pvv1
 blocks: [TRS-ji8y, TRS-fcji, TRS-wwx4]
 labels: [walking-skeleton, hard-tdd]
@@ -117,6 +117,73 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+RED author: `/root/dev_vk_mfn6`.
+
+Commands run independently by the coordinator:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-6rrt
+pytest -q tests/test_voice_edge_contracts.py
+git diff --check
+git status --short --branch
+git show --stat --oneline HEAD
+shasum -a 256 tests/test_voice_edge_contracts.py
+machinery check design --impl .
+```
+
+### CI/Test Results
+
+```text
+pytest -q tests/test_voice_edge_contracts.py:
+FFFFFFFF                                                               [100%]
+8 failed in 2.48s
+
+RED causes:
+- edge/tsconfig.json include lacks state/**/*.ts
+- edge/state/VoiceSession.ts does not exist
+- edge/state/ConversationTurn.ts does not exist
+
+git diff --check: PASS
+machinery check design --impl .:
+0 blocking (ERROR/DRIFT) finding(s)
+13 test files scanned
+7 machines / 62 oracle rows covered by conformance parse
+```
+
+Summary: this is a genuine hard-TDD RED artifact. The tests execute a generated strict TypeScript driver through `tsc` and Node, so failures come from missing real state modules rather than source grep assertions. Production implementation was deliberately absent.
+
+Commit SHA: ebdb66b3707943a3e1ecbf58a55980b63aeb142d
+
+Test SHA-256: dbe561717a4adebfbce3b7eab24ee7605c96f50488d12c04919519e59f5a3003
+
+### AC Verification
+
+| RED requirement | Result | Evidence |
+|---|---|---|
+| Tests cite named VOIC rows | PASS | VOIC-305554, VOIC-e62d1f, VOIC-32ea66 present |
+| Tests cite skeleton CONV rows | PASS | CONV-02965d, CONV-73bae3, CONV-dab39a present |
+| Negative boundary/guard cases included | PASS | Empty/credential transcript, unconsented cloud, early route, hash mismatch, restart/closed mutations |
+| Tests execute real intended TypeScript behavior | PASS | Strict tsc driver plus Node execution |
+| Genuine RED | PASS | 8 failures from missing modules/config |
+| Production intentionally not implemented | PASS | Only test file changed |
+| Design gate remains green | PASS | Machinery implementation check 0 blocking |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit SHA: `ebdb66b3707943a3e1ecbf58a55980b63aeb142d`.
+- Test SHA-256: `dbe561717a4adebfbce3b7eab24ee7605c96f50488d12c04919519e59f5a3003`.
+- Independent RED result: 8 failed.
+- Independent machinery result: 0 blocking findings.
+
+### proof
+- [x] RED tests authored and committed.
+- [x] RED failures are contract failures, not environment accidents.
+- [x] No production implementation was added.
+- [x] Ready for RED approval and GREEN dispatch.
 
 
 ## History

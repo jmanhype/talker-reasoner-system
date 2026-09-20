@@ -102,7 +102,7 @@ def test_complete_offline_m0_gate_emits_exact_pass_report() -> None:
         "sixty_two_unique": len(transitions) == 62 and len({row.stable_id for row in transitions}) == 62,
         "thirty_six_invariants": len(invariants) == 36 and len(set(invariants)) == 36,
         "all_transitions_conform": _all_transitions_conform(oracles),
-        "complete_suite_collected": collection_exit_code == 0 and collected_test_count == 338,
+        "complete_suite_collected": collection_exit_code == 0 and collected_test_count == 348,
         "no_live_dependencies": not live_dependency_classes,
     }
     report = {

@@ -6,10 +6,11 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:01:53Z
+updated_at: 2026-09-20T00:01:55Z
 content_hash: "sha256:1f599bd95aeee12b64f0bad22a6a2fc234f111e242963c8d69d3706627e7c0e2"
 parent: TRS-pvv1
 blocks: [TRS-ji8y, TRS-fcji, TRS-wwx4]
+labels: [walking-skeleton, hard-tdd]
 ---
 
 ## Description

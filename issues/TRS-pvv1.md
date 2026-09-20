@@ -1,13 +1,15 @@
 ---
 id: TRS-pvv1
 title: "M2 voice session and turn contracts"
-status: open
+status: closed
 priority: 1
 type: epic
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T01:21:03Z
-content_hash: "sha256:8150851cb7a3808e3ed04c17549cb45b799b0d7f8f29212e6fefce4f6cb2c2f6"
+updated_at: 2026-09-20T01:21:04Z
+content_hash: "sha256:c719a119f08e7f701e666e5031ccc792b84322569a9c73d95f257103c842ed3e"
+closed_at: 2026-09-20T01:21:04Z
+close_reason: "M2 completion gate passed: all four child stories accepted and merged; the real E2e journey has 18/18 conditions true, 4/4 privacy checks, 5/5 arbitration checks, 3/3 VOIC rows, 12/12 CONV rows, zero tool executions, 363/363 tests, and all machinery/Modelith/backlog/RTM gates green."
 ---
 
 ## Description
@@ -126,7 +128,7 @@ status: accepted
 
 
 ## History
-
+- 2026-09-20T01:21:04Z status: open -> closed
 
 ## Links
 

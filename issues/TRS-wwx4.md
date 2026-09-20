@@ -7,9 +7,9 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:01:54Z
-content_hash: "sha256:8733502ae8c3d07a139ffde532a26ddd9a47a7391ffe02bc1a253555f07b0d48"
+content_hash: "sha256:cf75308a78a4d7340099d0d6d0716cb5e88dd4cc6e4dbe3425db67bf39663ba5"
 parent: TRS-pvv1
-blocked_by: [TRS-6rrt, TRS-ji8y]
+blocked_by: [TRS-6rrt, TRS-ji8y, TRS-fcji]
 ---
 
 ## Description
@@ -122,9 +122,10 @@ status: new
 ## History
 - 2026-09-20T00:01:54Z dep_added: blocked_by TRS-6rrt
 - 2026-09-20T00:01:54Z dep_added: blocked_by TRS-ji8y
+- 2026-09-20T00:01:54Z dep_added: blocked_by TRS-fcji
 
 ## Links
 - Parent: [[TRS-pvv1]]
-- Blocked by: [[TRS-6rrt]], [[TRS-ji8y]]
+- Blocked by: [[TRS-6rrt]], [[TRS-ji8y]], [[TRS-fcji]]
 
 ## Comments

@@ -1,12 +1,19 @@
 import type { ProcessingBoundary } from "../ports/audio.js";
 
-export type ConversationTurnStatus = "Receiving" | "Routed" | "Responding" | "Terminal";
+export type ConversationTurnStatus =
+  | "Receiving" | "Routed" | "SlowPath" | "AwaitingConfirmation" | "Responding" | "Terminal";
 export type RouteName = "chitchat" | "needs_tools" | "unclear";
 export type RoutingRisk = "low" | "medium" | "high" | "unevaluable";
+export type PolicyOutcome = "allowed_without_confirmation" | "confirmation_required" | "rejected";
+export type TerminalReason = "canceled_by_user" | "turn_superseded";
 export interface ConversationTurnOpenInput {
   readonly sessionId: string; readonly turnId: string; readonly turnEpoch: number;
   readonly processingBoundary: ProcessingBoundary;
 }
+
+export interface CancelInput { readonly jobId: string | null }
+export interface AdvanceEpochInput { readonly jobId: string; readonly turnEpoch: number }
+export interface AwaitConfirmationInput { readonly policyOutcome: PolicyOutcome; readonly actionHash: string | null }
 export interface TranscribeInput {
   readonly transcript: string; readonly processingBoundary: ProcessingBoundary;
   readonly cloudConsent: boolean; readonly schemaVersion: string;
@@ -27,18 +34,22 @@ export interface RenderedResponse {
 export interface ConversationTurnSnapshot {
   readonly sessionId: string; readonly turnId: string; readonly turnEpoch: number; readonly status: ConversationTurnStatus;
   readonly processingBoundary: ProcessingBoundary; readonly inputHash: string | null; readonly ephemeralTranscript: string | null;
-  readonly boundRoute: RouteDecision | null;
-  readonly boundResponse: RenderedResponse | null;
+  readonly boundRoute: RouteDecision | null; readonly boundResponse: RenderedResponse | null;
+  readonly terminalReason: TerminalReason | null;
+  readonly cancellationIntent: {
+    readonly jobId: string | null; readonly stimulus: "cancel" | "turnAdvanced"; readonly turnEpoch: number;
+  } | null;
+  readonly awaitingActionHash: string | null;
 }
 
 const IDENTIFIER_PATTERN = /^[a-z0-9][a-z0-9._-]{2,127}$/;
 const VERSION_PATTERN = /^[a-z0-9][a-z0-9._-]{0,63}$/;
 const HASH_PATTERN = /^[0-9a-f]{64}$/;
-const CREDENTIAL_PATTERNS = [
-  /(?:api[_-]?key|password|passwd|secret|bearer\s+|access[_-]?token|authorization)/i,
-  /AKIA[0-9A-Z]{16}/,
-  /sk-[A-Za-z0-9_-]{16,}/,
-];
+const EXPECTED_THRESHOLDS_VERSION = "slice0-v1";
+const CREDENTIAL_PATTERNS = [/(?:api[_-]?key|password|passwd|secret|bearer\s+|access[_-]?token|authorization)/i, /AKIA[0-9A-Z]{16}/, /sk-[A-Za-z0-9_-]{16,}/];
+const ROUTES = new Set(["chitchat", "needs_tools", "unclear"]);
+const RISKS = new Set(["low", "medium", "high", "unevaluable"]);
+const FALLBACK_REASONS = new Set(["threshold", "safety", "invalid"]);
 
 function assertIdentifier(value: string, field: string): void {
   if (!IDENTIFIER_PATTERN.test(value)) {
@@ -62,6 +73,10 @@ function assertBoundary(value: ProcessingBoundary, field: string): void {
   if (value !== "localOnly" && value !== "consentedCloud") {
     throw new Error(`${field} must be localOnly or consentedCloud`);
   }
+}
+
+function assertJobId(value: string | null): void {
+  if (value !== null) assertIdentifier(value, "jobId");
 }
 
 function validatedTranscriptLength(value: string): number {
@@ -116,10 +131,7 @@ function sha256Hex(value: string): string {
     padded.push(Number((bitLength >> shift) & 0xffn));
   }
 
-  const hashes = [
-    0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
-    0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
-  ];
+  const hashes = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
   const roundConstants = ("428a2f98 71374491 b5c0fbcf e9b5dba5 3956c25b 59f111f1 923f82a4 ab1c5ed5 "
     + "d807aa98 12835b01 243185be 550c7dc3 72be5d74 80deb1fe 9bdc06a7 c19bf174 "
     + "e49b69c1 efbe4786 0fc19dc6 240ca1cc 2de92c6f 4a7484aa 5cb0a9dc 76f988da "
@@ -184,6 +196,11 @@ function boundaryIsConsented(
   return input.processingBoundary === "consentedCloud" ? input.cloudConsent : !input.cloudConsent;
 }
 
+function assertRouteIdentity(decision: RouteDecision): void {
+  if (!ROUTES.has(decision.route) || !ROUTES.has(decision.selectedLabel)
+    || decision.selectedLabel !== decision.route) throw new Error("routing label is invalid");
+}
+
 function normalizeRoute(decision: RouteDecision): RouteDecision {
   const allowed = new Set([
     "selectedLabel", "route", "confidence", "risk", "thresholdsVersion", "policyHash", "inputHash", "fallbackReason",
@@ -191,24 +208,17 @@ function normalizeRoute(decision: RouteDecision): RouteDecision {
   if (Object.keys(decision).some((key) => !allowed.has(key))) {
     throw new Error("routing decision contains unknown fields");
   }
-  if (decision.route === "needs_tools") {
-    throw new Error("M2 binds only a valid non-tool route");
-  }
-  if (decision.route !== "chitchat" && decision.route !== "unclear") {
-    throw new Error("route must be chitchat, needs_tools, or unclear");
-  }
-  if (decision.selectedLabel.length === 0 || !Number.isFinite(decision.confidence)
-    || decision.confidence < 0 || decision.confidence > 1) {
-    throw new Error("routing label or confidence is invalid");
-  }
-  const risks = new Set(["low", "medium", "high", "unevaluable"]);
-  if (!risks.has(decision.risk) || !HASH_PATTERN.test(decision.policyHash)
-    || !HASH_PATTERN.test(decision.inputHash)) {
+  assertRouteIdentity(decision);
+  if (!Number.isFinite(decision.confidence) || decision.confidence < 0
+    || decision.confidence > 1) throw new Error("routing confidence is invalid");
+  if (!RISKS.has(decision.risk) || !HASH_PATTERN.test(decision.policyHash)
+    || decision.policyHash === "0".repeat(64) || !HASH_PATTERN.test(decision.inputHash)) {
     throw new Error("routing risk or hash is invalid");
   }
-  assertVersion(decision.thresholdsVersion, "thresholdsVersion");
-  if (decision.fallbackReason !== null
-    && !["threshold", "safety", "invalid"].includes(decision.fallbackReason)) {
+  if (decision.thresholdsVersion !== EXPECTED_THRESHOLDS_VERSION) {
+    throw new Error("thresholdsVersion is not the active calibration");
+  }
+  if (decision.fallbackReason !== null && !FALLBACK_REASONS.has(decision.fallbackReason)) {
     throw new Error("fallbackReason is invalid");
   }
   return Object.freeze({ ...decision });
@@ -231,36 +241,26 @@ function normalizeResponse(response: RenderedResponse): RenderedResponse {
 
 /** One immutable, in-memory conversation-turn state object. */
 export class ConversationTurn {
-  readonly #sessionId: string;
-  readonly #turnId: string;
-  readonly #turnEpoch: number;
-  readonly #status: ConversationTurnStatus;
-  readonly #processingBoundary: ProcessingBoundary;
-  readonly #inputHash: string | null;
-  readonly #ephemeralTranscript: string | null;
-  readonly #boundRoute: RouteDecision | null;
-  readonly #boundResponse: RenderedResponse | null;
+  readonly #sessionId: string; readonly #turnId: string; readonly #turnEpoch: number;
+  readonly #status: ConversationTurnStatus; readonly #processingBoundary: ProcessingBoundary;
+  readonly #inputHash: string | null; readonly #ephemeralTranscript: string | null;
+  readonly #boundRoute: RouteDecision | null; readonly #boundResponse: RenderedResponse | null;
+  readonly #terminalReason: TerminalReason | null;
+  readonly #cancellationIntent: ConversationTurnSnapshot["cancellationIntent"];
+  readonly #awaitingActionHash: string | null;
 
   private constructor(input: {
-    sessionId: string;
-    turnId: string;
-    turnEpoch: number;
-    status: ConversationTurnStatus;
-    processingBoundary: ProcessingBoundary;
-    inputHash: string | null;
-    ephemeralTranscript: string | null;
-    boundRoute: RouteDecision | null;
-    boundResponse: RenderedResponse | null;
+    sessionId: string; turnId: string; turnEpoch: number; status: ConversationTurnStatus;
+    processingBoundary: ProcessingBoundary; inputHash: string | null; ephemeralTranscript: string | null;
+    boundRoute: RouteDecision | null; boundResponse: RenderedResponse | null; terminalReason: TerminalReason | null;
+    cancellationIntent: ConversationTurnSnapshot["cancellationIntent"]; awaitingActionHash: string | null;
   }) {
-    this.#sessionId = input.sessionId;
-    this.#turnId = input.turnId;
-    this.#turnEpoch = input.turnEpoch;
-    this.#status = input.status;
-    this.#processingBoundary = input.processingBoundary;
-    this.#inputHash = input.inputHash;
-    this.#ephemeralTranscript = input.ephemeralTranscript;
-    this.#boundRoute = input.boundRoute;
-    this.#boundResponse = input.boundResponse;
+    this.#sessionId = input.sessionId; this.#turnId = input.turnId; this.#turnEpoch = input.turnEpoch;
+    this.#status = input.status; this.#processingBoundary = input.processingBoundary;
+    this.#inputHash = input.inputHash; this.#ephemeralTranscript = input.ephemeralTranscript;
+    this.#boundRoute = input.boundRoute; this.#boundResponse = input.boundResponse;
+    this.#terminalReason = input.terminalReason; this.#cancellationIntent = input.cancellationIntent;
+    this.#awaitingActionHash = input.awaitingActionHash;
   }
 
   static open(input: ConversationTurnOpenInput): ConversationTurn {
@@ -275,6 +275,9 @@ export class ConversationTurn {
       ephemeralTranscript: null,
       boundRoute: null,
       boundResponse: null,
+      terminalReason: null,
+      cancellationIntent: null,
+      awaitingActionHash: null,
     });
   }
 
@@ -289,6 +292,10 @@ export class ConversationTurn {
       ephemeralTranscript: this.#ephemeralTranscript,
       boundRoute: this.#boundRoute === null ? null : Object.freeze({ ...this.#boundRoute }),
       boundResponse: this.#boundResponse === null ? null : Object.freeze({ ...this.#boundResponse }),
+      terminalReason: this.#terminalReason,
+      cancellationIntent: this.#cancellationIntent === null
+        ? null : Object.freeze({ ...this.#cancellationIntent }),
+      awaitingActionHash: this.#awaitingActionHash,
     });
   }
 
@@ -318,6 +325,9 @@ export class ConversationTurn {
       ephemeralTranscript: input.transcript,
       boundRoute: null,
       boundResponse: null,
+      terminalReason: null,
+      cancellationIntent: null,
+      awaitingActionHash: null,
     });
   }
 
@@ -333,12 +343,58 @@ export class ConversationTurn {
       sessionId: this.#sessionId,
       turnId: this.#turnId,
       turnEpoch: this.#turnEpoch,
-      status: "Responding",
+      status: route.route === "needs_tools" ? "SlowPath" : "Responding",
       processingBoundary: this.#processingBoundary,
       inputHash: this.#inputHash,
       ephemeralTranscript: this.#ephemeralTranscript,
       boundRoute: route,
       boundResponse: null,
+      terminalReason: null,
+      cancellationIntent: null,
+      awaitingActionHash: null,
+    });
+  }
+
+  cancel(input: CancelInput): ConversationTurn {
+    if (this.#status === "Terminal") throw new Error("a terminal turn cannot be canceled again");
+    assertJobId(input.jobId);
+    const turnEpoch = this.#turnEpoch + 1;
+    return new ConversationTurn({
+      sessionId: this.#sessionId, turnId: this.#turnId, turnEpoch, status: "Terminal",
+      processingBoundary: this.#processingBoundary, inputHash: this.#inputHash, ephemeralTranscript: null,
+      boundRoute: this.#boundRoute, boundResponse: null, terminalReason: "canceled_by_user",
+      cancellationIntent: { jobId: input.jobId, stimulus: "cancel", turnEpoch }, awaitingActionHash: null,
+    });
+  }
+
+  advanceEpoch(input: AdvanceEpochInput): ConversationTurn {
+    if (this.#status !== "SlowPath" && this.#status !== "AwaitingConfirmation") {
+      throw new Error("only slow work can be superseded by a turn epoch");
+    }
+    assertIdentifier(input.jobId, "jobId");
+    assertEpoch(input.turnEpoch, "turnEpoch");
+    if (input.turnEpoch <= this.#turnEpoch) throw new Error("turn epoch did not advance");
+    return new ConversationTurn({
+      sessionId: this.#sessionId, turnId: this.#turnId, turnEpoch: input.turnEpoch, status: "Terminal",
+      processingBoundary: this.#processingBoundary, inputHash: this.#inputHash, ephemeralTranscript: null,
+      boundRoute: this.#boundRoute, boundResponse: null, terminalReason: "turn_superseded",
+      cancellationIntent: { jobId: input.jobId, stimulus: "turnAdvanced", turnEpoch: input.turnEpoch },
+      awaitingActionHash: null,
+    });
+  }
+
+  awaitConfirmation(input: AwaitConfirmationInput): ConversationTurn {
+    if (this.#status !== "SlowPath") throw new Error("only slow work can wait for confirmation");
+    if (input.policyOutcome !== "confirmation_required" || input.actionHash === null
+      || !HASH_PATTERN.test(input.actionHash)) {
+      throw new Error("exact policy confirmation and an action hash are required");
+    }
+    return new ConversationTurn({
+      sessionId: this.#sessionId, turnId: this.#turnId, turnEpoch: this.#turnEpoch,
+      status: "AwaitingConfirmation", processingBoundary: this.#processingBoundary,
+      inputHash: this.#inputHash, ephemeralTranscript: this.#ephemeralTranscript,
+      boundRoute: this.#boundRoute, boundResponse: null, terminalReason: null,
+      cancellationIntent: null, awaitingActionHash: input.actionHash,
     });
   }
 
@@ -356,6 +412,9 @@ export class ConversationTurn {
       ephemeralTranscript: null,
       boundRoute: this.#boundRoute,
       boundResponse: normalizeResponse(input.response),
+      terminalReason: null,
+      cancellationIntent: null,
+      awaitingActionHash: null,
     });
   }
 }

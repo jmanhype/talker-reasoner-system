@@ -7,7 +7,7 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:59:32Z
-content_hash: "sha256:1e49eb8a3746b90ff97e91a0d3e86d1714f1e6923be98bfcb68d8d3fb62e225d"
+content_hash: "sha256:72baf3f56e295cf5f2759003c8d537ba100bfc54cd8e9249dec8120a5439db7f"
 parent: TRS-pvv1
 labels: [hard-tdd, red-approved, accepted]
 was_blocked_by: [TRS-6rrt]
@@ -15,6 +15,7 @@ assignee: dev-TRS-ji8y
 follows: [TRS-6rrt, TRS-fcji]
 closed_at: 2026-09-20T00:59:32Z
 close_reason: "Accepted: independently reran targeted slow-path suite 14/14, full suite 362/362, strict TypeScript compilation, machinery/machine/oracle/Modelith gates, hard-TDD verification, scoped gates/verify, and diff checks. Baseline repair was explicitly PM-authorized and committed with [test-edit-authorized]."
+led_to: [TRS-wwx4]
 ---
 
 ## Description
@@ -325,5 +326,6 @@ status: delivered
 - Parent: [[TRS-pvv1]]
 - Was blocked by: [[TRS-6rrt]]
 - Follows: [[TRS-6rrt]], [[TRS-fcji]]
+- Led to: [[TRS-wwx4]]
 
 ## Comments

@@ -1,16 +1,18 @@
 ---
 id: TRS-wwx4
 title: "E2e: prove the M2 voice-turn lifecycle"
-status: open
+status: in_progress
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:01:55Z
-content_hash: "sha256:12002586b91cc4c8456e80715355e4d5103085a069f1e5178dfd066eb1f2b711"
+updated_at: 2026-09-20T00:59:53Z
+content_hash: "sha256:f4ec416689aebc2bf5a0af45953f97a8cac11c8f746f8db4a27cdc8cc4a006e8"
 parent: TRS-pvv1
 labels: [capstone, hard-tdd]
 was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
+assignee: dev-TRS-wwx4
+follows: [TRS-6rrt, TRS-fcji, TRS-ji8y]
 ---
 
 ## Description
@@ -127,9 +129,15 @@ status: new
 - 2026-09-20T00:26:07Z dep_removed: was_blocked_by TRS-6rrt
 - 2026-09-20T00:43:13Z dep_removed: was_blocked_by TRS-fcji
 - 2026-09-20T00:59:32Z dep_removed: was_blocked_by TRS-ji8y
+- 2026-09-20T00:59:53Z status: open -> in_progress
+- 2026-09-20T00:59:53Z auto-follows: linked to predecessor TRS-6rrt
+- 2026-09-20T00:59:53Z auto-follows: linked to predecessor TRS-fcji
+- 2026-09-20T00:59:53Z auto-follows: linked to predecessor TRS-ji8y
+- 2026-09-20T00:59:53Z claimed by dev-TRS-wwx4
 
 ## Links
 - Parent: [[TRS-pvv1]]
 - Was blocked by: [[TRS-6rrt]], [[TRS-fcji]], [[TRS-ji8y]]
+- Follows: [[TRS-6rrt]], [[TRS-fcji]], [[TRS-ji8y]]
 
 ## Comments

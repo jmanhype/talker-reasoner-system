@@ -1,17 +1,19 @@
 ---
 id: TRS-fcji
 title: "Arbitrate one M2 response stream with accessibility metadata"
-status: open
+status: in_progress
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:01:55Z
-content_hash: "sha256:e4199a3edb362b6cd20a1e501a3eb298e021decf34a58e5839389340d3f49d77"
+updated_at: 2026-09-20T00:26:52Z
+content_hash: "sha256:531fcf5603d5b9f0289d74c85f0e2b35d60cfe4bda77722f588bfce78a77967d"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd]
 was_blocked_by: [TRS-6rrt]
+assignee: dev-TRS-fcji
+follows: [TRS-6rrt]
 ---
 
 ## Description
@@ -119,10 +121,14 @@ status: new
 - 2026-09-20T00:01:54Z dep_added: blocked_by TRS-6rrt
 - 2026-09-20T00:01:54Z dep_added: blocks TRS-wwx4
 - 2026-09-20T00:26:07Z dep_removed: was_blocked_by TRS-6rrt
+- 2026-09-20T00:26:52Z status: open -> in_progress
+- 2026-09-20T00:26:52Z auto-follows: linked to predecessor TRS-6rrt
+- 2026-09-20T00:26:52Z claimed by dev-TRS-fcji
 
 ## Links
 - Parent: [[TRS-pvv1]]
 - Blocks: [[TRS-wwx4]]
 - Was blocked by: [[TRS-6rrt]]
+- Follows: [[TRS-6rrt]]
 
 ## Comments

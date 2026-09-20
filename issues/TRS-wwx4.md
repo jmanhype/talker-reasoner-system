@@ -1,13 +1,13 @@
 ---
 id: TRS-wwx4
 title: "E2e: prove the M2 voice-turn lifecycle"
-status: in_progress
+status: open
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T01:05:36Z
-content_hash: "sha256:c62a54035b0c8d29b298066fb2e51076aeb5e407a5b251faf035e4ec718a1c10"
+content_hash: "sha256:94275be7108c69f48ba799e796f9c84a5a81735bbfad06c3361577b865cb6507"
 parent: TRS-pvv1
 labels: [capstone, hard-tdd, delivered]
 was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
@@ -199,6 +199,7 @@ status: delivered
 - 2026-09-20T00:59:53Z auto-follows: linked to predecessor TRS-ji8y
 - 2026-09-20T00:59:53Z claimed by dev-TRS-wwx4
 - 2026-09-20T01:05:35Z status: in_progress -> in_progress
+- 2026-09-20T01:05:36Z status: in_progress -> open
 
 ## Links
 - Parent: [[TRS-pvv1]]

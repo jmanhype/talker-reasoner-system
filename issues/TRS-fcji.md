@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:41:36Z
-content_hash: "sha256:444e21204282453e0a9b3d04fcbc2885a83a14e52a9d5877f9edfe6f92b7991d"
+updated_at: 2026-09-20T00:43:13Z
+content_hash: "sha256:2237054fea23fd05ac62b4a3c91fee936a9ce36a4b7c8cb511b39d31f79f62c2"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd, red-approved]
@@ -115,6 +115,83 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-fcji
+pytest -q tests/test_voice_presentation_arbitration.py
+pytest -q
+tsc -p edge
+machinery check design --impl .
+machinery lint design/machines
+machinery oracle design/machines
+modelith lint design/domain.modelith.yaml --completeness error
+pvg story verify-tdd --base ca61f46
+pvg gates edge/state/arbitration.ts
+pvg verify edge/state/arbitration.ts --format=text
+git diff --check
+```
+
+### CI/Test Results
+
+```text
+targeted arbitration suite: 10 passed in 4.89s
+full suite: 348 passed in 11.02s
+strict TypeScript compile: exit 0
+machinery implementation gate: 0 blocking findings; 5 TS files; 21 imports; 5 edges; 14 test files; 62 oracle rows
+machinery machine lint/oracle: 0 error/drift; 7 machines; 62 rows
+modelith completeness: 0 errors, 0 warnings
+hard-TDD verify: 3 commits checked; 0 unauthorized test edits
+scoped pvg gates: PASS, 0 warnings/skips
+scoped pvg verify: PASSED, 1 file, 0 issues
+git diff --check: PASS
+precise implementation secret-value scan: PASS
+```
+
+### PM-authorized harness repair and budget adjudication
+
+The GREEN worker identified a deterministic snapshot-order contradiction and additive milestone denominators. PM authorization was recorded before edits:
+
+- capture the one-stream snapshot before active-user supersession;
+- update M0/M1 inventory baselines to 348 tests, 14 scanned test files, and 5 TypeScript files;
+- adjudicate the combined 616-line RED-plus-GREEN overrun because the original budget omitted the 423-line executable harness.
+
+The test repair commit carries `[test-edit-authorized]`; hard-TDD verification passes.
+
+Summary: the dependency-free TypeScript PresentationArbiter enforces typed/spoken semantic parity, bounded payloads, screen-reader text and caption availability, one active stream, active-user supersession, stale-epoch rejection, canceled-output rejection, and privacy-safe snapshots without retaining raw transcript/audio.
+
+Commit SHA: d0c268aa6dee5036bff9f744153aae8aa865ccd8
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. Candidate shape/parity/channel/priority/epoch/accessibility | PASS | Valid renderer-backed candidate test |
+| 2. Parity fail-closed/no raw values | PASS | Empty, mismatch, and raw-value guards |
+| 3. Accessibility metadata fail-closed | PASS | Missing screen-reader text, unavailable captions, inaccessible channel |
+| 4. One active stream | PASS | Ordinary second submission rejected without overlap |
+| 5. Active user outranks stale slow output | PASS | Active-user submission supersedes stale stream |
+| 6. Stale epoch rejected | PASS | Current-epoch comparison |
+| 7. Canceled output cannot become audible | PASS | Canceled terminal state rejected |
+| 8. No raw retention/live dependency | PASS | Privacy snapshot and architecture/import gates |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit: `a2ffaa67c1c5bd49d7c731254bb5835e6de7a08e`.
+- Authorized test repair: `b2465b7cb53b6893fd14da1705d324f9823260f1`.
+- GREEN commit: `d0c268aa6dee5036bff9f744153aae8aa865ccd8`.
+- Full suite: 348 passed.
+
+### proof
+- [x] AC #1 through #8 verified with executable tests and coordinator reruns.
+- [x] Hard-TDD RED/authorized-repair/GREEN history passes.
+- [x] No live dependency or raw processing value retained.
+
+
 ## PM Test-Edit and Budget Authorization
 
 Authorized sanctioned repair for TRS-fcji RED/GREEN:

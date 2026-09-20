@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:50:57Z
-content_hash: "sha256:c4f5cc3d806621c436f2a24d0457b09094b2282396be78dfb09d09941eaa1818"
+updated_at: 2026-09-20T00:58:24Z
+content_hash: "sha256:251d1c01d3e0753cdea1cf1ed84610893f3bddb10229f9d89747a09b748be11f"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd, red-approved]
@@ -118,6 +118,15 @@ status: new
 
 
 ## Notes
+## PM Test-Edit Authorization
+
+Authorized sanctioned repair for TRS-ji8y GREEN:
+
+- Advance the M0/M1 collected-test denominator from 348 to 362.
+- Advance the M1 scanned-test-file denominator from 14 to 15.
+- Leave all other machinery denominators unchanged: 5 TypeScript files and 21 resolved imports remain correct.
+
+These are deterministic consequences of the approved 14-test RED file. The repair must be committed with `[test-edit-authorized]` and must not alter any oracle assertion.
 
 
 ## nd_contract

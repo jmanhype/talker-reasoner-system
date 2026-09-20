@@ -7,8 +7,9 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:01:54Z
-content_hash: "sha256:95510815e6758af61018f01f5c30ca1bc38e7ca68e62e5aa091c76eff151d8f8"
+content_hash: "sha256:f5166fad68d093ca6da68363b8d5f897d7dccaa259807786a4a6cc78e48d8a66"
 parent: TRS-pvv1
+blocked_by: [TRS-6rrt]
 ---
 
 ## Description
@@ -113,9 +114,10 @@ status: new
 
 
 ## History
-
+- 2026-09-20T00:01:54Z dep_added: blocked_by TRS-6rrt
 
 ## Links
 - Parent: [[TRS-pvv1]]
+- Blocked by: [[TRS-6rrt]]
 
 ## Comments

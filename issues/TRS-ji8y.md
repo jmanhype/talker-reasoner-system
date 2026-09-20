@@ -7,7 +7,8 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:01:53Z
-content_hash: "sha256:27c111e2504d80ce9358642ce00cd367e19e319a521114b75df4ae39b3194a04"
+content_hash: "sha256:0bdafea704f1f41e0de871698187ce09ef03f4c49a4fe62eca9374092b7b7f62"
+parent: TRS-pvv1
 ---
 
 ## Description
@@ -118,6 +119,6 @@ status: new
 
 
 ## Links
-
+- Parent: [[TRS-pvv1]]
 
 ## Comments

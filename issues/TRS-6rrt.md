@@ -1,13 +1,13 @@
 ---
 id: TRS-6rrt
 title: "Close one local voice turn through the M2 skeleton"
-status: in_progress
+status: open
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:10:21Z
-content_hash: "sha256:4f717994bc01cf3a2e451e0bb60d72d4ca1306a0e5b85cdc45e263937e75ade5"
+content_hash: "sha256:4f4e3f38c814c5acc40496fe3c4495e16c267d468283cbfc65174aa447a07403"
 parent: TRS-pvv1
 blocks: [TRS-ji8y, TRS-fcji, TRS-wwx4]
 labels: [walking-skeleton, hard-tdd, delivered]
@@ -252,6 +252,7 @@ status: delivered
 - 2026-09-20T00:02:54Z status: open -> in_progress
 - 2026-09-20T00:02:54Z claimed by dev-TRS-6rrt
 - 2026-09-20T00:10:05Z status: in_progress -> in_progress
+- 2026-09-20T00:10:21Z status: in_progress -> open
 
 ## Links
 - Parent: [[TRS-pvv1]]

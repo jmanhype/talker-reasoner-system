@@ -1,18 +1,20 @@
 ---
 id: TRS-wwx4
 title: "E2e: prove the M2 voice-turn lifecycle"
-status: in_progress
+status: closed
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T01:11:54Z
-content_hash: "sha256:7b3c95c7e3a106842fffe775bf2289aa8fe08ad673434ab4c4174b4fe7d4e7a3"
+content_hash: "sha256:efba5ac497feeb699578ae08e8fd2882ec0decd91f40a4e4a4630cd4738001e6"
 parent: TRS-pvv1
 labels: [capstone, hard-tdd, red-approved, delivered]
 was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
 assignee: dev-TRS-wwx4
 follows: [TRS-6rrt, TRS-fcji, TRS-ji8y]
+closed_at: 2026-09-20T01:11:54Z
+close_reason: "Accepted: independently reran the real local M2 E2e journey, full 363-test suite, strict TypeScript compile, machinery implementation/machine/oracle/Modelith gates, hard-TDD verification, scoped gates/verify, and diff checks. The frozen report has 18/18 conditions true, 4/4 privacy checks, 5/5 arbitration checks, exact 3 VOIC + 12 CONV denominators, zero tool executions, and decision pass."
 ---
 
 ## Description
@@ -314,6 +316,7 @@ status: delivered
 - 2026-09-20T01:05:57Z status: open -> in_progress
 - 2026-09-20T01:05:57Z claimed by dev-TRS-wwx4
 - 2026-09-20T01:11:53Z status: in_progress -> in_progress
+- 2026-09-20T01:11:54Z status: in_progress -> closed
 
 ## Links
 - Parent: [[TRS-pvv1]]

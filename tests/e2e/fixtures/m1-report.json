@@ -5,12 +5,12 @@
   "baseline_edge_count": 4,
   "ratcheted_edge_count": 4,
   "python_files_checked": 8,
-  "ts_files_checked": 4,
-  "test_files_scanned": 13,
+  "ts_files_checked": 5,
+  "test_files_scanned": 14,
   "machine_count": 7,
   "transition_count": 62,
   "invariant_count": 36,
-  "collected_test_count": 338,
+  "collected_test_count": 348,
   "live_dependency_classes": [],
   "decision": "pass"
 }

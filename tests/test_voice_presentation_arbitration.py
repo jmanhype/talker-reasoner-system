@@ -186,6 +186,7 @@ const overlapArbiter = openAt(valid.turnEpoch);
 const slowDecision = overlapArbiter.submit(slowOutput);
 const ordinarySecond: ResponseCandidate = { ...valid, responseId: "ordinary-second-001" };
 const ordinaryDecision = overlapArbiter.submit(ordinarySecond);
+const snapshotAfterOrdinary = overlapArbiter.snapshot;
 const activeUser: ResponseCandidate = {
   ...valid,
   ...input.activeUser,
@@ -244,7 +245,7 @@ console.log(JSON.stringify({
   oneStream: {
     slowDecision,
     ordinaryDecision,
-    snapshot: overlapArbiter.snapshot,
+    snapshot: snapshotAfterOrdinary,
   },
   activeUser: {
     decision: activeUserDecision,

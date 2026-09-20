@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T01:11:53Z
-content_hash: "sha256:51d5f0c505185ac220b5b8402da6b02044715ab5458cb605919b444e9e096257"
+updated_at: 2026-09-20T01:11:54Z
+content_hash: "sha256:7b3c95c7e3a106842fffe775bf2289aa8fe08ad673434ab4c4174b4fe7d4e7a3"
 parent: TRS-pvv1
 labels: [capstone, hard-tdd, red-approved, delivered]
 was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
@@ -120,6 +120,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-09-19.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence
 
 Commands run:

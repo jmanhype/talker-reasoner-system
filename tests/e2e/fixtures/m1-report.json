@@ -1,16 +1,16 @@
 {
   "schema_version": "trs-m1-architecture-report-v1",
-  "imports_resolved": 19,
+  "imports_resolved": 21,
   "allowed_edges_verified": 5,
   "baseline_edge_count": 4,
   "ratcheted_edge_count": 4,
   "python_files_checked": 8,
-  "ts_files_checked": 2,
-  "test_files_scanned": 12,
+  "ts_files_checked": 5,
+  "test_files_scanned": 16,
   "machine_count": 7,
   "transition_count": 62,
   "invariant_count": 36,
-  "collected_test_count": 330,
+  "collected_test_count": 363,
   "live_dependency_classes": [],
   "decision": "pass"
 }

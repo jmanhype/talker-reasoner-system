@@ -20,7 +20,7 @@ def test_edge_package_is_strict_offline_and_boundary_mapped() -> None:
     options = compiler["compilerOptions"]
     assert options["strict"] is True and options["noEmit"] is True
     assert options["module"] == options["moduleResolution"] == "nodenext"
-    assert compiler["include"] == ["ports/**/*.ts"]
+    assert compiler["include"] == ["ports/**/*.ts", "state/**/*.ts"]
     for token in (
         "export type ProcessingBoundary",
         "export type AudioSessionStatus",

@@ -215,6 +215,7 @@ Status: closed
 Implement VoiceSession and ConversationTurn guards/actions against the machine matrices, including typed/spoken parity, one-audio-stream arbitration, accessibility metadata, and turn-epoch cancellation.
 
 DoD: `VOIC-305554`, `VOIC-e62d1f`, `VOIC-32ea66`, and all `CONV-*` rows pass; privacy canaries prove ephemeral release; renderer arbitration prevents overlap.
+Status: closed
 
 **M3 - Live single-operator voice loop**
 

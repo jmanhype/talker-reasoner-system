@@ -12,7 +12,7 @@
   "oracle_file_count": 7,
   "transition_count": 62,
   "invariant_count": 36,
-  "collected_test_count": 330,
+  "collected_test_count": 363,
   "live_dependency_classes": [],
   "decision": "pass"
 }

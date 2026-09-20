@@ -1,17 +1,18 @@
 ---
 id: TRS-6rrt
 title: "Close one local voice turn through the M2 skeleton"
-status: in_progress
+status: closed
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:26:06Z
-content_hash: "sha256:63cd6662014c8e87e63b565ff38200ae14787a868b729327ea037e5539bc740f"
+updated_at: 2026-09-20T00:26:07Z
+content_hash: "sha256:c0d65aa175cfc6239628b688371e0b39cc5d44c6349af3cf31a93448cbd1883d"
 parent: TRS-pvv1
-blocks: [TRS-ji8y, TRS-fcji, TRS-wwx4]
 labels: [walking-skeleton, hard-tdd, red-approved, delivered]
 assignee: dev-TRS-6rrt
+closed_at: 2026-09-20T00:26:07Z
+close_reason: "Accepted: independently reran targeted suite 8/8, full suite 338/338, strict TypeScript compilation, machinery implementation/machine/oracle/Modelith gates, hard-TDD verification, scoped pvg gates/verify, and diff checks. RED was genuine; three harness/baseline conflicts were explicitly PM-authorized and committed with [test-edit-authorized]; production GREEN remains separately committed."
 ---
 
 ## Description
@@ -371,9 +372,12 @@ status: delivered
 - 2026-09-20T00:10:37Z status: open -> in_progress
 - 2026-09-20T00:10:37Z claimed by dev-TRS-6rrt
 - 2026-09-20T00:26:06Z status: in_progress -> in_progress
+- 2026-09-20T00:26:07Z status: in_progress -> closed
+- 2026-09-20T00:26:07Z dep_removed: no_longer_blocks TRS-ji8y
+- 2026-09-20T00:26:07Z dep_removed: no_longer_blocks TRS-fcji
+- 2026-09-20T00:26:07Z dep_removed: no_longer_blocks TRS-wwx4
 
 ## Links
 - Parent: [[TRS-pvv1]]
-- Blocks: [[TRS-ji8y]], [[TRS-fcji]], [[TRS-wwx4]]
 
 ## Comments

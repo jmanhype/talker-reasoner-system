@@ -7,11 +7,11 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:01:55Z
-content_hash: "sha256:b37c73e95e53f9323f3086ba86c63d24ef67f7b586e19946742846c6197fa9da"
+content_hash: "sha256:e2c7566814235bac21bf6048523238e4b1f286f0719870788fdae3b5178e5389"
 parent: TRS-pvv1
-blocked_by: [TRS-6rrt]
 blocks: [TRS-wwx4]
 labels: [hard-tdd]
+was_blocked_by: [TRS-6rrt]
 ---
 
 ## Description
@@ -121,10 +121,11 @@ status: new
 ## History
 - 2026-09-20T00:01:54Z dep_added: blocked_by TRS-6rrt
 - 2026-09-20T00:01:54Z dep_added: blocks TRS-wwx4
+- 2026-09-20T00:26:07Z dep_removed: was_blocked_by TRS-6rrt
 
 ## Links
 - Parent: [[TRS-pvv1]]
 - Blocks: [[TRS-wwx4]]
-- Blocked by: [[TRS-6rrt]]
+- Was blocked by: [[TRS-6rrt]]
 
 ## Comments

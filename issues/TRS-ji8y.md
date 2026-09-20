@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:58:24Z
-content_hash: "sha256:251d1c01d3e0753cdea1cf1ed84610893f3bddb10229f9d89747a09b748be11f"
+updated_at: 2026-09-20T00:59:31Z
+content_hash: "sha256:61adda664ce0d31de4ce6a41a3fbf6dc56221b75c492e4f6a7b0e43d40196603"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd, red-approved]
@@ -118,6 +118,80 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-ji8y
+pytest -q tests/test_voice_turn_transitions.py
+pytest -q
+tsc -p edge
+machinery check design --impl .
+machinery lint design/machines
+machinery oracle design/machines
+modelith lint design/domain.modelith.yaml --completeness error
+pvg story verify-tdd --base 4653ea1
+pvg gates edge/state/ConversationTurn.ts
+pvg verify edge/state/ConversationTurn.ts --format=text
+git diff --check
+```
+
+### CI/Test Results
+
+```text
+targeted slow-path suite: 14 passed in 0.51s
+full suite: 362 passed in 11.35s
+strict TypeScript compile: exit 0
+machinery implementation gate: 0 blocking findings; 5 TS files; 21 imports; 5 edges; 15 test files; 62 oracle rows
+machinery machine lint/oracle: 0 error/drift; 7 machines; 62 rows
+modelith completeness: 0 errors, 0 warnings
+hard-TDD verify: 3 commits checked; 0 unauthorized test edits
+scoped pvg gates: PASS, 0 warnings/skips
+scoped pvg verify: PASSED, 1 file, 0 issues
+git diff --check: PASS
+precise production secret-value regex: 0 hits
+```
+
+### PM-authorized baseline repair
+
+The approved RED added 14 tests and one scanned test file. PM authorization was recorded before edits to advance M0/M1 collected tests from 348 to 362 and M1 scanned files from 14 to 15. The repair commit carries `[test-edit-authorized]`; TypeScript/import counts remain 5 and 21.
+
+Summary: the real edge-local ConversationTurn now enters SlowPath only for a valid needs-tools route, waits only on exact confirmation/action identity, cancels from every legal live state, supersedes slow work on epoch advance, releases raw transcripts at terminal, and retains only scoped identities/hashes.
+
+Commit SHA: f35beab1cf12014206ae35efa7d7dad2fb527d3c
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. CONV-87aef6 valid needs-tools SlowPath | PASS | Exact route identity and guard tests |
+| 2. CONV-53ecad routed cancel | PASS | Routed cancellation terminalizes |
+| 3. CONV-5d0019 slow epoch advance | PASS | Superseding epoch terminalizes/cancels work |
+| 4. CONV-a756c5 exact confirmation | PASS | Policy + action hash required |
+| 5. CONV-7c39be slow cancel | PASS | Slow-path cancellation terminalizes |
+| 6. CONV-7f7105 awaiting epoch advance | PASS | Superseding epoch terminalizes |
+| 7. CONV-8fadcf awaiting cancel | PASS | Awaiting cancellation terminalizes |
+| 8. CONV-04c2c7 responding cancel | PASS | Canceled output cannot render normally |
+| 9. CONV-f9f25b receiving cancel | PASS | Pre-routing cancellation terminalizes |
+| 10. Guard clause falsification | PASS | All route/confirmation clauses tested |
+| 11. Terminal privacy | PASS | Transcript released; scoped hashes retained |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit: `1b68032d8842b31965154fc72081b70fe13776cc`.
+- GREEN commit: `f35beab1cf12014206ae35efa7d7dad2fb527d3c`.
+- Authorized baseline repair: `b9f32e17ed9f2d3d77c19e9ccdb9921e054ce8cb`.
+- Full suite: 362 passed.
+
+### proof
+- [x] AC #1 through #11 verified with executable tests and coordinator reruns.
+- [x] Hard-TDD RED/GREEN/authorized-repair history passes.
+- [x] No live dependency, tool authority, or raw terminal value retained.
+
+
 ## PM Test-Edit Authorization
 
 Authorized sanctioned repair for TRS-ji8y GREEN:

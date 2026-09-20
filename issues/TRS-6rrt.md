@@ -7,8 +7,9 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:01:53Z
-content_hash: "sha256:08f6644d516a7f5a9adfd185cab4b5705452d219bffe40234bb233bcf217c78e"
+content_hash: "sha256:9a385a1b7b1276bc5010cb205e8f029eb40c03d9477b2546fcf20faeeda441d9"
 parent: TRS-pvv1
+blocks: [TRS-ji8y]
 ---
 
 ## Description
@@ -117,9 +118,10 @@ status: new
 
 
 ## History
-
+- 2026-09-20T00:01:54Z dep_added: blocks TRS-ji8y
 
 ## Links
 - Parent: [[TRS-pvv1]]
+- Blocks: [[TRS-ji8y]]
 
 ## Comments

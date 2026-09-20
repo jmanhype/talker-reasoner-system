@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T00:43:35Z
-content_hash: "sha256:b46be2e48d3f6d4d9158074bec4b3405c9dea8fc113a553d04d586db8f913f1f"
+updated_at: 2026-09-20T00:49:37Z
+content_hash: "sha256:ae9674eddbec52ff71cf8296b211c927a481808a25c7ad9266d5202304be3e30"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd]
@@ -118,6 +118,63 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-ji8y
+pytest -q tests/test_voice_turn_transitions.py
+git diff --check
+git status --short --branch
+shasum -a 256 tests/test_voice_turn_transitions.py
+machinery check design --impl .
+```
+
+### CI/Test Results
+
+```text
+targeted RED suite: 12 failed, 2 passed in 5.08s
+RED cause: ConversationTurn lacks cancel, advanceEpoch, and awaitConfirmation operations
+two passes: oracle parser coverage and existing Python reasoner cancellation/epoch contract
+git diff --check: PASS
+machinery check design --impl .: 0 blocking findings; 15 test files; 7 machines; 62 oracle rows
+```
+
+Summary: genuine executable RED covering all nine story-cited ConversationTurn rows, each falsified needs-tools/confirmation guard clause, real Python reasoner cancellation/epoch integration, and terminal privacy release. No production implementation was added.
+
+Commit SHA: 1b68032d8842b31965154fc72081b70fe13776cc
+
+### AC Verification
+
+| RED requirement | Result | Evidence |
+|---|---|---|
+| CONV-f9f25b | FAIL as intended | Missing cancel operation |
+| CONV-87aef6 | FAIL as intended | Missing needs-tools SlowPath operation |
+| CONV-53ecad | FAIL as intended | Missing routed cancellation |
+| CONV-5d0019 | FAIL as intended | Missing epoch advance |
+| CONV-a756c5 | FAIL as intended | Missing confirmation wait |
+| CONV-7c39be | FAIL as intended | Missing slow-path cancellation |
+| CONV-7f7105 | FAIL as intended | Missing awaiting epoch advance |
+| CONV-8fadcf | FAIL as intended | Missing awaiting cancellation |
+| CONV-04c2c7 | FAIL as intended | Missing responding cancellation |
+| Guard clause falsification | PASS | All named clauses represented |
+| Existing design gate | PASS | Machinery 0 blocking |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit SHA: `1b68032d8842b31965154fc72081b70fe13776cc`.
+- Test SHA-256: `7072dd7b6ed64d659ee385eb5a359116085613ca1a922477344789400efafa65`.
+- Independent RED result: 12 failed, 2 passed.
+- Independent machinery result: 0 blocking.
+
+### proof
+- [x] RED tests authored and committed.
+- [x] RED failures are missing production operations.
+- [x] Existing reasoner contract and oracle coverage verified.
+- [x] Ready for RED approval and GREEN dispatch.
 
 
 ## History

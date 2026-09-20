@@ -28,6 +28,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Install pinned TypeScript compiler
+        run: |
+          npm install --prefix "${RUNNER_TEMP:-.tmp}/typescript" typescript@5.9.3
+          echo "${RUNNER_TEMP:-.tmp}/typescript/node_modules/.bin" >> "$GITHUB_PATH"
       - uses: actions/setup-go@v5
         with:
           go-version: stable
@@ -39,4 +43,4 @@ jobs:
       - name: Run Python tests
         run: uv run --group dev pytest -q
       - name: Check TypeScript edge
-        run: npx --yes --package typescript@5 tsc -p edge
+        run: tsc -p edge

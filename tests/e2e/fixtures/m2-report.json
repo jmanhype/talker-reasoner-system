@@ -1,0 +1,69 @@
+{
+  "schema_version": "trs-m2-voice-turn-report-v1",
+  "machine_denominators": {
+    "voiceSession": {
+      "transition_count": 3,
+      "stable_ids": [
+        "VOIC-305554",
+        "VOIC-e62d1f",
+        "VOIC-32ea66"
+      ]
+    },
+    "conversationTurn": {
+      "transition_count": 12,
+      "stable_ids": [
+        "CONV-02965d",
+        "CONV-f9f25b",
+        "CONV-87aef6",
+        "CONV-73bae3",
+        "CONV-53ecad",
+        "CONV-5d0019",
+        "CONV-a756c5",
+        "CONV-7c39be",
+        "CONV-7f7105",
+        "CONV-8fadcf",
+        "CONV-dab39a",
+        "CONV-04c2c7"
+      ]
+    },
+    "m2_oracle_row_count": 15
+  },
+  "test_denominators": {
+    "targeted_e2e_test_count": 1,
+    "condition_count": 18
+  },
+  "privacy_denominators": {
+    "check_count": 4,
+    "passed": 4
+  },
+  "arbitration_denominators": {
+    "check_count": 5,
+    "passed": 5
+  },
+  "reasoner_job": {
+    "state": "canceled",
+    "terminal_reason": "turn_superseded",
+    "tool_execution_count": 0
+  },
+  "conditions": {
+    "session_opened": true,
+    "session_closed_after_terminal_turns": true,
+    "clean_fast_response": true,
+    "slow_turn_awaits_confirmation": true,
+    "slow_work_superseded": true,
+    "stale_normal_output_prevented": true,
+    "fast_terminal_transcript_released": true,
+    "slow_terminal_transcript_released": true,
+    "session_values_released": true,
+    "stale_output_silent": true,
+    "one_stream_rejected_overlap": true,
+    "active_user_supersedes": true,
+    "active_stream_final": true,
+    "accessibility_available": true,
+    "typed_spoken_parity": true,
+    "exact_voic_denominators": true,
+    "exact_conv_denominators": true,
+    "no_tool_execution": true
+  },
+  "decision": "pass"
+}

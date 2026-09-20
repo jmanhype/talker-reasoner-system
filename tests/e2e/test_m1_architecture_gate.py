@@ -108,9 +108,9 @@ def test_complete_m1_architecture_gate_emits_pass_report() -> None:
         "allowed_edges": metrics["edges"] == 5,
         "explicit_debt": _has_exact_explicit_debt(metrics, ratchet),
         "python_and_ts_checked": metrics["python"] == 8 and metrics["ts"] == 5,
-        "oracle_tests_scanned": metrics["tests"] == 15 and metrics["machines"] == 7 and metrics["rows"] == 62,
+        "oracle_tests_scanned": metrics["tests"] == 16 and metrics["machines"] == 7 and metrics["rows"] == 62,
         "exact_denominators": len(oracles) == 7 and len(transitions) == 62 and len(invariants) == 36,
-        "suite_collected": collection_exit == 0 and collected_tests == 362,
+        "suite_collected": collection_exit == 0 and collected_tests == 363,
         "edge_dependency_free": _edge_manifest_is_dependency_free(manifest),
         "no_live_dependencies": not live_dependencies,
     }

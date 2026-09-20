@@ -7,7 +7,7 @@ type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:49:38Z
-content_hash: "sha256:04605599a9d320a887d1729e6d8cb143300bae639f2468a6a303f0db6a60b86d"
+content_hash: "sha256:a27b4f9770ae3b8fa83570ac371b874b83d94b5f847dc4adbeb9444b1575f165"
 parent: TRS-pvv1
 blocks: [TRS-wwx4]
 labels: [hard-tdd, delivered]
@@ -118,6 +118,18 @@ status: new
 
 
 ## Notes
+
+
+## nd_contract
+status: delivered
+
+### evidence
+- Transitioned via pvg story deliver on 2026-09-19.
+
+### proof
+- [ ] Developer evidence block must remain authoritative above this contract.
+
+
 ## Implementation Evidence
 
 Commands run:

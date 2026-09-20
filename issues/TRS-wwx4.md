@@ -6,8 +6,8 @@ priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
-updated_at: 2026-09-20T01:05:57Z
-content_hash: "sha256:1486b67ae06692b15dbf15e9e92612453fb4b1f6835d4d7480ded936c72a84eb"
+updated_at: 2026-09-20T01:11:53Z
+content_hash: "sha256:8e0ea6f06ef5dcb08c3870cbcc448d8018bdbdc8466b7dd8e9ad82423971309f"
 parent: TRS-pvv1
 labels: [capstone, hard-tdd, red-approved]
 was_blocked_by: [TRS-6rrt, TRS-fcji, TRS-ji8y]
@@ -120,6 +120,87 @@ status: new
 
 
 ## Notes
+## Implementation Evidence
+
+Commands run:
+
+```bash
+cd /Users/Shared/HermesWorkspace/talker-reasoner-system/.claude/worktrees/dev-TRS-wwx4
+pytest -q -s tests/e2e/test_m2_voice_turn_gate.py
+pytest -q
+tsc -p edge
+machinery check design --impl .
+machinery lint design/machines
+machinery oracle design/machines
+modelith lint design/domain.modelith.yaml --completeness error
+pvg story verify-tdd --base 3e69e71
+pvg gates tests/e2e/test_m2_voice_turn_gate.py tests/e2e/fixtures/m2-report.json
+pvg verify tests/e2e/test_m2_voice_turn_gate.py tests/e2e/fixtures/m2-report.json --include-tests --format=text
+git diff --check
+```
+
+### CI/Test Results
+
+```text
+targeted M2 E2e gate: 1 passed in 0.95s
+full suite: 363 passed in 12.17s
+strict TypeScript compile: exit 0
+machinery implementation gate: 0 blocking findings; 5 TS files; 21 imports; 5 edges; 16 test files; 62 oracle rows
+machinery machine lint/oracle: 0 error/drift; 7 machines; 62 rows
+modelith completeness: 0 errors, 0 warnings
+hard-TDD verify: 2 commits checked; 0 unauthorized test edits
+scoped pvg gates: PASS, 0 warnings/skips
+scoped pvg verify: PASSED, 1 file, 0 issues
+git diff --check: PASS
+```
+
+### Final M2 report
+
+```text
+schema: trs-m2-voice-turn-report-v1
+VOIC rows: 3
+CONV rows: 12
+M2 oracle rows: 15
+conditions: 18/18 true
+privacy checks: 4/4
+arbitration checks: 5/5
+reasoner job: canceled / turn_superseded
+tool executions: 0
+decision: pass
+```
+
+The frozen report records session open/close, clean fast response, waiting confirmation, epoch supersession, stale-output silence, transcript/session release, one active stream, active-user priority, accessibility, typed/spoken parity, exact denominators, and no tool execution.
+
+Commit SHA: 5a2fa827033cbc4561e08a698e7709d3261884bd
+
+### AC Verification
+
+| AC | Result | Evidence |
+|---|---|---|
+| 1. One session opened/closed after terminal turns | PASS | Journey condition true |
+| 2. Non-tool clean response/release | PASS | Journey + privacy checks |
+| 3. Needs-tools waits confirmation without execution | PASS | Job/report |
+| 4. Epoch supersedes slow work and blocks stale normal output | PASS | Canceled `turn_superseded`, silent stale render |
+| 5. Arbiter priority/one-stream/accessibility/parity | PASS | 5/5 arbitration checks |
+| 6. Privacy canaries | PASS | 4/4, no raw transcript in report |
+| 7. Exact 3 VOIC + 12 CONV denominators and decision pass | PASS | Frozen report |
+| 8. Full gates | PASS | 363 tests + all machinery/Modelith checks |
+
+## nd_contract
+status: delivered
+
+### evidence
+- RED commit: `b1802615ab3eebc2b3e63373cdf581c93b0bb1ab`.
+- GREEN/seal commit: `5a2fa827033cbc4561e08a698e7709d3261884bd`.
+- Report SHA-256: `018671e1f4d840b16b0dbb48d5b815b90afc938b9925ed1df449577848cb58c3`.
+- Full suite: 363 passed.
+
+### proof
+- [x] AC #1 through #8 verified by real local E2e execution and coordinator reruns.
+- [x] No mocks, live adapters, network, credentials, durable stores, or tool execution.
+- [x] M2 final decision is pass with exact denominators.
+
+
 ## PM Test-Edit Authorization
 
 Authorize the TRS-wwx4 GREEN completion repair required by its approved E2e test:

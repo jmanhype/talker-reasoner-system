@@ -10,7 +10,7 @@ updated_at: 2026-09-20T00:10:05Z
 content_hash: "sha256:6a461ec075005716ab2b71c40068602d339f8948b77c4442ec73bc9a8d3d1891"
 parent: TRS-pvv1
 blocks: [TRS-ji8y, TRS-fcji, TRS-wwx4]
-labels: [walking-skeleton, hard-tdd]
+labels: [walking-skeleton, hard-tdd, delivered]
 assignee: dev-TRS-6rrt
 ---
 

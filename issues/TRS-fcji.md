@@ -1,19 +1,20 @@
 ---
 id: TRS-fcji
 title: "Arbitrate one M2 response stream with accessibility metadata"
-status: in_progress
+status: closed
 priority: 1
 type: task
 created_at: 2026-09-20T00:01:53Z
 created_by: speed
 updated_at: 2026-09-20T00:43:13Z
-content_hash: "sha256:31de2f6071a22b728a8ef025c259a4290a3c7062cb9852df8357c228b588d828"
+content_hash: "sha256:8bb60d3cd1dab2d1149eb9deb5f9e43729c79298bec980b09ec65454a809e875"
 parent: TRS-pvv1
-blocks: [TRS-wwx4]
 labels: [hard-tdd, red-approved, delivered]
 was_blocked_by: [TRS-6rrt]
 assignee: dev-TRS-fcji
 follows: [TRS-6rrt]
+closed_at: 2026-09-20T00:43:13Z
+close_reason: "Accepted: independently reran targeted arbitration suite 10/10, full suite 348/348, strict TypeScript compilation, machinery/machine/oracle/Modelith gates, hard-TDD verification, scoped gates/verify, and diff checks. Snapshot-order and denominator repairs were explicitly authorized and committed with [test-edit-authorized]; the production arbiter remains a separate GREEN commit."
 ---
 
 ## Description
@@ -305,10 +306,11 @@ status: delivered
 - 2026-09-20T00:33:48Z status: open -> in_progress
 - 2026-09-20T00:33:48Z claimed by dev-TRS-fcji
 - 2026-09-20T00:43:13Z status: in_progress -> in_progress
+- 2026-09-20T00:43:13Z status: in_progress -> closed
+- 2026-09-20T00:43:13Z dep_removed: no_longer_blocks TRS-wwx4
 
 ## Links
 - Parent: [[TRS-pvv1]]
-- Blocks: [[TRS-wwx4]]
 - Was blocked by: [[TRS-6rrt]]
 - Follows: [[TRS-6rrt]]
 

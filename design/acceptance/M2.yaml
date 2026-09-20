@@ -1,0 +1,32 @@
+milestone: 2
+commit: 25b54c9610c61730d751bf9c2e9aa0dbddc77c22
+verdict: ACCEPTED
+dod_ids:
+  - VOIC-305554
+  - VOIC-e62d1f
+  - VOIC-32ea66
+  - CONV-02965d
+  - CONV-f9f25b
+  - CONV-87aef6
+  - CONV-73bae3
+  - CONV-53ecad
+  - CONV-5d0019
+  - CONV-a756c5
+  - CONV-7c39be
+  - CONV-7f7105
+  - CONV-8fadcf
+  - CONV-dab39a
+  - CONV-04c2c7
+attestations:
+  - all 3 VoiceSession and all 12 ConversationTurn oracle rows pass executable behavior tests
+  - the M2 E2e journey passes all 18 conditions with decision pass
+  - privacy canaries pass 4 of 4 and prove transcript/session processing-only release
+  - presentation arbitration passes 5 of 5 checks for one active stream, active-user priority, accessibility, and typed/spoken parity
+  - a needs-tools turn waits for exact confirmation, is superseded by turn epoch 1, and executes zero tools
+  - the complete repository suite passes 363 of 363 tests
+  - machinery check design --impl ., machinery lint, machinery oracle, and modelith completeness pass with zero blocking findings
+  - no live audio, model, credential, durable-service, remote-tool, or semantic-memory dependency is enabled
+findings:
+  - M0/M1 exact inventory fixtures were updated under authorized test-edit commits as M2 executable coverage was added.
+reviewer: milestone acceptance review, operator-approved Codex workflow
+date: 2026-09-20
